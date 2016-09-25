@@ -1,0 +1,71 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'forge'
+            url = 'http://files.minecraftforge.net/maven'
+        }
+        maven {
+            name = 'sonatype'
+            url = 'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+// Apply plugins
+apply plugin: 'forge'
+
+// Basic project information
+group = 'de.unratedfilms'
+version = '1.0.0-SNAPSHOT'
+
+// Minimum java version
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+minecraft {
+    version = '1.7.10-10.13.4.1614-1.7.10'
+    runDir = 'run'
+
+    // Replace strings with constants in the source
+    replace "@MOD_VERSION@", project.version
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'quartercode'
+        url = 'http://repo.quartercode.com/content/groups/public/'
+    }
+}
+
+dependencies {
+    compile 'karyonix:shadersmod:1.7.10-2.3.31:dev'
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+// Custom manifest attributes
+jar.manifest.attributes(
+        'FMLCorePlugin': 'de.unratedfilms.moviefocus.coremod.main.MovieFocusCoremod',
+        'FMLCorePluginContainsFMLMod': 'true')
