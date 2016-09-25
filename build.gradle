@@ -9,14 +9,21 @@ buildscript {
             name = 'sonatype'
             url = 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
+        maven {
+            name = 'jboss'
+            url = 'http://repository.jboss.org/nexus/content/groups/public/'
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
     }
 }
 
 // Apply plugins
 apply plugin: 'forge'
+apply plugin: 'maven-publish'
+apply plugin: 'maven-publish-auth'
 
 // Basic project information
 group = 'de.unratedfilms'
@@ -69,3 +76,42 @@ processResources {
 jar.manifest.attributes(
         'FMLCorePlugin': 'de.unratedfilms.moviefocus.coremod.main.MovieFocusCoremod',
         'FMLCorePluginContainsFMLMod': 'true')
+
+// Task for creating a deobfuscated JAR; needed by the projects which use this library
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+}
+
+// Task for creating a source jar
+task sourceJar(type: Jar) {
+    from sourceSets.main.java
+    from sourceSets.main.resources
+    classifier = 'sources'
+}
+
+// Task for creating a javadoc jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+// Publish the project artifacts to a maven repository
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact jar
+            artifact deobfJar
+            artifact sourceJar
+            artifact javadocJar
+        }
+    }
+    repositories {
+        maven {
+            name = 'quartercode-deployment'
+            url = version.endsWith('-SNAPSHOT') ?
+                    'http://repo.quartercode.com/content/repositories/snapshots/' :
+                    'http://repo.quartercode.com/content/repositories/releases/'
+        }
+    }
+}
