@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import de.unratedfilms.moviefocus.fmlmod.shader.ShaderConfiguration;
+import de.unratedfilms.moviefocus.fmlmod.shader.ShaderUniforms;
 
 public class KeyHandler {
 
@@ -15,21 +15,21 @@ public class KeyHandler {
     public void onKeyInput(InputEvent event) {
 
         if (KeyBindings.toggle.isPressed()) {
-            ShaderConfiguration.setEnabled(!ShaderConfiguration.isEnabled());
+            ShaderUniforms.setEnabled(!ShaderUniforms.isEnabled());
         }
     }
 
     @SubscribeEvent
     public void onTick(TickEvent event) {
 
-        if (ShaderConfiguration.isEnabled()) {
+        if (ShaderUniforms.isEnabled()) {
             int rawMouseScroll = Mouse.getDWheel();
             if (rawMouseScroll != 0) {
                 int mouseScroll = rawMouseScroll > 0 ? 1 : -1;
 
                 float focalDepthChange = mouseScroll * 0.1f;
-                ShaderConfiguration.addFocalDepth(focalDepthChange);
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("New focal depth: " + ShaderConfiguration.getFocalDepth());
+                ShaderUniforms.addFocalDepth(focalDepthChange);
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("New focal depth: " + ShaderUniforms.getFocalDepth());
             }
         }
     }

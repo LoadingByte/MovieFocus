@@ -15,7 +15,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import de.unratedfilms.moviefocus.coremod.asm.ClassNodeTransformer;
 import de.unratedfilms.moviefocus.coremod.asm.util.AsmUtils;
-import de.unratedfilms.moviefocus.fmlmod.shader.ShaderConfiguration;
+import de.unratedfilms.moviefocus.fmlmod.shader.ShaderUniforms;
 import de.unratedfilms.moviefocus.shared.Consts;
 
 public class CNT_Shaders implements ClassNodeTransformer {
@@ -55,7 +55,7 @@ public class CNT_Shaders implements ClassNodeTransformer {
         target.add(new LdcInsnNode(Consts.MOD_ID + "_" + variableName));
 
         // Push the value argument
-        target.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(ShaderConfiguration.class), variableName, "I"));
+        target.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(ShaderUniforms.class), variableName, "I"));
 
         // Invoke the method
         target.add(new MethodInsnNode(INVOKESTATIC, classNode.name, METHOD_SET_PROGRAM_UNIFORM_1I.getName(), METHOD_SET_PROGRAM_UNIFORM_1I.getDescriptor(), false));
@@ -67,7 +67,7 @@ public class CNT_Shaders implements ClassNodeTransformer {
         target.add(new LdcInsnNode(Consts.MOD_ID + "_" + variableName));
 
         // Push the value argument
-        target.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(ShaderConfiguration.class), variableName, "F"));
+        target.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(ShaderUniforms.class), variableName, "F"));
 
         // Invoke the method
         target.add(new MethodInsnNode(INVOKESTATIC, classNode.name, METHOD_SET_PROGRAM_UNIFORM_1F.getName(), METHOD_SET_PROGRAM_UNIFORM_1F.getDescriptor(), false));
