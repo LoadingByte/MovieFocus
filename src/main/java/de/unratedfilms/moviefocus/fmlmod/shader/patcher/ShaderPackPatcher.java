@@ -1,10 +1,9 @@
 
-package de.unratedfilms.moviefocus.fmlmod.shader;
+package de.unratedfilms.moviefocus.fmlmod.shader.patcher;
 
 import java.io.IOException;
 import java.io.InputStream;
 import com.google.common.collect.ImmutableList;
-import de.unratedfilms.moviefocus.fmlmod.shader.patchers.SPP_OnlyDof;
 import shadersmodcore.client.IShaderPack;
 
 public interface ShaderPackPatcher {

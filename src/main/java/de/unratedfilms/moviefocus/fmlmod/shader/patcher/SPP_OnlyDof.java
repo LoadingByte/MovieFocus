@@ -1,5 +1,5 @@
 
-package de.unratedfilms.moviefocus.fmlmod.shader.patchers;
+package de.unratedfilms.moviefocus.fmlmod.shader.patcher;
 
 import static de.unratedfilms.moviefocus.fmlmod.util.MoreStringUtils.insertAfter;
 import static de.unratedfilms.moviefocus.fmlmod.util.MoreStringUtils.insertBefore;
@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import org.apache.commons.io.IOUtils;
-import de.unratedfilms.moviefocus.fmlmod.shader.ShaderPackPatcher;
 import de.unratedfilms.moviefocus.shared.Consts;
 import shadersmodcore.client.IShaderPack;
 
