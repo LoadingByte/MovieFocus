@@ -50,10 +50,10 @@ public class SPP_OnlyDoF implements ShaderPackPatcher {
         // Insert the uniforms on the second line (the first line is the GL version)
         shader = insertAfter(shader, "#version 120", "\n"
                 + "uniform int " + Consts.MOD_ID + "_enabled;\n"
-                + "uniform float " + Consts.MOD_ID + "_focalDepth;");
+                + "uniform float " + Consts.MOD_ID + "_focalDepthLinear;");
 
         // Replace the call that retrieves the depth from the middle of the screen with a reference to the focalDepth uniform
-        shader = shader.replace("getDepth(vec2(0.5, 0.5))", Consts.MOD_ID + "_focalDepth");
+        shader = shader.replace("getDepth(vec2(0.5, 0.5))", Consts.MOD_ID + "_focalDepthLinear");
 
         // Only run the DOF if the mod is actually enabled
         shader = insertAfter(shader, "vec4 color = texture2D(composite, texcoord.st);", "\n if (" + Consts.MOD_ID + "_enabled == 1) {");

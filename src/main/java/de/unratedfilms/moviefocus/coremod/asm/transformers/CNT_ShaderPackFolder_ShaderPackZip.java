@@ -15,7 +15,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 import de.unratedfilms.moviefocus.coremod.asm.ClassNodeTransformer;
 import de.unratedfilms.moviefocus.coremod.asm.util.AsmUtils;
 import de.unratedfilms.moviefocus.fmlmod.hooks.ShaderPackHooks;
-import de.unratedfilms.moviefocus.fmlmod.shader.ShaderPackPatcher;
+import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcher;
 import de.unratedfilms.moviefocus.shared.Consts;
 
 public class CNT_ShaderPackFolder_ShaderPackZip implements ClassNodeTransformer {

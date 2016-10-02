@@ -4,7 +4,7 @@ package de.unratedfilms.moviefocus.fmlmod.hooks;
 import static de.unratedfilms.moviefocus.shared.Consts.LOGGER;
 import java.io.IOException;
 import java.io.InputStream;
-import de.unratedfilms.moviefocus.fmlmod.shader.ShaderPackPatcher;
+import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcher;
 import de.unratedfilms.moviefocus.shared.Consts;
 import shadersmodcore.client.IShaderPack;
 
