@@ -1,6 +1,9 @@
 
 package de.unratedfilms.moviefocus.fmlmod.util;
 
+import java.util.List;
+import java.util.ListIterator;
+
 public class MoreStringUtils {
 
     public static int indexAfter(String str, String searchStr) {
@@ -21,6 +24,15 @@ public class MoreStringUtils {
     public static String insertAfter(String str, String searchStr, String insertedStr) {
 
         return insert(str, indexAfter(str, searchStr), insertedStr);
+    }
+
+    public static List<String> trimAll(List<String> strs) {
+
+        for (ListIterator<String> iter = strs.listIterator(); iter.hasNext();) {
+            iter.set(iter.next().trim());
+        }
+
+        return strs;
     }
 
 }

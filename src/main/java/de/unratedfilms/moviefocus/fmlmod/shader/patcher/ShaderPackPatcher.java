@@ -10,6 +10,7 @@ public interface ShaderPackPatcher {
 
     public static final ImmutableList<ShaderPackPatcher> AVAILABLE_PATCHERS = ImmutableList.<ShaderPackPatcher> builder()
             .add(new SPP_OnlyDoF())
+            .add(new SPP_SEUS())
             .build();
 
     public boolean isShaderPackSupported(IShaderPack shaderPack) throws IOException;
