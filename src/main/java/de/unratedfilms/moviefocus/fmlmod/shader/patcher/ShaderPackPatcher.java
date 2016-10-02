@@ -9,7 +9,7 @@ import shadersmodcore.client.IShaderPack;
 public interface ShaderPackPatcher {
 
     public static final ImmutableList<ShaderPackPatcher> AVAILABLE_PATCHERS = ImmutableList.<ShaderPackPatcher> builder()
-            .add(new SPP_OnlyDof())
+            .add(new SPP_OnlyDoF())
             .build();
 
     public boolean isShaderPackSupported(IShaderPack shaderPack) throws IOException;

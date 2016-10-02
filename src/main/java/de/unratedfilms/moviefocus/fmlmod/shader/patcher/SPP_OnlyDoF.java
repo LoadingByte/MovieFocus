@@ -15,7 +15,7 @@ import shadersmodcore.client.IShaderPack;
  * <br>
  * http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2392600-shader-pack-only-depth-of-field-dof-shaders
  */
-public class SPP_OnlyDof implements ShaderPackPatcher {
+public class SPP_OnlyDoF implements ShaderPackPatcher {
 
     @Override
     public boolean isShaderPackSupported(IShaderPack shaderPack) throws IOException {
