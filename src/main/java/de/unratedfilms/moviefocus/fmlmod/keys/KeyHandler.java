@@ -16,15 +16,15 @@ public class KeyHandler {
     public void onKeyInput(InputEvent event) {
 
         if (KeyBindings.toggle.isPressed()) {
-            FocusConfigurationManager.getCurrentConfiguration().toggleActivity();
+            FocusConfigurationManager.getCurrent().toggleActivity();
         }
     }
 
     @SubscribeEvent
     public void onTick(TickEvent event) {
 
-        if (FocusConfigurationManager.getCurrentConfiguration() instanceof FixedFocusConfiguration) {
-            FixedFocusConfiguration focusConf = (FixedFocusConfiguration) FocusConfigurationManager.getCurrentConfiguration();
+        if (FocusConfigurationManager.getCurrent().isActive() && FocusConfigurationManager.getCurrent() instanceof FixedFocusConfiguration) {
+            FixedFocusConfiguration focusConf = (FixedFocusConfiguration) FocusConfigurationManager.getCurrent();
 
             int rawMouseScroll = Mouse.getDWheel();
             if (rawMouseScroll != 0) {

@@ -27,7 +27,7 @@ public class ShaderUniforms {
             return;
         }
 
-        enabled = FocusConfigurationManager.getCurrentConfiguration().isActive() ? 1 : 0;
+        enabled = FocusConfigurationManager.getCurrent().isActive() ? 1 : 0;
 
         if (enabled == 1) {
             refreshFocalDepthLinear();
@@ -37,7 +37,7 @@ public class ShaderUniforms {
 
     private static void refreshFocalDepthLinear() {
 
-        focalDepthLinear = FocusConfigurationManager.getCurrentConfiguration().getFocalDepth();
+        focalDepthLinear = FocusConfigurationManager.getCurrent().getFocalDepth();
         focalDepthLinear = focalDepthLinear < 0.1f ? 0.1f : focalDepthLinear; // the focal depth mustn't be below 0
     }
 
