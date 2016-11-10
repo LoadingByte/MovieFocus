@@ -20,9 +20,9 @@ public class SPP_OnlyDoF implements ShaderPackPatcher {
     @Override
     public boolean isShaderPackSupported(IShaderPack shaderPack) throws IOException {
 
-        try (InputStream readme = shaderPack.getResourceAsStream("/readme.txt")) {
-            if (readme != null) {
-                String firstLine = IOUtils.lineIterator(readme, Charset.defaultCharset()).nextLine();
+        try (InputStream readmeIn = shaderPack.getResourceAsStream("/readme.txt")) {
+            if (readmeIn != null) {
+                String firstLine = IOUtils.lineIterator(readmeIn, Charset.defaultCharset()).nextLine();
                 if (firstLine.equals("Only Depth of Field Shader byMrY: https://youtube.com/hdjellybeanlp")) {
                     return true;
                 }
@@ -55,7 +55,7 @@ public class SPP_OnlyDoF implements ShaderPackPatcher {
         // Replace the call that retrieves the depth from the middle of the screen with a reference to the focalDepth uniform
         shader = shader.replace("getDepth(vec2(0.5, 0.5))", Consts.MOD_ID + "_focalDepthLinear");
 
-        // Only run the DOF if the mod is actually enabled
+        // Only run the DoF if the mod is actually enabled
         shader = insertAfter(shader, "vec4 color = texture2D(composite, texcoord.st);", "\n if (" + Consts.MOD_ID + "_enabled == 1) {");
         shader = insertBefore(shader, "gl_FragColor = color;", "}\n");
 

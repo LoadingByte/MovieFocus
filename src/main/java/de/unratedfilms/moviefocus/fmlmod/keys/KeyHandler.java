@@ -15,7 +15,7 @@ public class KeyHandler {
     @SubscribeEvent
     public void onKeyInput(InputEvent event) {
 
-        if (KeyBindings.toggle.isPressed()) {
+        if (KeyBindings.toggleActivity.isPressed()) {
             FocusConfigurationManager.getCurrent().toggleActivity();
         }
     }

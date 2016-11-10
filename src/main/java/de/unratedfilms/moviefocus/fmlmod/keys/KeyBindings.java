@@ -8,7 +8,7 @@ import de.unratedfilms.moviefocus.shared.Consts;
 
 public class KeyBindings {
 
-    public static KeyBinding toggle = createKeyBinding("toggle", Keyboard.KEY_G);
+    public static KeyBinding toggleActivity   = createKeyBinding("toggleActivity", Keyboard.KEY_G);
 
     private static KeyBinding createKeyBinding(String name, int key) {
 
@@ -17,7 +17,7 @@ public class KeyBindings {
 
     public static void initialize() {
 
-        ClientRegistry.registerKeyBinding(toggle);
+        ClientRegistry.registerKeyBinding(toggleActivity);
     }
 
 }
