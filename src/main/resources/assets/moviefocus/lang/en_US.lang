@@ -9,7 +9,7 @@ gui.moviefocus.focusConfigTitle.fixed=Fixed Focal Depth
 gui.moviefocus.focusConfigTitle.point=Focus on Point
 gui.moviefocus.focusConfigTitle.entity=Focus on Entity
 
-gui.moviefocus.overlay.focalDepth=Focal Depth: %s
+gui.moviefocus.overlay.focalDepth=Focal Depth: %s m
 
 gui.moviefocus.settings.title=Focus Settings
 gui.moviefocus.settings.config=Configuration:

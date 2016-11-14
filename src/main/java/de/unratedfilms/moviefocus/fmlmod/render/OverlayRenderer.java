@@ -16,7 +16,7 @@ public class OverlayRenderer {
     public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 
         if (!MC.gameSettings.hideGUI && FocusConfigManager.isRendered()) {
-            String shortFocalDepth = String.format("%.3f", FocusConfigManager.getSelected().getFocalDepth());
+            String shortFocalDepth = String.format("%.2f", FocusConfigManager.getSelected().getFocalDepth());
             String focalDepthInfo = I18n.format("gui." + MOD_ID + ".overlay.focalDepth", shortFocalDepth);
             MC.fontRenderer.drawStringWithShadow(focalDepthInfo, 10, 10, 0xffffff);
         }
