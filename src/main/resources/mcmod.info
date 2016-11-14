@@ -6,6 +6,8 @@
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "http://www.unratedfilmindustries.de",
-  "authorList": [ "LoadingByte" ]
+  "authorList": [ "LoadingByte" ],
+  "requiredMods": [ "guilib" ],
+  "dependencies": [ "guilib" ]
 }
 ]

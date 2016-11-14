@@ -50,6 +50,7 @@ repositories {
 }
 
 dependencies {
+    compile 'de.unratedfilms:guilib:1.2.0-SNAPSHOT:dev'
     compile 'karyonix:shadersmod:1.7.10-2.3.31:dev'
 }
 
