@@ -1,18 +1,24 @@
 
 package de.unratedfilms.moviefocus.fmlmod.conf;
 
-import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.Validate;
 import com.google.common.collect.ImmutableList;
-import de.unratedfilms.moviefocus.fmlmod.conf.impls.EntityFocusConfig;
-import de.unratedfilms.moviefocus.fmlmod.conf.impls.FixedFocusConfig;
-import de.unratedfilms.moviefocus.fmlmod.conf.impls.PointFocusConfig;
 
 public class FocusConfigManager {
 
-    public static final FocusConfigManager   INSTANCE  = new FocusConfigManager(Arrays.asList(
-            new FixedFocusConfig(), new PointFocusConfig(), new EntityFocusConfig()));
+    private static FocusConfigManager instance;
+
+    public static FocusConfigManager get() {
+
+        return instance;
+    }
+
+    public static void install(FocusConfigManager instance) {
+
+        Validate.validState(instance == null, "Cannot install the focus config manager twice");
+        FocusConfigManager.instance = instance;
+    }
 
     private final ImmutableList<FocusConfig> configurations;
 

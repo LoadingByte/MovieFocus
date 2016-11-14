@@ -65,20 +65,20 @@ public class SettingsScreen extends BasicScreen {
         mainContainer.addWidgets(contentContainer);
 
         String toggleActivityKey = GameSettings.getKeyDisplayString(KeyBindings.toggleActivity.getKeyCode());
-        activatedCheckbox = new CheckboxImpl(I18n.format("gui." + MOD_ID + ".settings.activated", toggleActivityKey), FocusConfigManager.INSTANCE.isActivated());
+        activatedCheckbox = new CheckboxImpl(I18n.format("gui." + MOD_ID + ".settings.activated", toggleActivityKey), FocusConfigManager.get().isActivated());
         activatedCheckbox.setHandler((Checkbox checkbox, boolean checked) -> {
-            FocusConfigManager.INSTANCE.setActivated(checked);
+            FocusConfigManager.get().setActivated(checked);
         });
         contentContainer.addWidgets(activatedCheckbox);
 
         configDropdownLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".settings.config"));
         List<GenericUserObjectOption<FocusConfig, String>> configOptions = new ArrayList<>();
-        for (FocusConfig config : FocusConfigManager.INSTANCE.getAll()) {
+        for (FocusConfig config : FocusConfigManager.get().getAll()) {
             configOptions.add(new GenericUserObjectOption<>(config, config.getTitle()));
         }
         configDropdown = new DropdownLabelImpl<>(configOptions);
         configDropdown.setHandler((Dropdown<GenericUserObjectOption<FocusConfig, String>> dropdown, GenericUserObjectOption<FocusConfig, String> option) -> {
-            FocusConfigManager.INSTANCE.setSelected(option.getUserObject());
+            FocusConfigManager.get().setSelected(option.getUserObject());
             updateSettingsContainer(); // Switch the settings container if another focus config has been selected by the player
         });
         contentContainer.addWidgets(configDropdownLabel, configDropdown);
@@ -122,7 +122,7 @@ public class SettingsScreen extends BasicScreen {
             contentContainer.removeWidgets(settingsContainer);
         }
 
-        settingsContainer = FocusConfigManager.INSTANCE.getSelected().createSettingsContainer();
+        settingsContainer = FocusConfigManager.get().getSelected().createSettingsContainer();
         contentContainer.addWidgets(settingsContainer);
     }
 
