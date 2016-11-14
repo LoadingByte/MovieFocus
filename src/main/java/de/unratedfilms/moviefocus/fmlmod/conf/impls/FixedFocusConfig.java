@@ -82,7 +82,7 @@ public class FixedFocusConfig implements FocusConfig {
                 int mouseScroll = rawMouseScroll > 0 ? 1 : -1;
 
                 float focalDepthChange = mouseScroll * 0.1f;
-                fixedFocalDepth += focalDepthChange;
+                setFocalDepth(fixedFocalDepth + focalDepthChange);
             }
         }
     }
