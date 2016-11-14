@@ -2,11 +2,11 @@
 package de.unratedfilms.moviefocus.fmlmod.shader;
 
 import net.minecraft.client.Minecraft;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfiguration;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigurationManager;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigManager;
 
 /**
- * This class acts as an adapter layer between the frontend {@link FocusConfiguration} and the backend shader objects.
+ * This class acts as an adapter layer between the frontend {@link FocusConfig} and the backend shader objects.
  * The {@link shadersmodcore.client.Shaders} class uses the fields from this adapter to get the values it should inject into the shader objects as uniform variables.
  */
 public class ShaderUniforms {
@@ -27,7 +27,7 @@ public class ShaderUniforms {
             return;
         }
 
-        enabled = FocusConfigurationManager.getCurrent().isActive() ? 1 : 0;
+        enabled = FocusConfigManager.INSTANCE.isRendered() ? 1 : 0;
 
         if (enabled == 1) {
             refreshFocalDepthLinear();
@@ -37,7 +37,7 @@ public class ShaderUniforms {
 
     private static void refreshFocalDepthLinear() {
 
-        focalDepthLinear = FocusConfigurationManager.getCurrent().getFocalDepth();
+        focalDepthLinear = FocusConfigManager.INSTANCE.getSelected().getFocalDepth();
         focalDepthLinear = focalDepthLinear < 0.1f ? 0.1f : focalDepthLinear; // the focal depth mustn't be below 0
     }
 

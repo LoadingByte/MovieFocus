@@ -1,3 +1,27 @@
 key.categories.moviefocus=MovieFocus
 
+key.moviefocus.openConfigScreen=Open Config Screen
 key.moviefocus.toggleActivity=Toggle Activity of Current Config
+
+
+
+gui.moviefocus.focusConfigTitle.fixed=Fixed Focal Depth
+gui.moviefocus.focusConfigTitle.point=Focus on Point
+gui.moviefocus.focusConfigTitle.entity=Focus on Entity
+
+gui.moviefocus.overlay.focalDepth=Focal Depth: %s
+
+gui.moviefocus.settings.title=Focus Settings
+gui.moviefocus.settings.config=Configuration:
+gui.moviefocus.settings.activated=Activated ('%s' to toggle)
+gui.moviefocus.settings.close=Finish
+
+gui.moviefocus.settings.fixed.focalDepthLabel=Focal Depth:
+
+gui.moviefocus.settings.point.focusedPoint=Focusing on %s
+gui.moviefocus.settings.point.selectionStart=Select Block
+gui.moviefocus.settings.point.selectionStatus.waiting=Click a block!
+
+gui.moviefocus.settings.entity.focusedEntity=Focusing on %s
+gui.moviefocus.settings.entity.selectionStart=Select Entity
+gui.moviefocus.settings.entity.selectionStatus.waiting=Click an entity!

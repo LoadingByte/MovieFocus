@@ -35,4 +35,6 @@ public class MoreStringUtils {
         return strs;
     }
 
+    private MoreStringUtils() {}
+
 }

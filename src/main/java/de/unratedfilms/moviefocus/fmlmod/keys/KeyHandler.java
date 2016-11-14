@@ -1,13 +1,11 @@
 
 package de.unratedfilms.moviefocus.fmlmod.keys;
 
-import org.lwjgl.input.Mouse;
 import net.minecraft.client.Minecraft;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigurationManager;
-import de.unratedfilms.moviefocus.fmlmod.conf.impls.FixedFocusConfiguration;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigManager;
+import de.unratedfilms.moviefocus.fmlmod.gui.SettingsScreen;
 
 public class KeyHandler {
 
@@ -15,25 +13,10 @@ public class KeyHandler {
     @SubscribeEvent
     public void onKeyInput(InputEvent event) {
 
-        if (KeyBindings.toggleActivity.isPressed()) {
-            FocusConfigurationManager.getCurrent().toggleActivity();
-        }
-    }
-
-    @SubscribeEvent
-    public void onTick(TickEvent event) {
-
-        if (FocusConfigurationManager.getCurrent().isActive() && FocusConfigurationManager.getCurrent() instanceof FixedFocusConfiguration) {
-            FixedFocusConfiguration focusConf = (FixedFocusConfiguration) FocusConfigurationManager.getCurrent();
-
-            int rawMouseScroll = Mouse.getDWheel();
-            if (rawMouseScroll != 0) {
-                int mouseScroll = rawMouseScroll > 0 ? 1 : -1;
-
-                float focalDepthChange = mouseScroll * 0.1f;
-                focusConf.setFocalDepth(focusConf.getFocalDepth() + focalDepthChange);
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("New focal depth: " + focusConf.getFocalDepth());
-            }
+        if (KeyBindings.openSettingsScreen.isPressed()) {
+            Minecraft.getMinecraft().displayGuiScreen(new SettingsScreen(null));
+        } else if (KeyBindings.toggleActivity.isPressed()) {
+            FocusConfigManager.INSTANCE.setActivated(!FocusConfigManager.INSTANCE.isActivated());
         }
     }
 
