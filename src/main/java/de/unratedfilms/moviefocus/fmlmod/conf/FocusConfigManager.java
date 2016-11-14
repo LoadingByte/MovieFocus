@@ -1,76 +1,64 @@
 
 package de.unratedfilms.moviefocus.fmlmod.conf;
 
-import java.util.List;
 import org.apache.commons.lang3.Validate;
 import com.google.common.collect.ImmutableList;
 
 public class FocusConfigManager {
 
-    private static FocusConfigManager instance;
+    private static ImmutableList<FocusConfig> configs;
 
-    public static FocusConfigManager get() {
+    private static FocusConfig                selectedConfig;
+    private static boolean                    activated = false;
 
-        return instance;
-    }
+    // This block initializes the manager automatically as soon as it is referenced for the first time
+    static {
 
-    public static void install(FocusConfigManager instance) {
-
-        Validate.validState(instance == null, "Cannot install the focus config manager twice");
-        FocusConfigManager.instance = instance;
-    }
-
-    private final ImmutableList<FocusConfig> configurations;
-
-    private FocusConfig                      selectedConfiguration;
-    private boolean                          activated = false;
-
-    public FocusConfigManager(List<FocusConfig> configurations) {
-
-        Validate.notEmpty(configurations, "You cannot create a focus configuration manager without any focus configurations");
-
-        this.configurations = ImmutableList.copyOf(configurations);
+        configs = ImmutableList.copyOf(FocusConfigRegistry.createAll());
+        Validate.validState(!configs.isEmpty(),
+                "The focus config manager just tried to initialize itself, but no focus configs were registered yet; did you load the focus config manager class too early?");
 
         // Select the first provided configuration by default, but don't activate it
-        setSelected(configurations.get(0));
+        setSelected(configs.get(0));
+
     }
 
-    public ImmutableList<FocusConfig> getAll() {
+    public static ImmutableList<FocusConfig> getAllConfigs() {
 
-        return configurations;
+        return configs;
     }
 
-    public FocusConfig getSelected() {
+    public static FocusConfig getSelected() {
 
-        return selectedConfiguration;
+        return selectedConfig;
     }
 
-    public void setSelected(FocusConfig selectedConfiguration) {
+    public static void setSelected(FocusConfig selectedConfig) {
 
-        Validate.notNull(selectedConfiguration, "Currently selected focus configuration cannot be null");
+        Validate.notNull(selectedConfig, "Currently selected focus config cannot be null");
 
-        if (this.selectedConfiguration != null) {
-            this.selectedConfiguration.setStatus(false, false);
+        if (FocusConfigManager.selectedConfig != null) {
+            FocusConfigManager.selectedConfig.setStatus(false, false);
         }
-        selectedConfiguration.setStatus(true, activated);
+        selectedConfig.setStatus(true, activated);
 
-        this.selectedConfiguration = selectedConfiguration;
+        FocusConfigManager.selectedConfig = selectedConfig;
     }
 
-    public boolean isActivated() {
+    public static boolean isActivated() {
 
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public static void setActivated(boolean activated) {
 
-        this.activated = activated;
-        selectedConfiguration.setStatus(true, activated);
+        FocusConfigManager.activated = activated;
+        selectedConfig.setStatus(true, activated);
     }
 
-    public boolean isRendered() {
+    public static boolean isRendered() {
 
-        return activated && selectedConfiguration.isAvailable();
+        return activated && selectedConfig.isAvailable();
     }
 
 }

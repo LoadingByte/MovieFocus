@@ -5,6 +5,7 @@ import static de.unratedfilms.moviefocus.shared.Consts.LOGGER;
 import java.io.IOException;
 import java.io.InputStream;
 import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcher;
+import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcherRegistry;
 import de.unratedfilms.moviefocus.shared.Consts;
 import shadersmodcore.client.IShaderPack;
 
@@ -14,7 +15,7 @@ public class ShaderPackHooks {
 
         LOGGER.info("Searching for a shader pack patcher that supports the current shader pack");
 
-        for (ShaderPackPatcher patcher : ShaderPackPatcher.AVAILABLE_PATCHERS) {
+        for (ShaderPackPatcher patcher : ShaderPackPatcherRegistry.getAll()) {
             try {
                 if (patcher.isShaderPackSupported(shaderPack)) {
                     LOGGER.info("Found patcher: '{}'", patcher.getClass().getName());

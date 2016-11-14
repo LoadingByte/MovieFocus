@@ -16,7 +16,7 @@ public class KeyHandler {
         if (KeyBindings.openSettingsScreen.isPressed()) {
             Minecraft.getMinecraft().displayGuiScreen(new SettingsScreen(null));
         } else if (KeyBindings.toggleActivity.isPressed()) {
-            FocusConfigManager.get().setActivated(!FocusConfigManager.get().isActivated());
+            FocusConfigManager.setActivated(!FocusConfigManager.isActivated());
         }
     }
 

@@ -1,5 +1,5 @@
 
-package de.unratedfilms.moviefocus.fmlmod.shader.patcher;
+package de.unratedfilms.moviefocus.fmlmod.shader.patcher.impls;
 
 import static de.unratedfilms.moviefocus.fmlmod.util.MoreStringUtils.*;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcher;
 import de.unratedfilms.moviefocus.shared.Consts;
 import shadersmodcore.client.IShaderPack;
 
