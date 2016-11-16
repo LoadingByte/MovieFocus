@@ -14,6 +14,7 @@ import de.unratedfilms.moviefocus.fmlmod.keys.KeyBindings;
 import de.unratedfilms.moviefocus.fmlmod.keys.KeyHandler;
 import de.unratedfilms.moviefocus.fmlmod.render.OverlayRenderer;
 import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcherRegistry;
+import de.unratedfilms.moviefocus.fmlmod.shader.patcher.impls.SPP_Chocapic13sShaders;
 import de.unratedfilms.moviefocus.fmlmod.shader.patcher.impls.SPP_OnlyDoF;
 import de.unratedfilms.moviefocus.fmlmod.shader.patcher.impls.SPP_SEUS;
 import de.unratedfilms.moviefocus.shared.Consts;
@@ -32,6 +33,7 @@ public class MovieFocusFmlmod {
         // Register the shader pack patchers
         ShaderPackPatcherRegistry.register(new SPP_OnlyDoF());
         ShaderPackPatcherRegistry.register(new SPP_SEUS());
+        ShaderPackPatcherRegistry.register(new SPP_Chocapic13sShaders());
 
         // Initialize the key bindings
         KeyBindings.initialize();
