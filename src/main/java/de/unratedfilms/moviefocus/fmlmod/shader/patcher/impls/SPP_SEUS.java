@@ -79,8 +79,8 @@ public class SPP_SEUS implements ShaderPackPatcher {
         shader = shader.replace("float cursorDepth = 0.0f;", "float cursorDepth = " + Consts.MOD_ID + "_focalDepthNormalized;"); // v11.0
 
         // Only run the DoF if the mod is actually enabled
-        shader = insertBefore(shader, "float cursorDepth =", "\n if (" + Consts.MOD_ID + "_enabled == 1) {");
-        shader = insertAfter(shader, "color = col/41;", "}\n");
+        shader = insertBefore(shader, "float cursorDepth =", "if (" + Consts.MOD_ID + "_enabled == 1) {\n");
+        shader = insertAfter(shader, "color = col/41;", "\n }");
 
         return IOUtils.toInputStream(shader);
     }
