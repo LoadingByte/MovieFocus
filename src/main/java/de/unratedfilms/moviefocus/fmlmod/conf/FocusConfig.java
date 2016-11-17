@@ -5,8 +5,6 @@ import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
 
 public interface FocusConfig {
 
-    // ----- Properties -----
-
     public String getTitle();
 
     /**
@@ -16,8 +14,6 @@ public interface FocusConfig {
      * @param activated Whether this configuration has been selected <b>and</b> then explicitly activated. Without this activation, no DoF is rendered.
      */
     public void setStatus(boolean selected, boolean activated);
-
-    // ----- Queries -----
 
     /**
      * Returns whether {@link #getFocalDepth()} provides a sensible focal depth value that should be rendered.

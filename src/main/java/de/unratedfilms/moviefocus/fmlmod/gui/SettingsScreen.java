@@ -66,7 +66,7 @@ public class SettingsScreen extends BasicScreen {
 
         String toggleActivityKey = GameSettings.getKeyDisplayString(KeyBindings.toggleActivity.getKeyCode());
         activatedCheckbox = new CheckboxImpl(I18n.format("gui." + MOD_ID + ".settings.activated", toggleActivityKey), FocusConfigManager.isActivated());
-        activatedCheckbox.setHandler((Checkbox checkbox, boolean checked) -> {
+        activatedCheckbox.setHandler((checkbox, checked) -> {
             FocusConfigManager.setActivated(checked);
         });
         contentContainer.addWidgets(activatedCheckbox);
@@ -77,7 +77,7 @@ public class SettingsScreen extends BasicScreen {
             configOptions.add(new GenericUserObjectOption<>(config, config.getTitle()));
         }
         configDropdown = new DropdownLabelImpl<>(configOptions);
-        configDropdown.setHandler((Dropdown<GenericUserObjectOption<FocusConfig, String>> dropdown, GenericUserObjectOption<FocusConfig, String> option) -> {
+        configDropdown.setHandler((dropdown, option) -> {
             FocusConfigManager.setSelected(option.getUserObject());
             updateSettingsContainer(); // Switch the settings container if another focus config has been selected by the player
         });

@@ -16,9 +16,11 @@ gui.moviefocus.settings.config=Configuration:
 gui.moviefocus.settings.activated=Activated ('%s' to toggle)
 gui.moviefocus.settings.close=Finish
 
-gui.moviefocus.settings.fixed.focalDepthLabel=Focal Depth:
+gui.moviefocus.settings.general.envsphereRadius=Envsphere Radius:
 
-gui.moviefocus.settings.point.focusedPoint=Focusing on %s
+gui.moviefocus.settings.fixed.focalDepth=Focal Depth:
+
+gui.moviefocus.settings.point.focusedPoint=Focusing on:
 gui.moviefocus.settings.point.selectionStart=Select Block
 gui.moviefocus.settings.point.selectionStatus.waiting=Click a block!
 
