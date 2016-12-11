@@ -13,8 +13,9 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import de.unratedfilms.guilib.extra.FlowLayoutManager;
-import de.unratedfilms.guilib.extra.FlowLayoutManager.Axis;
+import de.unratedfilms.guilib.core.Axis;
+import de.unratedfilms.guilib.layouts.AlignLayout;
+import de.unratedfilms.guilib.layouts.FlowLayout;
 import de.unratedfilms.guilib.widgets.model.ButtonLabel;
 import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
 import de.unratedfilms.guilib.widgets.model.Label;
@@ -151,10 +152,11 @@ public class EntityFocusConfig extends FocusConfigAdapter {
 
             // ----- Revalidation -----
 
-            appendLayoutManager(() -> {
+            appendLayoutManager(c -> {
                 selectionStartButton.setWidth(getWidth());
             });
-            appendLayoutManager(new FlowLayoutManager(this, Axis.Y, 0, 0, 5));
+            appendLayoutManager(new AlignLayout(Axis.X, 0));
+            appendLayoutManager(new FlowLayout(Axis.Y, 0, 5));
         }
 
         private void refreshSelectionStatusLabel() {

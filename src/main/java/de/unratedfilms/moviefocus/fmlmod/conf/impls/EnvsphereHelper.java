@@ -52,7 +52,7 @@ class EnvsphereHelper {
 
         // ----- Revalidation -----
 
-        container.appendLayoutManager(() -> {
+        container.appendLayoutManager(c -> {
             radiusTextField.setWidth(container.getWidth());
         });
     }

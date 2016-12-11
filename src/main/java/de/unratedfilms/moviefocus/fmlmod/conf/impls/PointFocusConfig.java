@@ -15,16 +15,17 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import de.unratedfilms.guilib.extra.FlowLayoutManager;
-import de.unratedfilms.guilib.extra.FlowLayoutManager.Axis;
+import de.unratedfilms.guilib.core.Axis;
+import de.unratedfilms.guilib.layouts.AlignLayout;
+import de.unratedfilms.guilib.layouts.FitLayout;
+import de.unratedfilms.guilib.layouts.FlowLayout;
+import de.unratedfilms.guilib.layouts.SqueezeLayout;
 import de.unratedfilms.guilib.widgets.model.ButtonLabel;
-import de.unratedfilms.guilib.widgets.model.Container;
 import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
 import de.unratedfilms.guilib.widgets.model.Label;
 import de.unratedfilms.guilib.widgets.model.TextField;
 import de.unratedfilms.guilib.widgets.model.TextField.DecimalNumberFilter;
 import de.unratedfilms.guilib.widgets.view.impl.ButtonLabelImpl;
-import de.unratedfilms.guilib.widgets.view.impl.ContainerAdjustingImpl;
 import de.unratedfilms.guilib.widgets.view.impl.ContainerClippingImpl;
 import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
 import de.unratedfilms.guilib.widgets.view.impl.TextFieldImpl;
@@ -126,7 +127,7 @@ public class PointFocusConfig extends FocusConfigAdapter {
             focusedPointXCoordTextField = createCoordTextField(() -> focusedPoint.xCoord, (x) -> focusedPoint.xCoord = x);
             focusedPointYCoordTextField = createCoordTextField(() -> focusedPoint.yCoord, (y) -> focusedPoint.yCoord = y);
             focusedPointZCoordTextField = createCoordTextField(() -> focusedPoint.zCoord, (z) -> focusedPoint.zCoord = z);
-            Container focusedPointCoordContainer = new ContainerAdjustingImpl(focusedPointXCoordTextField, focusedPointYCoordTextField, focusedPointZCoordTextField);
+            ContainerFlexible focusedPointCoordContainer = new ContainerClippingImpl(focusedPointXCoordTextField, focusedPointYCoordTextField, focusedPointZCoordTextField);
 
             selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".settings.point.selectionStart"),
                     (button, mouseButton) -> {
@@ -143,18 +144,17 @@ public class PointFocusConfig extends FocusConfigAdapter {
 
             // ----- Revalidation -----
 
-            appendLayoutManager(() -> {
+            appendLayoutManager(c -> {
+                focusedPointCoordContainer.setSize(getWidth(), 20);
                 selectionStartButton.setWidth(getWidth());
             });
-            appendLayoutManager(new FlowLayoutManager(this, Axis.Y, 0, 0, 5));
+            appendLayoutManager(new AlignLayout(Axis.X, 0));
+            appendLayoutManager(new FlowLayout(Axis.Y, 0, 5));
 
             focusedPointCoordContainer
-                    .appendLayoutManager(() -> {
-                        focusedPointXCoordTextField.setWidth(getWidth() / 3);
-                        focusedPointYCoordTextField.setWidth(getWidth() / 3);
-                        focusedPointZCoordTextField.setWidth(getWidth() / 3);
-                    })
-                    .appendLayoutManager(new FlowLayoutManager(focusedPointCoordContainer, Axis.X, 0, 0, 0));
+                    .appendLayoutManager(new AlignLayout(Axis.Y, 0))
+                    .appendLayoutManager(new FitLayout(Axis.Y))
+                    .appendLayoutManager(new SqueezeLayout(Axis.X, 0, 0));
         }
 
         private TextField createCoordTextField(Supplier<Double> getter, Consumer<Double> setter) {

@@ -11,8 +11,9 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import de.unratedfilms.guilib.extra.FlowLayoutManager;
-import de.unratedfilms.guilib.extra.FlowLayoutManager.Axis;
+import de.unratedfilms.guilib.core.Axis;
+import de.unratedfilms.guilib.layouts.AlignLayout;
+import de.unratedfilms.guilib.layouts.FlowLayout;
 import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
 import de.unratedfilms.guilib.widgets.model.Label;
 import de.unratedfilms.guilib.widgets.model.TextField;
@@ -97,10 +98,11 @@ public class FixedFocusConfig extends FocusConfigAdapter {
 
             // ----- Revalidation -----
 
-            appendLayoutManager(() -> {
+            appendLayoutManager(c -> {
                 focalDepthTextField.setWidth(getWidth());
             });
-            appendLayoutManager(new FlowLayoutManager(this, Axis.Y, 0, 0, 5));
+            appendLayoutManager(new AlignLayout(Axis.X, 0));
+            appendLayoutManager(new FlowLayout(Axis.Y, 0, 5));
         }
 
     }

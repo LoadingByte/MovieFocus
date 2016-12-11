@@ -7,10 +7,11 @@ import java.util.List;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
+import de.unratedfilms.guilib.core.Axis;
 import de.unratedfilms.guilib.extra.CloseScreenButtonHandler;
-import de.unratedfilms.guilib.extra.FlowLayoutManager;
-import de.unratedfilms.guilib.extra.FlowLayoutManager.Axis;
 import de.unratedfilms.guilib.integration.BasicScreen;
+import de.unratedfilms.guilib.layouts.AlignLayout;
+import de.unratedfilms.guilib.layouts.FlowLayout;
 import de.unratedfilms.guilib.widgets.model.ButtonLabel;
 import de.unratedfilms.guilib.widgets.model.Checkbox;
 import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
@@ -89,13 +90,13 @@ public class SettingsScreen extends BasicScreen {
         // ----- Revalidation -----
 
         rootContainer
-                .appendLayoutManager(() -> {
+                .appendLayoutManager(c -> {
                     mainContainer.setBounds((int) (rootContainer.getWidth() * (1 - H_RATIO) - MARGIN), MARGIN,
                             (int) (rootContainer.getWidth() * H_RATIO), rootContainer.getHeight() - 2 * MARGIN);
                 });
 
         mainContainer
-                .appendLayoutManager(() -> {
+                .appendLayoutManager(c -> {
                     // Title label at the top, close button at the bottom
                     titleLabel.setPosition( (mainContainer.getWidth() - titleLabel.getWidth()) / 2, PADDING);
                     closeButton.setBounds(PADDING, mainContainer.getHeight() - PADDING - 20, mainContainer.getWidth() - 2 * PADDING, 20);
@@ -106,11 +107,12 @@ public class SettingsScreen extends BasicScreen {
                 });
 
         contentContainer
-                .appendLayoutManager(() -> {
+                .appendLayoutManager(c -> {
                     configDropdown.setWidth(contentContainer.getWidth());
                 })
-                .appendLayoutManager(new FlowLayoutManager(contentContainer, Axis.Y, 0, 0, 5))
-                .appendLayoutManager(() -> {
+                .appendLayoutManager(new AlignLayout(Axis.X, 0))
+                .appendLayoutManager(new FlowLayout(Axis.Y, 0, 5))
+                .appendLayoutManager(c -> {
                     // The settings container should use up all the available space below the config dropdown (below which it has flowed)
                     settingsContainer.setSize(contentContainer.getWidth(), contentContainer.getHeight() - settingsContainer.getY());
                 });
