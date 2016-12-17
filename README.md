@@ -3,7 +3,7 @@ MovieFocus
 
 MovieFocus is a Minecraft mod that allows for a more flexible usage of depth of field and focus in Minecraft movies. It patches supported shaderpacks so that they work together with the mod.
 
-In order to use this mod, you first need to install GuiLib and the [GLSL shaders mod](http://shadersmod.net/) as a dependency!
+Without the [GLSL shaders mod](http://shadersmod.net/) and a supported depth of field shaderpack, the mod won't activate.
 
 License
 -------
