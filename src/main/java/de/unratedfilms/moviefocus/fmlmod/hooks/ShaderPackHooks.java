@@ -11,9 +11,10 @@ import shadersmodcore.client.IShaderPack;
 
 public class ShaderPackHooks {
 
-    public static ShaderPackPatcher findPatcher(IShaderPack shaderPack) {
+    // shaderPackName is only used for logging purposes and doesn't need to be supplied for the method itself to function.
+    public static ShaderPackPatcher findPatcher(String shaderPackName, IShaderPack shaderPack) {
 
-        LOGGER.info("Searching for a shader pack patcher that supports the current shader pack");
+        LOGGER.info("Searching for a shader pack patcher that supports the current shader pack '{}'", shaderPackName);
 
         for (ShaderPackPatcher patcher : ShaderPackPatcherRegistry.getAll()) {
             try {
@@ -26,7 +27,7 @@ public class ShaderPackHooks {
             }
         }
 
-        LOGGER.info("No patcher found; either the current shader pack is not supported, or it has {} support already built into it", Consts.MOD_NAME);
+        LOGGER.info("No patcher found; either the current shader pack '{}' is not supported, or it has {} support already built into it", shaderPackName, Consts.MOD_NAME);
         return null;
     }
 

@@ -25,7 +25,7 @@ public class CNT_ShaderPackFolder_ShaderPackZip implements ClassNodeTransformer 
 
     private static final String PATCHER_FIELD              = Consts.MOD_ID + "patcher";
 
-    private static final Method FIND_PATCHER_HOOK          = Method.getMethod(ShaderPackPatcher.class.getName() + " findPatcher (shadersmodcore.client.IShaderPack)");
+    private static final Method FIND_PATCHER_HOOK          = Method.getMethod(ShaderPackPatcher.class.getName() + " findPatcher (java.lang.String, shadersmodcore.client.IShaderPack)");
     private static final Method PATCH_RESOURCE_STREAM_HOOK = Method.getMethod("java.io.InputStream patchResourceStreamIfPatcherExists (java.io.InputStream, java.lang.String, " + ShaderPackPatcher.class.getName() + ")");
 
     @Override
@@ -59,7 +59,8 @@ public class CNT_ShaderPackFolder_ShaderPackZip implements ClassNodeTransformer 
         // Generate the call to ShaderPackHooks.findPatcher()
         InsnList toInjectInsns = new InsnList();
         toInjectInsns.add(new VarInsnNode(ALOAD, 0)); // so that PUTFIELD down below knows it should write into a field from this very object
-        toInjectInsns.add(new VarInsnNode(ALOAD, 0)); // the new shader pack is provided to the findPatcher() method as its only argument
+        toInjectInsns.add(new VarInsnNode(ALOAD, 1)); // the first argument for the findPatcher() call is the shader pack name
+        toInjectInsns.add(new VarInsnNode(ALOAD, 0)); // the second argument for the findPatcher() call is the new shader pack instance itself
         toInjectInsns.add(new MethodInsnNode(INVOKESTATIC, HOOKS_CLASS_NAME, FIND_PATCHER_HOOK.getName(), FIND_PATCHER_HOOK.getDescriptor(), false));
         toInjectInsns.add(new FieldInsnNode(PUTFIELD, classNode.name, PATCHER_FIELD, PATCHER_CLASS_DESC)); // put the returned patcher into the patcher field so it can be used later on
 
