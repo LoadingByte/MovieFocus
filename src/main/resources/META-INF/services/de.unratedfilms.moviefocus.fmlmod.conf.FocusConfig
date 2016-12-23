@@ -1,0 +1,3 @@
+de.unratedfilms.moviefocus.fmlmod.conf.impls.FixedFocusConfig
+de.unratedfilms.moviefocus.fmlmod.conf.impls.PointFocusConfig
+de.unratedfilms.moviefocus.fmlmod.conf.impls.EntityFocusConfig

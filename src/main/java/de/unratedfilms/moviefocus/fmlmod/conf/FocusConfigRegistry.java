@@ -1,27 +1,29 @@
 
 package de.unratedfilms.moviefocus.fmlmod.conf;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.ServiceLoader;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class FocusConfigRegistry {
 
-    private static List<Supplier<FocusConfig>> suppliers = new ArrayList<>();
+    // Service loader wasn't really designed for loading classes, but we can take the instances and get their classes to build this list
+    private static List<Class<? extends FocusConfig>> focusConfigTypes = StreamSupport.stream(ServiceLoader.load(FocusConfig.class).spliterator(), false)
+            .map(FocusConfig::getClass).collect(Collectors.toList());
 
-    public static List<FocusConfig> createAll() {
+    public static List<Class<? extends FocusConfig>> getAllTypes() {
 
-        List<FocusConfig> instances = new ArrayList<>();
-        for (Supplier<FocusConfig> supplier : suppliers) {
-            instances.add(supplier.get());
-        }
-
-        return instances;
+        return focusConfigTypes;
     }
 
-    public static void register(Supplier<FocusConfig> focusConfigSupplier) {
+    public static FocusConfig newInstance(Class<? extends FocusConfig> focusConfigType) {
 
-        suppliers.add(focusConfigSupplier);
+        try {
+            return focusConfigType.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new IllegalStateException("Some programmer decided that it was a good idea to make the class '" + focusConfigType.getName() + "' impossible to construct", e);
+        }
     }
 
     private FocusConfigRegistry() {}
