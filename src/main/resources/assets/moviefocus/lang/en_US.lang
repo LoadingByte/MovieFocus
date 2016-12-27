@@ -5,25 +5,30 @@ key.moviefocus.toggleActivity=Toggle Activity of Current Config
 
 
 
-gui.moviefocus.focusConfigTitle.fixed=Fixed Focal Depth
-gui.moviefocus.focusConfigTitle.point=Focus on Point
-gui.moviefocus.focusConfigTitle.entity=Focus on Entity
+gui.moviefocus.focusConfigName.fixed=Fixed Focal Depth
+gui.moviefocus.focusConfigName.point=Focus on Point
+gui.moviefocus.focusConfigName.entity=Focus on Entity
 
 gui.moviefocus.overlay.focalDepth=Focal Depth: %s m
 
-gui.moviefocus.settings.title=Focus Settings
-gui.moviefocus.settings.config=Configuration:
-gui.moviefocus.settings.activated=Activated ('%s' to toggle)
-gui.moviefocus.settings.close=Finish
+gui.moviefocus.focusFlow.title=Focus Flow
+gui.moviefocus.focusFlow.startRunning=Launch Flow
+gui.moviefocus.focusFlow.close=Finish
+gui.moviefocus.focusFlow.editEntry=Edit
 
-gui.moviefocus.settings.general.envsphereRadius=Envsphere Radius:
+gui.moviefocus.focusFlowEntry.title=Editing Flow Entry:
+gui.moviefocus.focusFlowEntry.noEntryTitle=- No Title -
+gui.moviefocus.focusFlowEntry.tryout=Try Out
+gui.moviefocus.focusFlowEntry.close=Finish
 
-gui.moviefocus.settings.fixed.focalDepth=Focal Depth:
+gui.moviefocus.focusConfigSettings.general.envsphereRadius=Envsphere Radius:
 
-gui.moviefocus.settings.point.focusedPoint=Focusing on:
-gui.moviefocus.settings.point.selectionStart=Select Block
-gui.moviefocus.settings.point.selectionStatus.waiting=Click a block!
+gui.moviefocus.focusConfigSettings.fixed.focalDepth=Focal Depth:
 
-gui.moviefocus.settings.entity.focusedEntity=Focusing on %s
-gui.moviefocus.settings.entity.selectionStart=Select Entity
-gui.moviefocus.settings.entity.selectionStatus.waiting=Click an entity!
+gui.moviefocus.focusConfigSettings.point.focusedPoint=Focusing on:
+gui.moviefocus.focusConfigSettings.point.selectionStart=Select Block
+gui.moviefocus.focusConfigSettings.point.selectionStatus.waiting=Click a block!
+
+gui.moviefocus.focusConfigSettings.entity.focusedEntity=Focusing on %s
+gui.moviefocus.focusConfigSettings.entity.selectionStart=Select Entity
+gui.moviefocus.focusConfigSettings.entity.selectionStatus.waiting=Click an entity!

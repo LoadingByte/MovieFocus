@@ -3,24 +3,17 @@ package de.unratedfilms.moviefocus.fmlmod.conf;
 
 public abstract class FocusConfigAdapter implements FocusConfig {
 
-    private boolean selected;
-    private boolean activated;
+    private boolean active;
 
-    protected boolean isSelected() {
+    protected boolean isActive() {
 
-        return selected;
-    }
-
-    protected boolean isActivated() {
-
-        return activated;
+        return active;
     }
 
     @Override
-    public void setStatus(boolean selected, boolean activated) {
+    public void setActive(boolean active) {
 
-        this.selected = selected;
-        this.activated = activated;
+        this.active = active;
     }
 
 }

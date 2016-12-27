@@ -16,7 +16,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.guilib.core.Axis;
-import de.unratedfilms.guilib.layouts.AlignLayout;
 import de.unratedfilms.guilib.layouts.FitLayout;
 import de.unratedfilms.guilib.layouts.FlowLayout;
 import de.unratedfilms.guilib.layouts.SqueezeLayout;
@@ -29,9 +28,11 @@ import de.unratedfilms.guilib.widgets.view.impl.ButtonLabelImpl;
 import de.unratedfilms.guilib.widgets.view.impl.ContainerClippingImpl;
 import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
 import de.unratedfilms.guilib.widgets.view.impl.TextFieldImpl;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigAdapter;
 import de.unratedfilms.moviefocus.fmlmod.util.GeometryUtils;
 
+@FocusConfig.InternalName ("point")
 public class PointFocusConfig extends FocusConfigAdapter {
 
     private Vec3    focusedPoint    = Vec3.createVectorHelper(0, 0, 0);
@@ -42,12 +43,6 @@ public class PointFocusConfig extends FocusConfigAdapter {
     public PointFocusConfig() {
 
         MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @Override
-    public String getTitle() {
-
-        return I18n.format("gui." + MOD_ID + ".focusConfigTitle.point");
     }
 
     @Override
@@ -68,7 +63,7 @@ public class PointFocusConfig extends FocusConfigAdapter {
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
 
-        if (!isSelected()) {
+        if (!isActive()) {
             return;
         }
 
@@ -89,10 +84,6 @@ public class PointFocusConfig extends FocusConfigAdapter {
 
     @SubscribeEvent
     public void onBlockClick(PlayerInteractEvent event) {
-
-        if (!isSelected()) {
-            return;
-        }
 
         if (waitingForUserSelection) {
             waitingForUserSelection = false;
@@ -122,14 +113,14 @@ public class PointFocusConfig extends FocusConfigAdapter {
 
         public SettingsContainer() {
 
-            focusedPointLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".settings.point.focusedPoint"));
+            focusedPointLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".focusConfigSettings.point.focusedPoint"));
 
             focusedPointXCoordTextField = createCoordTextField(() -> focusedPoint.xCoord, (x) -> focusedPoint.xCoord = x);
             focusedPointYCoordTextField = createCoordTextField(() -> focusedPoint.yCoord, (y) -> focusedPoint.yCoord = y);
             focusedPointZCoordTextField = createCoordTextField(() -> focusedPoint.zCoord, (z) -> focusedPoint.zCoord = z);
             ContainerFlexible focusedPointCoordContainer = new ContainerClippingImpl(focusedPointXCoordTextField, focusedPointYCoordTextField, focusedPointZCoordTextField);
 
-            selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".settings.point.selectionStart"),
+            selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".focusConfigSettings.point.selectionStart"),
                     (button, mouseButton) -> {
                         waitingForUserSelection = true;
                         refreshSelectionStatusLabel();
@@ -148,13 +139,12 @@ public class PointFocusConfig extends FocusConfigAdapter {
                 focusedPointCoordContainer.setSize(getWidth(), 20);
                 selectionStartButton.setWidth(getWidth());
             });
-            appendLayoutManager(new AlignLayout(Axis.X, 0));
             appendLayoutManager(new FlowLayout(Axis.Y, 0, 5));
 
             focusedPointCoordContainer
-                    .appendLayoutManager(new AlignLayout(Axis.Y, 0))
                     .appendLayoutManager(new FitLayout(Axis.Y))
-                    .appendLayoutManager(new SqueezeLayout(Axis.X, 0, 0));
+                    .appendLayoutManager(new SqueezeLayout(Axis.X, 0, 0)
+                            .weight(1, focusedPointXCoordTextField, focusedPointYCoordTextField, focusedPointZCoordTextField));
         }
 
         private TextField createCoordTextField(Supplier<Double> getter, Consumer<Double> setter) {
@@ -171,7 +161,7 @@ public class PointFocusConfig extends FocusConfigAdapter {
         private void refreshSelectionStatusLabel() {
 
             if (waitingForUserSelection) {
-                selectionStatusLabel.setText(I18n.format("gui." + MOD_ID + ".settings.point.selectionStatus.waiting"));
+                selectionStatusLabel.setText(I18n.format("gui." + MOD_ID + ".focusConfigSettings.point.selectionStatus.waiting"));
             } else {
                 selectionStatusLabel.setText("");
             }

@@ -14,7 +14,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.guilib.core.Axis;
-import de.unratedfilms.guilib.layouts.AlignLayout;
 import de.unratedfilms.guilib.layouts.FlowLayout;
 import de.unratedfilms.guilib.widgets.model.ButtonLabel;
 import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
@@ -22,11 +21,13 @@ import de.unratedfilms.guilib.widgets.model.Label;
 import de.unratedfilms.guilib.widgets.view.impl.ButtonLabelImpl;
 import de.unratedfilms.guilib.widgets.view.impl.ContainerClippingImpl;
 import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigAdapter;
 import de.unratedfilms.moviefocus.fmlmod.util.GeometryUtils;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils.RenderSetting;
 
+@FocusConfig.InternalName ("entity")
 public class EntityFocusConfig extends FocusConfigAdapter {
 
     private static final RenderSetting[] AABB_RENDER_SETTINGS = new RenderSetting[] {
@@ -42,12 +43,6 @@ public class EntityFocusConfig extends FocusConfigAdapter {
     public EntityFocusConfig() {
 
         MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @Override
-    public String getTitle() {
-
-        return I18n.format("gui." + MOD_ID + ".focusConfigTitle.entity");
     }
 
     private boolean hasFocusedEntity() {
@@ -79,7 +74,7 @@ public class EntityFocusConfig extends FocusConfigAdapter {
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
 
-        if (!isSelected()) {
+        if (!isActive()) {
             return;
         }
 
@@ -104,10 +99,6 @@ public class EntityFocusConfig extends FocusConfigAdapter {
 
     @SubscribeEvent
     public void onEntityClick(EntityInteractEvent event) {
-
-        if (!isSelected()) {
-            return;
-        }
 
         if (waitingForUserSelection) {
             waitingForUserSelection = false;
@@ -134,10 +125,10 @@ public class EntityFocusConfig extends FocusConfigAdapter {
 
         public SettingsContainer() {
 
-            focusedEntityLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".settings.entity.focusedEntity",
+            focusedEntityLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".focusConfigSettings.entity.focusedEntity",
                     !hasFocusedEntity() ? "--" : focusedEntity.get().getCommandSenderName()));
 
-            selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".settings.entity.selectionStart"),
+            selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".focusConfigSettings.entity.selectionStart"),
                     (button, mouseButton) -> {
                         waitingForUserSelection = true;
                         refreshSelectionStatusLabel();
@@ -155,14 +146,13 @@ public class EntityFocusConfig extends FocusConfigAdapter {
             appendLayoutManager(c -> {
                 selectionStartButton.setWidth(getWidth());
             });
-            appendLayoutManager(new AlignLayout(Axis.X, 0));
             appendLayoutManager(new FlowLayout(Axis.Y, 0, 5));
         }
 
         private void refreshSelectionStatusLabel() {
 
             if (waitingForUserSelection) {
-                selectionStatusLabel.setText(I18n.format("gui." + MOD_ID + ".settings.entity.selectionStatus.waiting"));
+                selectionStatusLabel.setText(I18n.format("gui." + MOD_ID + ".focusConfigSettings.entity.selectionStatus.waiting"));
             } else {
                 selectionStatusLabel.setText(" ");
             }

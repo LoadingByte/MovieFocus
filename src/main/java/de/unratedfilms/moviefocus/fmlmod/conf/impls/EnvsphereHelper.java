@@ -38,7 +38,7 @@ class EnvsphereHelper {
 
     public static void addGuiSettings(Container container, Supplier<Float> radiusGetter, Consumer<Float> radiusSetter) {
 
-        Label radiusLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".settings.general.envsphereRadius"));
+        Label radiusLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".focusConfigSettings.general.envsphereRadius"));
 
         TextField radiusTextField = new TextFieldImpl();
         radiusTextField.setFilter(c -> Character.isDigit(c) || c == '.'); // allow positive decimal numbers

@@ -12,7 +12,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import de.unratedfilms.guilib.core.Axis;
-import de.unratedfilms.guilib.layouts.AlignLayout;
 import de.unratedfilms.guilib.layouts.FlowLayout;
 import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
 import de.unratedfilms.guilib.widgets.model.Label;
@@ -20,8 +19,10 @@ import de.unratedfilms.guilib.widgets.model.TextField;
 import de.unratedfilms.guilib.widgets.view.impl.ContainerClippingImpl;
 import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
 import de.unratedfilms.guilib.widgets.view.impl.TextFieldImpl;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigAdapter;
 
+@FocusConfig.InternalName ("fixed")
 public class FixedFocusConfig extends FocusConfigAdapter {
 
     private float fixedFocalDepth;
@@ -29,12 +30,6 @@ public class FixedFocusConfig extends FocusConfigAdapter {
     public FixedFocusConfig() {
 
         FMLCommonHandler.instance().bus().register(this);
-    }
-
-    @Override
-    public String getTitle() {
-
-        return I18n.format("gui." + MOD_ID + ".focusConfigTitle.fixed");
     }
 
     @Override
@@ -54,7 +49,7 @@ public class FixedFocusConfig extends FocusConfigAdapter {
     @SubscribeEvent
     public void onTick(ClientTickEvent event) {
 
-        if (!isSelected() || !isActivated()) {
+        if (!isActive()) {
             return;
         }
 
@@ -84,7 +79,7 @@ public class FixedFocusConfig extends FocusConfigAdapter {
 
         public SettingsContainer() {
 
-            focalDepthLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".settings.fixed.focalDepth"));
+            focalDepthLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".focusConfigSettings.fixed.focalDepth"));
 
             focalDepthTextField = new TextFieldImpl();
             focalDepthTextField.setFilter(c -> Character.isDigit(c) || c == '.'); // allow positive decimal numbers
@@ -101,7 +96,6 @@ public class FixedFocusConfig extends FocusConfigAdapter {
             appendLayoutManager(c -> {
                 focalDepthTextField.setWidth(getWidth());
             });
-            appendLayoutManager(new AlignLayout(Axis.X, 0));
             appendLayoutManager(new FlowLayout(Axis.Y, 0, 5));
         }
 

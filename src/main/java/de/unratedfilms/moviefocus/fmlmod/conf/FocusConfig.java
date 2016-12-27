@@ -1,24 +1,56 @@
 
 package de.unratedfilms.moviefocus.fmlmod.conf;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
 
 public interface FocusConfig {
 
-    public String getTitle();
+    /**
+     * Returns the internal name of the given focus config type (i.e. {@code fixed}), or {@code unknown} if it is not specified via an {@link FocusConfig.InternalName} annotation.
+     *
+     * @param clazz The focus config type whose internal name should be returned.
+     * @return The internal name of the given focus config, or {@code unknown} if it is undefined.
+     */
+    public static String getInternalName(Class<? extends FocusConfig> clazz) {
+
+        if (clazz.isAnnotationPresent(FocusConfig.InternalName.class)) {
+            return clazz.getAnnotation(FocusConfig.InternalName.class).value();
+        } else {
+            return "unknown";
+        }
+    }
 
     /**
-     * Changes the status of the focus configuration.
+     * Returns the internal name of this focus config (i.e. {@code fixed}), or {@code unknown} if it is not specified via an {@link FocusConfig.InternalName} annotation.
+     * Note that this is just a shortcut for {@code FocusConfig.getName(fc.getClass())}.
      *
-     * @param selected Whether this configuration has been selected from the configuration dropdown and can therefore be viewed as the current configuration.
-     * @param activated Whether this configuration has been selected <b>and</b> then explicitly activated. Without this activation, no DoF is rendered.
+     * @return The internal name of this given focus config, or {@code unknown} if it is undefined.
      */
-    public void setStatus(boolean selected, boolean activated);
+    public default String getInternalName() {
+
+        return getInternalName(getClass());
+    }
+
+    /**
+     * Tells the focus configuration whether the user views it as the active configuration.
+     * That is the case if this configuration is currently being edited or if this configuration is currently being rendered.
+     * In case of activity, this configuration is allowed to render debug markings on the screen, listen for input (e.g. the mouse wheel)
+     * and should expect {@link #getFocalDepth()} being called.
+     *
+     * @param active Whether this focus configuration should do its stuff ({@code true}) or sleep entirely ({@code false}).
+     */
+    public void setActive(boolean active);
 
     /**
      * Returns whether {@link #getFocalDepth()} provides a sensible focal depth value that should be rendered.
      * If this is {@code false}, no DoF effect will be rendered at all.
      * For example, that might be the case if an entity the focus depth calculation has been bound to has died.
+     * Note that if this returns {@code false}, {@link #getFocalDepth()} won't be called afterwards, meaning that you can use this method like a validation check.
      *
      * @return Whether a DoF effect should be rendered with the return value from {@link #getFocalDepth()}.
      */
@@ -35,5 +67,14 @@ public interface FocusConfig {
     // ----- GUI -----
 
     public ContainerFlexible createSettingsContainer();
+
+    @Retention (RetentionPolicy.RUNTIME)
+    @Target (ElementType.TYPE)
+    @Documented
+    public static @interface InternalName {
+
+        String value ();
+
+    }
 
 }
