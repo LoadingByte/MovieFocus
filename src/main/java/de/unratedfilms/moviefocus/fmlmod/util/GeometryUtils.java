@@ -53,6 +53,9 @@ public class GeometryUtils {
      * <br>
      * Internally, this method determines the distance between the near camera plane and that very point.
      * Note that the distance is returned in regular units (1 unit = 1 block) and not mapped to {@code [0; 1]}.
+     *
+     * @param point The distance should be calculated between this point and the camera plane.
+     * @return The distance between the given point and the camera plane.
      */
     public static double getDepth(Vec3 point) {
 

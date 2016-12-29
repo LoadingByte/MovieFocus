@@ -1,5 +1,5 @@
 
-package de.unratedfilms.moviefocus.fmlmod.gui;
+package de.unratedfilms.moviefocus.fmlmod.gui.states;
 
 import java.util.ArrayList;
 import java.util.List;

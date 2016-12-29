@@ -3,7 +3,7 @@ package de.unratedfilms.moviefocus.fmlmod.shader;
 
 import net.minecraft.client.Minecraft;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
-import de.unratedfilms.moviefocus.fmlmod.conf.RenderedFocusConfigProvider;
+import de.unratedfilms.moviefocus.fmlmod.poller.FocusPoller;
 
 /**
  * This class acts as an adapter layer between the frontend {@link FocusConfig} and the backend shader objects.
@@ -27,7 +27,7 @@ public class ShaderUniforms {
             return;
         }
 
-        enabled = RenderedFocusConfigProvider.isFocusRendered() ? 1 : 0;
+        enabled = FocusPoller.pollIsFocusRendered() ? 1 : 0;
 
         if (enabled == 1) {
             refreshFocalDepthLinear();
@@ -37,7 +37,7 @@ public class ShaderUniforms {
 
     private static void refreshFocalDepthLinear() {
 
-        focalDepthLinear = RenderedFocusConfigProvider.getRenderedFocusConfig().getFocalDepth();
+        focalDepthLinear = FocusPoller.pollFocus();
         focalDepthLinear = focalDepthLinear < 0.1f ? 0.1f : focalDepthLinear; // the focal depth mustn't be below 0
     }
 

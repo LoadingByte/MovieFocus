@@ -11,24 +11,28 @@ gui.moviefocus.focusConfigName.entity=Focus on Entity
 
 gui.moviefocus.overlay.focalDepth=Focal Depth: %s m
 
-gui.moviefocus.focusFlow.title=Focus Flow
-gui.moviefocus.focusFlow.startRunning=Launch Flow
-gui.moviefocus.focusFlow.close=Finish
-gui.moviefocus.focusFlow.editEntry=Edit
 
-gui.moviefocus.focusFlowEntry.title=Editing Flow Entry:
-gui.moviefocus.focusFlowEntry.noEntryTitle=- No Title -
-gui.moviefocus.focusFlowEntry.tryout=Try Out
-gui.moviefocus.focusFlowEntry.close=Finish
+gui.moviefocus.selectBlock.info=Click a block to select it
+gui.moviefocus.selectEntity.info=Click an entity to select it
 
-gui.moviefocus.focusConfigSettings.general.envsphereRadius=Envsphere Radius:
+gui.moviefocus.editFocusFlow.title=Focus Flow
+gui.moviefocus.editFocusFlow.startRunning=Launch Flow
+gui.moviefocus.editFocusFlow.close=Finish
+gui.moviefocus.editFocusFlow.editEntry=Edit
 
-gui.moviefocus.focusConfigSettings.fixed.focalDepth=Focal Depth:
 
-gui.moviefocus.focusConfigSettings.point.focusedPoint=Focusing on:
-gui.moviefocus.focusConfigSettings.point.selectionStart=Select Block
-gui.moviefocus.focusConfigSettings.point.selectionStatus.waiting=Click a block!
+gui.moviefocus.editFocusFlowEntry.title=Editing Flow Entry:
+gui.moviefocus.editFocusFlowEntry.noEntryTitle=- No Title -
+gui.moviefocus.editFocusFlowEntry.tryout=Try Out
+gui.moviefocus.editFocusFlowEntry.back=< Back
+gui.moviefocus.editFocusFlowEntry.close=Close
 
-gui.moviefocus.focusConfigSettings.entity.focusedEntity=Focusing on %s
-gui.moviefocus.focusConfigSettings.entity.selectionStart=Select Entity
-gui.moviefocus.focusConfigSettings.entity.selectionStatus.waiting=Click an entity!
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.general.envsphereRadius=Envsphere Radius:
+
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.fixed.focalDepth=Focal Depth:
+
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.point.focusedPoint=Focusing on:
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.point.startSelection=Select Block
+
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.entity.focusedEntity=Focusing on %s
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.entity.startSelection=Select Entity

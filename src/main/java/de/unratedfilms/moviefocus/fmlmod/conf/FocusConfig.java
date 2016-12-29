@@ -6,7 +6,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
 
 public interface FocusConfig {
 
@@ -63,10 +62,6 @@ public interface FocusConfig {
      * @return The <b>linear</b> focused depth.
      */
     public float getFocalDepth();
-
-    // ----- GUI -----
-
-    public ContainerFlexible createSettingsContainer();
 
     @Retention (RetentionPolicy.RUNTIME)
     @Target (ElementType.TYPE)

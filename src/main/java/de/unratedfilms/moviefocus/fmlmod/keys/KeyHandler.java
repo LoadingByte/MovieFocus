@@ -1,11 +1,13 @@
 
 package de.unratedfilms.moviefocus.fmlmod.keys;
 
-import net.minecraft.client.Minecraft;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowRunner;
-import de.unratedfilms.moviefocus.fmlmod.gui.FocusFlowScreen;
+import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
+import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
+import de.unratedfilms.moviefocus.fmlmod.gui.states.EditFocusFlowGuiState;
+import de.unratedfilms.moviefocus.fmlmod.gui.states.RunningFocusFlowGuiState;
 
 public class KeyHandler {
 
@@ -14,10 +16,12 @@ public class KeyHandler {
     public void onKeyInput(InputEvent event) {
 
         if (KeyBindings.FLOW.isPressed()) {
-            if (FocusFlowRunner.isRunning()) {
+            GuiState currentState = GuiStateMachine.getCurrentState();
+
+            if (currentState instanceof RunningFocusFlowGuiState) {
                 FocusFlowRunner.advance();
-            } else {
-                Minecraft.getMinecraft().displayGuiScreen(new FocusFlowScreen());
+            } else if (currentState == null) {
+                GuiStateMachine.transitionToState(new EditFocusFlowGuiState());
             }
         }
     }

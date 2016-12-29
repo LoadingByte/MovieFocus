@@ -1,5 +1,5 @@
 
-package de.unratedfilms.moviefocus.fmlmod.conf.impls;
+package de.unratedfilms.moviefocus.fmlmod.gui.states.editflowentry;
 
 import static de.unratedfilms.moviefocus.fmlmod.util.VectorUtils.add;
 import static de.unratedfilms.moviefocus.fmlmod.util.VectorUtils.multiply;
@@ -38,7 +38,7 @@ class EnvsphereHelper {
 
     public static void addGuiSettings(Container container, Supplier<Float> radiusGetter, Consumer<Float> radiusSetter) {
 
-        Label radiusLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".focusConfigSettings.general.envsphereRadius"));
+        Label radiusLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.general.envsphereRadius"));
 
         TextField radiusTextField = new TextFieldImpl();
         radiusTextField.setFilter(c -> Character.isDigit(c) || c == '.'); // allow positive decimal numbers
