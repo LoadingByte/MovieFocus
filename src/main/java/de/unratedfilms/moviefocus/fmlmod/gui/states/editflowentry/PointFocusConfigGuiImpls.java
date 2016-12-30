@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.guilib.core.Axis;
@@ -30,6 +31,7 @@ import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.conf.impls.PointFocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.SelectBlockGuiState;
+import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
 
 class PointFocusConfigGuiImpls {
 
@@ -57,9 +59,9 @@ class PointFocusConfigGuiImpls {
 
             focusedPointLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.point.focusedPoint"));
 
-            focusedPointXCoordTextField = createCoordTextField(() -> config.getFocusedPoint().xCoord, x -> config.getFocusedPoint().xCoord = x);
-            focusedPointYCoordTextField = createCoordTextField(() -> config.getFocusedPoint().yCoord, y -> config.getFocusedPoint().yCoord = y);
-            focusedPointZCoordTextField = createCoordTextField(() -> config.getFocusedPoint().zCoord, z -> config.getFocusedPoint().zCoord = z);
+            focusedPointXCoordTextField = createCoordTextField(0xffff0000, () -> config.getFocusedPoint().xCoord, x -> config.getFocusedPoint().xCoord = x);
+            focusedPointYCoordTextField = createCoordTextField(0xff00ff00, () -> config.getFocusedPoint().yCoord, y -> config.getFocusedPoint().yCoord = y);
+            focusedPointZCoordTextField = createCoordTextField(0xff0000ff, () -> config.getFocusedPoint().zCoord, z -> config.getFocusedPoint().zCoord = z);
             ContainerFlexible focusedPointCoordContainer = new ContainerClippingImpl(focusedPointXCoordTextField, focusedPointYCoordTextField, focusedPointZCoordTextField);
 
             selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.point.startSelection"),
@@ -88,9 +90,10 @@ class PointFocusConfigGuiImpls {
                             .weight(1, focusedPointXCoordTextField, focusedPointYCoordTextField, focusedPointZCoordTextField));
         }
 
-        private TextField createCoordTextField(Supplier<Double> getter, Consumer<Double> setter) {
+        private TextField createCoordTextField(int color, Supplier<Double> getter, Consumer<Double> setter) {
 
-            TextField coordTextField = new TextFieldImpl(new DecimalNumberFilter());
+            TextFieldImpl coordTextField = new TextFieldImpl(new DecimalNumberFilter());
+            coordTextField.setOuterColor(color);
             coordTextField.setMaxLength(10);
             coordTextField.setText(String.format(Locale.ENGLISH, "%.2f", getter.get()));
             coordTextField.setHandler((textField, typedChar, keyCode) -> {
@@ -119,6 +122,15 @@ class PointFocusConfigGuiImpls {
                     EnvsphereHelper.renderEnvsphere(config.getFocusedPoint(), config.getEnvsphereRadius());
                 }
                 GL11.glPopMatrix();
+            }
+        }
+
+        @SubscribeEvent
+        public void onRenderGameOverlay(RenderGameOverlayEvent event) {
+
+            if (!Minecraft.getMinecraft().gameSettings.hideGUI) {
+                // Render the gizmo
+                RenderUtils.drawGizmo(20, 4, event.partialTicks);
             }
         }
 

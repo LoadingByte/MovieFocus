@@ -4,13 +4,22 @@ package de.unratedfilms.moviefocus.fmlmod.util;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 
 public class RenderUtils {
 
-    private static final Sphere SPHERE = new Sphere();
+    private static final Minecraft       MC                      = Minecraft.getMinecraft();
+
+    private static final Sphere          SPHERE                  = new Sphere();
+
+    private static final RenderSetting[] GIZMO_X_RENDER_SETTINGS = { new RenderSetting(1f, 0f, 0f, 1f, GL11.GL_ALWAYS) };
+    private static final RenderSetting[] GIZMO_Y_RENDER_SETTINGS = { new RenderSetting(0f, 1f, 0f, 1f, GL11.GL_ALWAYS) };
+    private static final RenderSetting[] GIZMO_Z_RENDER_SETTINGS = { new RenderSetting(0f, 0f, 1f, 1f, GL11.GL_ALWAYS) };
 
     public static void drawLine(Vec3 pos1, Vec3 pos2, RenderSetting[] settings) {
 
@@ -121,6 +130,28 @@ public class RenderUtils {
         GL11.glDepthFunc(originalDepthFunc);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
+    }
+
+    public static void drawGizmo(float lineLength, float lineWidth, float partialTicks) {
+
+        ScaledResolution scaledResolution = new ScaledResolution(MC, MC.displayWidth, MC.displayHeight);
+
+        GL11.glPushMatrix();
+        {
+            // This code is shamelessly stolen from the latest Minecraft version
+            GL11.glTranslatef(scaledResolution.getScaledWidth() * 0.5f, scaledResolution.getScaledHeight() * 0.5f, 0);
+            Entity entity = MC.renderViewEntity;
+            GL11.glRotatef(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, -1, 0, 0);
+            GL11.glRotatef(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks, 0, 1, 0);
+            GL11.glScalef(-1, -1, -1);
+
+            GL11.glLineWidth(lineWidth);
+            RenderUtils.drawLine(0, 0, 0, lineLength, 0, 0, GIZMO_X_RENDER_SETTINGS);
+            RenderUtils.drawLine(0, 0, 0, 0, lineLength, 0, GIZMO_Y_RENDER_SETTINGS);
+            RenderUtils.drawLine(0, 0, 0, 0, 0, lineLength, GIZMO_Z_RENDER_SETTINGS);
+            GL11.glLineWidth(1);
+        }
+        GL11.glPopMatrix();
     }
 
     private RenderUtils() {}
