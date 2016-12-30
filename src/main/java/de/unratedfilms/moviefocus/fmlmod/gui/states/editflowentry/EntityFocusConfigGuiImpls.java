@@ -72,8 +72,8 @@ class EntityFocusConfigGuiImpls {
     public class EventHandler {
 
         private final RenderSetting[] aabbRenderSettings = new RenderSetting[] {
-                new RenderSetting(1f, 0f, 0f, .3f, GL11.GL_LEQUAL),
-                new RenderSetting(1f, 0f, 0f, .11f, GL11.GL_GREATER)
+                new RenderSetting(1, 0, 0, .3).depthFunc(GL11.GL_LEQUAL),
+                new RenderSetting(1, 0, 0, .11).depthFunc(GL11.GL_GREATER)
         };
 
         // Renders the bounding box around the focused entity if the DoF effect is not activated
