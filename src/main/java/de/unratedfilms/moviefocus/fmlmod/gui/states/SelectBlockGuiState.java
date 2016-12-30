@@ -10,6 +10,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
@@ -54,10 +55,12 @@ public class SelectBlockGuiState extends GuiState {
         @SubscribeEvent
         public void onBlockClick(PlayerInteractEvent event) {
 
-            event.setCanceled(true);
+            if (event.action == Action.RIGHT_CLICK_BLOCK || event.action == Action.LEFT_CLICK_BLOCK) {
+                event.setCanceled(true);
 
-            Vec3 selectedPoint = Vec3.createVectorHelper(event.x + 0.5, event.y + 0.5, event.z + 0.5);
-            selectionCallback.accept(selectedPoint);
+                Vec3 selectedPoint = Vec3.createVectorHelper(event.x + 0.5, event.y + 0.5, event.z + 0.5);
+                selectionCallback.accept(selectedPoint);
+            }
         }
 
     }
