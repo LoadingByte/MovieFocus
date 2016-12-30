@@ -9,9 +9,20 @@ import net.minecraft.util.Vec3;
 public class GeometryUtils {
 
     /**
+     * Calculates the exact location of the current camera in regular world space.
+     * Note that this point does always lie on the camera plane.
+     *
+     * @return The camera location.
+     */
+    public static Vec3 getCamLoc() {
+
+        return ActiveRenderInfo.projectViewFromEntity(Minecraft.getMinecraft().renderViewEntity, 0);
+    }
+
+    /**
      * Calculates the normal vector of the current camera plane.
      * The returned vector will always face away from the camera.
-     * Note that the returned vector has not been normalized.
+     * Note that the vector is return in normalized form and therefore always has a length of 1.
      *
      * @return The camera plane's normal vector.
      */
@@ -59,11 +70,11 @@ public class GeometryUtils {
      */
     public static double getDepth(Vec3 point) {
 
-        // This is the exact location of the camera. Note that this point must lie on the camera plain.
-        Vec3 camLoc = ActiveRenderInfo.projectViewFromEntity(Minecraft.getMinecraft().renderViewEntity, 0);
+        // This is the exact location of the camera. Note that this point must lie on the camera plane.
+        Vec3 camLoc = getCamLoc();
 
         // This is the normal vector of the camera plane.
-        Vec3 camSightLine = getCamSightLine().normalize();
+        Vec3 camSightLine = getCamSightLine();
 
         /*
          * I can now describe the camera plane since we have a point on that plane (camLoc) and the plane's normalized normal vector (camSightLine).

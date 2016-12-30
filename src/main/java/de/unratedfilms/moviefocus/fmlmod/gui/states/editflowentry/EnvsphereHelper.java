@@ -62,7 +62,7 @@ class EnvsphereHelper {
         RenderUtils.drawSphere(center, radius, (int) ( (Math.log(radius) + 5) * 3), true, ENVSPHERE_WIREFRAME_RENDER_SETTINGS);
         RenderUtils.drawSphere(center, 0.03f, 16, false, ENVSPHERE_CENTER_RENDER_SETTINGS);
 
-        Vec3 focusSpot = add(center, multiply(GeometryUtils.getCamSightLine().normalize(), -radius));
+        Vec3 focusSpot = add(center, multiply(GeometryUtils.getCamSightLine(), -radius));
         RenderUtils.drawSphere(focusSpot, 0.03f, 16, false, FOCUS_SPOT_RENDER_SETTINGS);
         RenderUtils.drawLine(center, focusSpot, FOCUS_SPOT_RENDER_SETTINGS);
     }
