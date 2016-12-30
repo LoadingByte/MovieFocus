@@ -71,12 +71,11 @@ class EntityFocusConfigGuiImpls {
 
     public class EventHandler {
 
-        private final RenderSetting[] aabbRenderSettings = new RenderSetting[] {
+        private final RenderSetting[] aabbRenderSettings = {
                 new RenderSetting(1, 0, 0, .3).depthFunc(GL11.GL_LEQUAL),
                 new RenderSetting(1, 0, 0, .11).depthFunc(GL11.GL_GREATER)
         };
 
-        // Renders the bounding box around the focused entity if the DoF effect is not activated
         @SubscribeEvent
         public void onRenderWorldLast(RenderWorldLastEvent event) {
 
@@ -90,9 +89,12 @@ class EntityFocusConfigGuiImpls {
                 {
                     GL11.glTranslated(-playerX, -playerY, -playerZ);
 
+                    // Render the bounding box around the focused entity
                     if (config.getFocusedEntity().boundingBox != null) {
                         RenderUtils.drawAABB(config.getFocusedEntity().boundingBox, aabbRenderSettings);
                     }
+
+                    // Render the envsphere
                     EnvsphereHelper.renderEnvsphere(config.getEnvsphereCenter(), config.getEnvsphereRadius());
                 }
                 GL11.glPopMatrix();

@@ -22,18 +22,18 @@ import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils.RenderSetting;
 
 class EnvsphereHelper {
 
-    private static final RenderSetting[] ENVSPHERE_WIREFRAME_RENDER_SETTINGS = new RenderSetting[] {
+    private static final RenderSetting[] ENVSPHERE_WIREFRAME_RENDER_SETTINGS = {
             new RenderSetting(1, .2, 0, .7).depthFunc(GL11.GL_LEQUAL),
-            new RenderSetting(1, .2, 0, .2).depthFunc( GL11.GL_GREATER)
+            new RenderSetting(1, .2, 0, .2).depthFunc(GL11.GL_GREATER)
     };
-    private static final RenderSetting[] ENVSPHERE_CENTER_RENDER_SETTINGS    = new RenderSetting[] {
-            new RenderSetting(1, .5, 0, .7).depthFunc( GL11.GL_LEQUAL),
-            new RenderSetting(1, .5, 0, .2).depthFunc( GL11.GL_GREATER)
+    private static final RenderSetting[] ENVSPHERE_CENTER_RENDER_SETTINGS    = {
+            new RenderSetting(1, .5, 0, .7).depthFunc(GL11.GL_LEQUAL),
+            new RenderSetting(1, .5, 0, .2).depthFunc(GL11.GL_GREATER)
     };
 
-    private static final RenderSetting[] FOCUS_SPOT_RENDER_SETTINGS          = new RenderSetting[] {
-            new RenderSetting(1, .75, 0, .7).depthFunc( GL11.GL_LEQUAL),
-            new RenderSetting(1, .75, 0, .2).depthFunc( GL11.GL_GREATER)
+    private static final RenderSetting[] FOCUS_SPOT_RENDER_SETTINGS          = {
+            new RenderSetting(1, .75, 0, .7).depthFunc(GL11.GL_LEQUAL),
+            new RenderSetting(1, .75, 0, .2).depthFunc(GL11.GL_GREATER)
     };
 
     public static void addGuiSettings(Container container, Supplier<Float> radiusGetter, Consumer<Float> radiusSetter) {

@@ -106,7 +106,6 @@ class PointFocusConfigGuiImpls {
 
     public class EventHandler {
 
-        // Renders the envsphere which highlights the focused point if the DoF effect is not activated
         @SubscribeEvent
         public void onRenderWorldLast(RenderWorldLastEvent event) {
 
@@ -119,6 +118,8 @@ class PointFocusConfigGuiImpls {
                 GL11.glPushMatrix();
                 {
                     GL11.glTranslated(-playerX, -playerY, -playerZ);
+
+                    // Render the envsphere which highlights the focused point
                     EnvsphereHelper.renderEnvsphere(config.getFocusedPoint(), config.getEnvsphereRadius());
                 }
                 GL11.glPopMatrix();
