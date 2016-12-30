@@ -8,7 +8,7 @@ import de.unratedfilms.moviefocus.shared.Consts;
 
 public class KeyBindings {
 
-    public static final KeyBinding FLOW = createKeyBinding("flow", Keyboard.KEY_G);
+    public static final KeyBinding FLOW = createKeyBinding("flow", Keyboard.KEY_F);
 
     private static KeyBinding createKeyBinding(String name, int key) {
 
