@@ -75,7 +75,7 @@ public class EditFocusFlowGuiState extends GuiState {
             titleLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlow.title"));
             startRunningButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlow.startRunning"), new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> {
                 FocusFlowRunner.loadAndStartRunning();
-                close();
+                GuiStateMachine.transitionToState(new RunningFocusFlowGuiState());
             }));
             closeButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlow.close"), new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> close()));
             mainContainer.addWidgets(titleLabel, startRunningButton, closeButton);

@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowRunner;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 
 public class RunningFocusFlowGuiState extends GuiState {
@@ -17,6 +18,18 @@ public class RunningFocusFlowGuiState extends GuiState {
     protected ImmutableList<Object> getEventHandlers() {
 
         return ImmutableList.of(eventHandler);
+    }
+
+    @Override
+    protected void enter() {
+
+        FocusFlowRunner.loadAndStartRunning();
+    }
+
+    @Override
+    protected void exit() {
+
+        FocusFlowRunner.stopRunning();
     }
 
     protected class EventHandler {

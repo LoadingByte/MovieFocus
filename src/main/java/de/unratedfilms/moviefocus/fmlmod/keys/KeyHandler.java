@@ -19,6 +19,7 @@ public class KeyHandler {
             GuiState currentState = GuiStateMachine.getCurrentState();
 
             if (currentState instanceof RunningFocusFlowGuiState) {
+                // Sadly, even this state-specific key event has to be handled here since key handlers must be registered at initialization time
                 FocusFlowRunner.advance();
             } else if (currentState == null) {
                 GuiStateMachine.transitionToState(new EditFocusFlowGuiState());
