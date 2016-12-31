@@ -4,9 +4,9 @@ key.moviefocus.flow=Focus Flow Key
 
 
 
-gui.moviefocus.focusConfigName.fixed=Fixed Focal Depth
-gui.moviefocus.focusConfigName.point=Focus on Point
-gui.moviefocus.focusConfigName.entity=Focus on Entity
+gui.moviefocus.general.focusConfigName.fixed=Fixed Focal Depth
+gui.moviefocus.general.focusConfigName.point=Focus on Point
+gui.moviefocus.general.focusConfigName.entity=Focus on Entity
 
 gui.moviefocus.overlay.focalDepth=Focal Depth: %s m
 

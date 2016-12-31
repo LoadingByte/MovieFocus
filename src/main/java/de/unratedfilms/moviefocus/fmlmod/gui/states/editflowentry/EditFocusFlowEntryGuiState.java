@@ -91,7 +91,7 @@ public class EditFocusFlowEntryGuiState extends GuiState {
             rootContainer.addWidgets(mainContainer);
 
             titleLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.title"));
-            configNameLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".focusConfigName." + editedFlowEntry.getFocusConfig().getInternalName()));
+            configNameLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".general.focusConfigName." + editedFlowEntry.getFocusConfig().getInternalName()));
             flowEntryTitleLabel = new LabelImpl(editedFlowEntry.getTitle().isEmpty() ? I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.noEntryTitle") : '"' + editedFlowEntry.getTitle() + '"');
             tryoutCheckbox = new CheckboxImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.tryout"), true);
             configSettingsContainer = FocusConfigGuiImplsFactory.createSettingsContainer(editedFlowEntry);

@@ -82,7 +82,7 @@ public class EditFocusFlowGuiState extends GuiState {
 
             addFlowEntryButtonsContainer = new ContainerAdjustingImpl();
             for (Class<? extends FocusConfig> fct : FocusConfigRegistry.getAllTypes()) {
-                addFlowEntryButtonsContainer.addWidgets(new ButtonLabelImpl("+ " + I18n.format("gui." + MOD_ID + ".focusConfigName." + FocusConfig.getInternalName(fct)),
+                addFlowEntryButtonsContainer.addWidgets(new ButtonLabelImpl("+ " + I18n.format("gui." + MOD_ID + ".general.focusConfigName." + FocusConfig.getInternalName(fct)),
                         new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> flowList.addElement(new FocusFlowEntry(FocusConfigRegistry.newInstance(fct))))));
             }
             mainContainer.addWidgets(addFlowEntryButtonsContainer);
@@ -136,7 +136,7 @@ public class EditFocusFlowGuiState extends GuiState {
             TextField titleTextField = new TextFieldImpl().setText(flowEntry.getTitle());
             titleTextField.setHandler((textField, typedChar, keyCode) -> flowEntry.setTitle(titleTextField.getText()));
 
-            Label nameLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".focusConfigName." + flowEntry.getFocusConfig().getInternalName()));
+            Label nameLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".general.focusConfigName." + flowEntry.getFocusConfig().getInternalName()));
 
             ContainerFlexible container = new ContainerClippingImpl(editButton, titleTextField, nameLabel);
             container.appendLayoutManager(c -> {

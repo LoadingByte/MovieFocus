@@ -20,7 +20,7 @@ import de.unratedfilms.moviefocus.fmlmod.util.ListUtils.Direction;
 /**
  * Note that this widget is half-rigid and changes its own height depending on how many elements it contains.
  */
-public class EditableList<E> extends ContainerClippingImpl {
+class EditableList<E> extends ContainerClippingImpl {
 
     // Note that the model should never change while this widget is in use!
     private final List<E>                     model;

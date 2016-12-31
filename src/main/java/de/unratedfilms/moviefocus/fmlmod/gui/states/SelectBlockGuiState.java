@@ -41,14 +41,14 @@ public class SelectBlockGuiState extends GuiState {
         @SubscribeEvent
         public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 
-            if (!Minecraft.getMinecraft().gameSettings.hideGUI) {
+            if (!MC.gameSettings.hideGUI) {
                 // Draw the border
                 ScaledResolution scaledResolution = new ScaledResolution(MC, MC.displayWidth, MC.displayHeight);
                 RenderUtils.drawAABB2D(15, 15, scaledResolution.getScaledWidth() - 15, scaledResolution.getScaledHeight() - 15, BORDER_RENDER_SETTING);
 
                 // Draw the text
                 String info = I18n.format("gui." + MOD_ID + ".selectBlock.info");
-                Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(info, 25, 25, 0xffffff);
+                MC.fontRenderer.drawStringWithShadow(info, 25, 25, 0xffffff);
             }
         }
 
