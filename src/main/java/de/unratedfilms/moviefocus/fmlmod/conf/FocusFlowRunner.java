@@ -10,12 +10,6 @@ public class FocusFlowRunner {
 
     private static Queue<FocusFlowEntry> remainingSequence;
 
-    public static void loadAndStartRunning() {
-
-        remainingSequence = new LinkedList<>(FocusFlow.sequence);
-        getCurrentEntry().getFocusConfig().setActive(true);
-    }
-
     public static boolean isRunning() {
 
         return remainingSequence != null;
@@ -27,18 +21,40 @@ public class FocusFlowRunner {
         return remainingSequence.peek();
     }
 
+    public static void loadAndStartRunning() {
+
+        stopRunning();
+
+        if (!FocusFlow.sequence.isEmpty()) {
+            remainingSequence = new LinkedList<>(FocusFlow.sequence);
+            getCurrentEntry().getFocusConfig().setActive(true);
+        }
+    }
+
     public static void advance() {
 
-        if (isRunning()) {
-            getCurrentEntry().getFocusConfig().setActive(false);
-            remainingSequence.remove();
+        if (!isRunning()) {
+            return;
         }
+
+        getCurrentEntry().getFocusConfig().setActive(false);
+        remainingSequence.remove();
 
         if (remainingSequence.isEmpty()) {
             remainingSequence = null;
         } else {
             getCurrentEntry().getFocusConfig().setActive(true);
         }
+    }
+
+    public static void stopRunning() {
+
+        if (!isRunning()) {
+            return;
+        }
+
+        getCurrentEntry().getFocusConfig().setActive(false);
+        remainingSequence = null;
     }
 
     public static boolean isFocusRendered() {
