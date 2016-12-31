@@ -57,7 +57,7 @@ public class FocusFlowRunner {
         remainingSequence = null;
     }
 
-    public static boolean isFocusRendered() {
+    public static boolean isFocusAvailable() {
 
         return isRunning() && getCurrentEntry().getFocusConfig().isAvailable();
     }

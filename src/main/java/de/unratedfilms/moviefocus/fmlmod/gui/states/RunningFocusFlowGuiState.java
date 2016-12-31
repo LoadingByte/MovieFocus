@@ -37,7 +37,7 @@ public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiSta
     @Override
     public boolean isFocusRendered() {
 
-        return FocusFlowRunner.isFocusRendered();
+        return FocusFlowRunner.isFocusAvailable();
     }
 
     @Override
