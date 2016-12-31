@@ -3,7 +3,6 @@ package de.unratedfilms.moviefocus.fmlmod.keys;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowRunner;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.EditFocusFlowGuiState;
@@ -20,7 +19,7 @@ public class KeyHandler {
 
             if (currentState instanceof RunningFocusFlowGuiState) {
                 // Sadly, even this state-specific key event has to be handled here since key handlers must be registered at initialization time
-                FocusFlowRunner.advance();
+                ((RunningFocusFlowGuiState) currentState).onFlowKey();
             } else if (currentState == null) {
                 GuiStateMachine.transitionToState(new EditFocusFlowGuiState());
             }

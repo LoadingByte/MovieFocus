@@ -8,6 +8,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowRunner;
 import de.unratedfilms.moviefocus.fmlmod.gui.FocusingGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
+import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 
 public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiState {
 
@@ -43,6 +44,16 @@ public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiSta
     public float getFocalDepth() {
 
         return FocusFlowRunner.getCurrentEntry().getFocusConfig().getFocalDepth();
+    }
+
+    // Called by the KeyHandler
+    public void onFlowKey() {
+
+        FocusFlowRunner.advance();
+
+        if (!FocusFlowRunner.isRunning()) {
+            GuiStateMachine.transitionToState(null);
+        }
     }
 
     protected class EventHandler {
