@@ -9,7 +9,10 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.lwjgl.opengl.GL11;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
 import de.unratedfilms.guilib.widgets.model.Container;
 import de.unratedfilms.guilib.widgets.model.Label;
@@ -21,6 +24,12 @@ import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils.RenderSetting;
 
 public class GuiHelper {
+
+    private static final Minecraft       MC                                   = Minecraft.getMinecraft();
+
+    private static final RenderSetting   GIZMO_X_RENDER_SETTING               = new RenderSetting(1, 0, 0, 1).lineWidth(4);
+    private static final RenderSetting   GIZMO_Y_RENDER_SETTING               = new RenderSetting(0, 1, 0, 1).lineWidth(4);
+    private static final RenderSetting   GIZMO_Z_RENDER_SETTING               = new RenderSetting(0, 0, 1, 1).lineWidth(4);
 
     private static final RenderSetting[] ENVSPHERE_WIREFRAME_RENDER_SETTINGS  = {
             new RenderSetting(1, .2, 0, .7).lineWidth(2).depthFunc(GL11.GL_LEQUAL),
@@ -34,6 +43,26 @@ public class GuiHelper {
             new RenderSetting(1, .75, 0, .7).depthFunc(GL11.GL_LEQUAL),
             new RenderSetting(1, .75, 0, .2).depthFunc(GL11.GL_GREATER)
     };
+
+    public static void drawGizmo(float lineLength, float partialTicks) {
+
+        ScaledResolution scaledResolution = new ScaledResolution(MC, MC.displayWidth, MC.displayHeight);
+
+        GL11.glPushMatrix();
+        {
+            // This code is shamelessly stolen from the latest Minecraft version
+            GL11.glTranslatef(scaledResolution.getScaledWidth() * 0.5f, scaledResolution.getScaledHeight() * 0.5f, 0);
+            Entity entity = MC.renderViewEntity;
+            GL11.glRotatef(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, -1, 0, 0);
+            GL11.glRotatef(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks, 0, 1, 0);
+            GL11.glScalef(-1, -1, -1);
+
+            RenderUtils.drawLine(0, 0, 0, lineLength, 0, 0, GIZMO_X_RENDER_SETTING);
+            RenderUtils.drawLine(0, 0, 0, 0, lineLength, 0, GIZMO_Y_RENDER_SETTING);
+            RenderUtils.drawLine(0, 0, 0, 0, 0, lineLength, GIZMO_Z_RENDER_SETTING);
+        }
+        GL11.glPopMatrix();
+    }
 
     public static void addEnvsphereGuiSettings(Container container, Supplier<Float> radiusGetter, Consumer<Float> radiusSetter) {
 

@@ -32,7 +32,6 @@ import de.unratedfilms.moviefocus.fmlmod.conf.impls.PointFocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.GuiHelper;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.SelectBlockGuiState;
-import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
 
 class PointFocusConfigGuiImpls {
 
@@ -132,7 +131,7 @@ class PointFocusConfigGuiImpls {
 
             if (!Minecraft.getMinecraft().gameSettings.hideGUI) {
                 // Render the gizmo
-                RenderUtils.drawGizmo(20, 4, event.partialTicks);
+                GuiHelper.drawGizmo(20, event.partialTicks);
             }
         }
 

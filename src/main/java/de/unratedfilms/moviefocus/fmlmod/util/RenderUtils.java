@@ -4,22 +4,13 @@ package de.unratedfilms.moviefocus.fmlmod.util;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 
 public class RenderUtils {
 
-    private static final Minecraft     MC                     = Minecraft.getMinecraft();
-
-    private static final Sphere        SPHERE                 = new Sphere();
-
-    private static final RenderSetting GIZMO_X_RENDER_SETTING = new RenderSetting(1, 0, 0, 1).lineWidth(4);
-    private static final RenderSetting GIZMO_Y_RENDER_SETTING = new RenderSetting(0, 1, 0, 1).lineWidth(4);
-    private static final RenderSetting GIZMO_Z_RENDER_SETTING = new RenderSetting(0, 0, 1, 1).lineWidth(4);
+    private static final Sphere SPHERE = new Sphere();
 
     public static void drawWithRenderSettings(Runnable drawer, RenderSetting... settings) {
 
@@ -129,26 +120,6 @@ public class RenderUtils {
                 SPHERE.setDrawStyle(wireframe ? GLU.GLU_LINE : GLU.GLU_FILL);
                 SPHERE.draw(radius, resolution, resolution);
             }, settings);
-        }
-        GL11.glPopMatrix();
-    }
-
-    public static void drawGizmo(float lineLength, float lineWidth, float partialTicks) {
-
-        ScaledResolution scaledResolution = new ScaledResolution(MC, MC.displayWidth, MC.displayHeight);
-
-        GL11.glPushMatrix();
-        {
-            // This code is shamelessly stolen from the latest Minecraft version
-            GL11.glTranslatef(scaledResolution.getScaledWidth() * 0.5f, scaledResolution.getScaledHeight() * 0.5f, 0);
-            Entity entity = MC.renderViewEntity;
-            GL11.glRotatef(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, -1, 0, 0);
-            GL11.glRotatef(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks, 0, 1, 0);
-            GL11.glScalef(-1, -1, -1);
-
-            RenderUtils.drawLine(0, 0, 0, lineLength, 0, 0, GIZMO_X_RENDER_SETTING);
-            RenderUtils.drawLine(0, 0, 0, 0, lineLength, 0, GIZMO_Y_RENDER_SETTING);
-            RenderUtils.drawLine(0, 0, 0, 0, 0, lineLength, GIZMO_Z_RENDER_SETTING);
         }
         GL11.glPopMatrix();
     }
