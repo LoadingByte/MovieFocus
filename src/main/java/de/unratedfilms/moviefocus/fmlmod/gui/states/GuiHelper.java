@@ -64,10 +64,17 @@ public class GuiHelper {
         GL11.glPopMatrix();
     }
 
-    public static void drawFocalDepthIndicator(float focalDepth) {
+    // focalDepthSupplier is only called if available is true
+    public static void drawFocalDepthIndicator(boolean available, Supplier<Float> focalDepthSupplier) {
 
-        String shortFocalDepth = String.format("%.2f", focalDepth);
-        String focalDepthInfo = I18n.format("gui." + MOD_ID + ".general.focalDepth", shortFocalDepth);
+        String focalDepthInfo;
+        if (available) {
+            String shortFocalDepth = String.format("%.2f", focalDepthSupplier.get());
+            focalDepthInfo = I18n.format("gui." + MOD_ID + ".general.focalDepth.available", shortFocalDepth);
+        } else {
+            focalDepthInfo = I18n.format("gui." + MOD_ID + ".general.focalDepth.unavailable");
+        }
+
         MC.fontRenderer.drawStringWithShadow(focalDepthInfo, 10, 10, 0xffffff);
     }
 

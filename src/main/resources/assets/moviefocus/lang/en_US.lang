@@ -8,7 +8,8 @@ gui.moviefocus.general.focusConfigName.fixed=Fixed Focal Depth
 gui.moviefocus.general.focusConfigName.point=Focus on Point
 gui.moviefocus.general.focusConfigName.entity=Focus on Entity
 
-gui.moviefocus.general.focalDepth=Focal Depth: %s m
+gui.moviefocus.general.focalDepth.available=Focal Depth: %s m
+gui.moviefocus.general.focalDepth.unavailable=Focal Depth: Indeterminable
 
 
 gui.moviefocus.selectBlock.info=Click a block to select it

@@ -63,9 +63,7 @@ public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiSta
 
             if (!MC.gameSettings.hideGUI) {
                 // Draw the focal depth indicator
-                if (isFocusRendered()) {
-                    GuiHelper.drawFocalDepthIndicator(getFocalDepth());
-                }
+                GuiHelper.drawFocalDepthIndicator(isFocusRendered(), RunningFocusFlowGuiState.this::getFocalDepth);
             }
         }
 

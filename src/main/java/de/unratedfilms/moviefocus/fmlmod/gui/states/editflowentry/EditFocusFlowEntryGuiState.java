@@ -151,8 +151,8 @@ public class EditFocusFlowEntryGuiState extends GuiState implements FocusingGuiS
 
             if (!Minecraft.getMinecraft().gameSettings.hideGUI) {
                 // Draw the focal depth indicator
-                if (isFocusRendered()) {
-                    GuiHelper.drawFocalDepthIndicator(getFocalDepth());
+                if (screen.tryoutCheckbox.isChecked()) {
+                    GuiHelper.drawFocalDepthIndicator(editedFlowEntry.getFocusConfig().isAvailable(), EditFocusFlowEntryGuiState.this::getFocalDepth);
                 }
             }
         }
