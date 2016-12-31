@@ -25,25 +25,37 @@ public class GuiStateMachine {
 
     public static void transitionToState(GuiState newState) {
 
+        exitCurrentState();
+        currentState = newState;
+        enterCurrentState();
+    }
+
+    private static void exitCurrentState() {
+
         if (currentState != null) {
             for (Object eventHandler : currentState.getEventHandlers()) {
                 FMLCommonHandler.instance().bus().unregister(eventHandler);
                 MinecraftForge.EVENT_BUS.unregister(eventHandler);
             }
+
+            currentState.exit();
         }
+    }
 
-        currentState = newState;
+    private static void enterCurrentState() {
 
-        if (newState != null) {
-            for (Object eventHandler : newState.getEventHandlers()) {
+        if (currentState != null) {
+            currentState.enter();
+
+            for (Object eventHandler : currentState.getEventHandlers()) {
                 // We don't know what kind of events the handler wants to handle, so we just register it to both buses
                 FMLCommonHandler.instance().bus().register(eventHandler);
                 MinecraftForge.EVENT_BUS.register(eventHandler);
             }
         }
 
-        if (newState != null && newState.getScreen() != null) {
-            Minecraft.getMinecraft().displayGuiScreen(newState.getScreen());
+        if (currentState != null && currentState.getScreen() != null) {
+            Minecraft.getMinecraft().displayGuiScreen(currentState.getScreen());
         } else {
             Minecraft.getMinecraft().displayGuiScreen(null);
         }

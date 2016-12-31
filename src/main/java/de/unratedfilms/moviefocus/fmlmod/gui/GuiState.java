@@ -16,4 +16,12 @@ public abstract class GuiState {
         return ImmutableList.of();
     }
 
+    protected void enter() {
+
+    }
+
+    protected void exit() {
+
+    }
+
 }
