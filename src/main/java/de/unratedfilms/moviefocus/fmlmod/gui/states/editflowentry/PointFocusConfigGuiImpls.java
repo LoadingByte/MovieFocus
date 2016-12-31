@@ -30,6 +30,7 @@ import de.unratedfilms.guilib.widgets.view.impl.TextFieldImpl;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.conf.impls.PointFocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
+import de.unratedfilms.moviefocus.fmlmod.gui.states.GuiHelper;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.SelectBlockGuiState;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
 
@@ -74,7 +75,7 @@ class PointFocusConfigGuiImpls {
 
             addWidgets(focusedPointLabel, focusedPointCoordContainer, selectionStartButton);
 
-            EnvsphereHelper.addGuiSettings(this, () -> config.getEnvsphereRadius(), r -> config.setEnvsphereRadius(r));
+            GuiHelper.addEnvsphereGuiSettings(this, () -> config.getEnvsphereRadius(), r -> config.setEnvsphereRadius(r));
 
             // ----- Revalidation -----
 
@@ -120,7 +121,7 @@ class PointFocusConfigGuiImpls {
                     GL11.glTranslated(-playerX, -playerY, -playerZ);
 
                     // Render the envsphere which highlights the focused point
-                    EnvsphereHelper.renderEnvsphere(config.getFocusedPoint(), config.getEnvsphereRadius());
+                    GuiHelper.drawEnvsphere(config.getFocusedPoint(), config.getEnvsphereRadius());
                 }
                 GL11.glPopMatrix();
             }

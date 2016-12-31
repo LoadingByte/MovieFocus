@@ -19,6 +19,7 @@ import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.conf.impls.EntityFocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
+import de.unratedfilms.moviefocus.fmlmod.gui.states.GuiHelper;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.SelectEntityGuiState;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils.RenderSetting;
@@ -57,7 +58,7 @@ class EntityFocusConfigGuiImpls {
 
             addWidgets(focusedEntityLabel, selectionStartButton);
 
-            EnvsphereHelper.addGuiSettings(this, () -> config.getEnvsphereRadius(), r -> config.setEnvsphereRadius(r));
+            GuiHelper.addEnvsphereGuiSettings(this, () -> config.getEnvsphereRadius(), r -> config.setEnvsphereRadius(r));
 
             // ----- Revalidation -----
 
@@ -95,7 +96,7 @@ class EntityFocusConfigGuiImpls {
                     }
 
                     // Render the envsphere
-                    EnvsphereHelper.renderEnvsphere(config.getEnvsphereCenter(), config.getEnvsphereRadius());
+                    GuiHelper.drawEnvsphere(config.getEnvsphereCenter(), config.getEnvsphereRadius());
                 }
                 GL11.glPopMatrix();
             }

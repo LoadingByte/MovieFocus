@@ -1,5 +1,5 @@
 
-package de.unratedfilms.moviefocus.fmlmod.gui.states.editflowentry;
+package de.unratedfilms.moviefocus.fmlmod.gui.states;
 
 import static de.unratedfilms.moviefocus.fmlmod.util.VectorUtils.add;
 import static de.unratedfilms.moviefocus.fmlmod.util.VectorUtils.multiply;
@@ -20,23 +20,22 @@ import de.unratedfilms.moviefocus.fmlmod.util.GeometryUtils;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils.RenderSetting;
 
-class EnvsphereHelper {
+public class GuiHelper {
 
-    private static final RenderSetting[] ENVSPHERE_WIREFRAME_RENDER_SETTINGS = {
+    private static final RenderSetting[] ENVSPHERE_WIREFRAME_RENDER_SETTINGS  = {
             new RenderSetting(1, .2, 0, .7).lineWidth(2).depthFunc(GL11.GL_LEQUAL),
             new RenderSetting(1, .2, 0, .2).lineWidth(2).depthFunc(GL11.GL_GREATER)
     };
-    private static final RenderSetting[] ENVSPHERE_CENTER_RENDER_SETTINGS    = {
+    private static final RenderSetting[] ENVSPHERE_CENTER_RENDER_SETTINGS     = {
             new RenderSetting(1, .5, 0, .7).depthFunc(GL11.GL_LEQUAL),
             new RenderSetting(1, .5, 0, .2).depthFunc(GL11.GL_GREATER)
     };
-
-    private static final RenderSetting[] FOCUS_SPOT_RENDER_SETTINGS          = {
+    private static final RenderSetting[] ENVSPHERE_FOCUS_SPOT_RENDER_SETTINGS = {
             new RenderSetting(1, .75, 0, .7).depthFunc(GL11.GL_LEQUAL),
             new RenderSetting(1, .75, 0, .2).depthFunc(GL11.GL_GREATER)
     };
 
-    public static void addGuiSettings(Container container, Supplier<Float> radiusGetter, Consumer<Float> radiusSetter) {
+    public static void addEnvsphereGuiSettings(Container container, Supplier<Float> radiusGetter, Consumer<Float> radiusSetter) {
 
         Label radiusLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.general.envsphereRadius"));
 
@@ -57,16 +56,16 @@ class EnvsphereHelper {
         });
     }
 
-    public static void renderEnvsphere(Vec3 center, float radius) {
+    public static void drawEnvsphere(Vec3 center, float radius) {
 
         RenderUtils.drawSphere(center, radius, (int) ( (Math.log(radius) + 5) * 3), true, ENVSPHERE_WIREFRAME_RENDER_SETTINGS);
         RenderUtils.drawSphere(center, 0.03f, 16, false, ENVSPHERE_CENTER_RENDER_SETTINGS);
 
         Vec3 focusSpot = add(center, multiply(GeometryUtils.getCamSightLine(), -radius));
-        RenderUtils.drawSphere(focusSpot, 0.03f, 16, false, FOCUS_SPOT_RENDER_SETTINGS);
-        RenderUtils.drawLine(center, focusSpot, FOCUS_SPOT_RENDER_SETTINGS);
+        RenderUtils.drawSphere(focusSpot, 0.03f, 16, false, ENVSPHERE_FOCUS_SPOT_RENDER_SETTINGS);
+        RenderUtils.drawLine(center, focusSpot, ENVSPHERE_FOCUS_SPOT_RENDER_SETTINGS);
     }
 
-    private EnvsphereHelper() {}
+    private GuiHelper() {}
 
 }
