@@ -19,6 +19,7 @@ import de.unratedfilms.guilib.widgets.model.Label;
 import de.unratedfilms.guilib.widgets.model.TextField;
 import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
 import de.unratedfilms.guilib.widgets.view.impl.TextFieldImpl;
+import de.unratedfilms.moviefocus.fmlmod.poller.FocusPoller;
 import de.unratedfilms.moviefocus.fmlmod.util.GeometryUtils;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils.RenderSetting;
@@ -62,6 +63,15 @@ public class GuiHelper {
             RenderUtils.drawLine(0, 0, 0, 0, 0, lineLength, GIZMO_Z_RENDER_SETTING);
         }
         GL11.glPopMatrix();
+    }
+
+    public static void drawFocalDepthIndicator() {
+
+        if (FocusPoller.pollIsFocusRendered()) {
+            String shortFocalDepth = String.format("%.2f", FocusPoller.pollFocus());
+            String focalDepthInfo = I18n.format("gui." + MOD_ID + ".general.focalDepth", shortFocalDepth);
+            MC.fontRenderer.drawStringWithShadow(focalDepthInfo, 10, 10, 0xffffff);
+        }
     }
 
     public static void addEnvsphereGuiSettings(Container container, Supplier<Float> radiusGetter, Consumer<Float> radiusSetter) {

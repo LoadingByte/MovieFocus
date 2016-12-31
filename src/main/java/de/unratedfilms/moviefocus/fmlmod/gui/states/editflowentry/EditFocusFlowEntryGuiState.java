@@ -3,8 +3,11 @@ package de.unratedfilms.moviefocus.fmlmod.gui.states.editflowentry;
 
 import static de.unratedfilms.moviefocus.shared.Consts.MOD_ID;
 import com.google.common.collect.ImmutableList;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.guilib.core.Axis;
 import de.unratedfilms.guilib.core.MouseButton;
 import de.unratedfilms.guilib.integration.BasicScreen;
@@ -23,12 +26,14 @@ import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.EditFocusFlowGuiState;
+import de.unratedfilms.moviefocus.fmlmod.gui.states.GuiHelper;
 
 public class EditFocusFlowEntryGuiState extends GuiState {
 
     private final FocusFlowEntry editedFlowEntry;
 
-    private final Screen         screen = new Screen();
+    private final Screen         screen           = new Screen();
+    private final EventHandler   thisEventHandler = new EventHandler();
     private final Object         configEventHandler;
 
     public EditFocusFlowEntryGuiState(FocusFlowEntry editedFlowEntry) {
@@ -47,7 +52,7 @@ public class EditFocusFlowEntryGuiState extends GuiState {
     @Override
     protected ImmutableList<Object> getEventHandlers() {
 
-        return ImmutableList.of(configEventHandler);
+        return ImmutableList.of(thisEventHandler, configEventHandler);
     }
 
     public FocusFlowEntry getEditedFlowEntry() {
@@ -132,6 +137,19 @@ public class EditFocusFlowEntryGuiState extends GuiState {
 
             // We can simply query these coordinates because the main container is a direct child of the root container, meaning that the coordinates are absolute
             drawRect(mainContainer.getX(), mainContainer.getY(), mainContainer.getX() + mainContainer.getWidth(), mainContainer.getY() + mainContainer.getHeight(), 0x80101010);
+        }
+
+    }
+
+    protected class EventHandler {
+
+        @SubscribeEvent
+        public void onRenderGameOverlay(RenderGameOverlayEvent event) {
+
+            if (!Minecraft.getMinecraft().gameSettings.hideGUI) {
+                // Draw the focal depth indicator
+                GuiHelper.drawFocalDepthIndicator();
+            }
         }
 
     }
