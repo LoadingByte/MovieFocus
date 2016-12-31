@@ -6,9 +6,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowRunner;
+import de.unratedfilms.moviefocus.fmlmod.gui.FocusingGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 
-public class RunningFocusFlowGuiState extends GuiState {
+public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiState {
 
     private static final Minecraft MC           = Minecraft.getMinecraft();
 
@@ -32,6 +33,18 @@ public class RunningFocusFlowGuiState extends GuiState {
         FocusFlowRunner.stopRunning();
     }
 
+    @Override
+    public boolean isFocusRendered() {
+
+        return FocusFlowRunner.isFocusRendered();
+    }
+
+    @Override
+    public float getFocalDepth() {
+
+        return FocusFlowRunner.getCurrentEntry().getFocusConfig().getFocalDepth();
+    }
+
     protected class EventHandler {
 
         @SubscribeEvent
@@ -39,7 +52,9 @@ public class RunningFocusFlowGuiState extends GuiState {
 
             if (!MC.gameSettings.hideGUI) {
                 // Draw the focal depth indicator
-                GuiHelper.drawFocalDepthIndicator();
+                if (isFocusRendered()) {
+                    GuiHelper.drawFocalDepthIndicator(getFocalDepth());
+                }
             }
         }
 

@@ -23,12 +23,13 @@ import de.unratedfilms.guilib.widgets.view.impl.CheckboxImpl;
 import de.unratedfilms.guilib.widgets.view.impl.ContainerClippingImpl;
 import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
+import de.unratedfilms.moviefocus.fmlmod.gui.FocusingGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.EditFocusFlowGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.GuiHelper;
 
-public class EditFocusFlowEntryGuiState extends GuiState {
+public class EditFocusFlowEntryGuiState extends GuiState implements FocusingGuiState {
 
     private final FocusFlowEntry editedFlowEntry;
 
@@ -55,14 +56,16 @@ public class EditFocusFlowEntryGuiState extends GuiState {
         return ImmutableList.of(thisEventHandler, configEventHandler);
     }
 
-    public FocusFlowEntry getEditedFlowEntry() {
+    @Override
+    public boolean isFocusRendered() {
 
-        return editedFlowEntry;
+        return screen.tryoutCheckbox.isChecked() && editedFlowEntry.getFocusConfig().isAvailable();
     }
 
-    public boolean isTryoutEnabled() {
+    @Override
+    public float getFocalDepth() {
 
-        return screen.tryoutCheckbox.isChecked();
+        return editedFlowEntry.getFocusConfig().getFocalDepth();
     }
 
     private class Screen extends BasicScreen {
@@ -148,7 +151,9 @@ public class EditFocusFlowEntryGuiState extends GuiState {
 
             if (!Minecraft.getMinecraft().gameSettings.hideGUI) {
                 // Draw the focal depth indicator
-                GuiHelper.drawFocalDepthIndicator();
+                if (isFocusRendered()) {
+                    GuiHelper.drawFocalDepthIndicator(getFocalDepth());
+                }
             }
         }
 
