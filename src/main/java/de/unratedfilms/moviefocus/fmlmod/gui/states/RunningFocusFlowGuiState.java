@@ -1,10 +1,13 @@
 
 package de.unratedfilms.moviefocus.fmlmod.gui.states;
 
+import static de.unratedfilms.moviefocus.shared.Consts.MOD_ID;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowRunner;
 import de.unratedfilms.moviefocus.fmlmod.gui.FocusingGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
@@ -64,6 +67,16 @@ public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiSta
             if (!MC.gameSettings.hideGUI) {
                 // Draw the focal depth indicator
                 GuiHelper.drawFocalDepthIndicator(isFocusRendered(), RunningFocusFlowGuiState.this::getFocalDepth);
+
+                // Draw the current flow entry name and title
+                FocusFlowEntry currEntry = FocusFlowRunner.getCurrentEntry();
+
+                String name = I18n.format("gui." + MOD_ID + ".general.focusConfigName." + currEntry.getFocusConfig().getInternalName());
+                MC.fontRenderer.drawStringWithShadow(name, 10, 35, 0xffffff);
+
+                if (!currEntry.getTitle().isEmpty()) {
+                    MC.fontRenderer.drawStringWithShadow('"' + currEntry.getTitle() + '"', 10, 50, 0xffffff);
+                }
             }
         }
 
