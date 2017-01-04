@@ -4,15 +4,16 @@ package de.unratedfilms.moviefocus.fmlmod.conf;
 import java.util.LinkedList;
 import java.util.Queue;
 import org.apache.commons.lang3.Validate;
+import net.minecraftforge.common.MinecraftForge;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 
 public class FocusFlowRunner {
 
-    private static Queue<FocusFlowEntry> remainingSequence;
+    private static Queue<FocusFlowEntry> remainingSequence = new LinkedList<>();
 
     public static boolean isRunning() {
 
-        return remainingSequence != null;
+        return !remainingSequence.isEmpty();
     }
 
     public static FocusFlowEntry getCurrentEntry() {
@@ -26,8 +27,8 @@ public class FocusFlowRunner {
         stopRunning();
 
         if (!FocusFlow.sequence.isEmpty()) {
-            remainingSequence = new LinkedList<>(FocusFlow.sequence);
-            getCurrentEntry().getFocusConfig().setActive(true);
+            remainingSequence.addAll(FocusFlow.sequence);
+            MinecraftForge.EVENT_BUS.post(new FocusFlowTransitionEvent(null, getCurrentEntry()));
         }
     }
 
@@ -37,24 +38,30 @@ public class FocusFlowRunner {
             return;
         }
 
-        getCurrentEntry().getFocusConfig().setActive(false);
-        remainingSequence.remove();
+        // Save the old entry for later
+        FocusFlowEntry fromEntry = getCurrentEntry();
 
-        if (remainingSequence.isEmpty()) {
-            remainingSequence = null;
-        } else {
+        // Deactivate the old entry
+        fromEntry.getFocusConfig().setActive(false);
+
+        // Remove the old entry from the queue, so that the next entry shows up
+        remainingSequence.poll();
+
+        // If we're still in the game, activate the next entry
+        if (isRunning()) {
             getCurrentEntry().getFocusConfig().setActive(true);
         }
+
+        // Inform everyone about the transition
+        MinecraftForge.EVENT_BUS.post(new FocusFlowTransitionEvent(fromEntry, isRunning() ? getCurrentEntry() : null));
     }
 
     public static void stopRunning() {
 
-        if (!isRunning()) {
-            return;
+        if (isRunning()) {
+            getCurrentEntry().getFocusConfig().setActive(false);
+            remainingSequence.clear();
         }
-
-        getCurrentEntry().getFocusConfig().setActive(false);
-        remainingSequence = null;
     }
 
     public static boolean isFocusAvailable() {
