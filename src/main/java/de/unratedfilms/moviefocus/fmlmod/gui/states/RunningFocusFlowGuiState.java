@@ -9,6 +9,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowRunner;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowSmoother;
 import de.unratedfilms.moviefocus.fmlmod.gui.FocusingGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
@@ -40,13 +41,13 @@ public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiSta
     @Override
     public boolean isFocusRendered() {
 
-        return FocusFlowRunner.isFocusAvailable();
+        return FocusFlowRunner.getCurrentEntry().getFocusConfig().isAvailable();
     }
 
     @Override
     public float getFocalDepth() {
 
-        return FocusFlowRunner.getCurrentEntry().getFocusConfig().getFocalDepth();
+        return FocusFlowSmoother.getSmoothedFocalDepth();
     }
 
     // Called by the KeyHandler
@@ -65,12 +66,12 @@ public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiSta
         public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 
             if (!MC.gameSettings.hideGUI) {
-                // Draw the focal depth indicator
-                GuiHelper.drawFocalDepthIndicator(isFocusRendered(), RunningFocusFlowGuiState.this::getFocalDepth);
-
-                // Draw the current flow entry name and title
                 FocusFlowEntry currEntry = FocusFlowRunner.getCurrentEntry();
 
+                // Draw the focal depth indicator
+                GuiHelper.drawFocalDepthIndicator(currEntry.getFocusConfig().isAvailable(), RunningFocusFlowGuiState.this::getFocalDepth);
+
+                // Draw the current flow entry name and title
                 String name = I18n.format("gui." + MOD_ID + ".general.focusConfigName." + currEntry.getFocusConfig().getInternalName());
                 MC.fontRenderer.drawStringWithShadow(name, 10, 35, 0xffffff);
 
