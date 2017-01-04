@@ -28,7 +28,6 @@ import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigRegistry;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowRunner;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.editflowentry.EditFocusFlowEntryGuiState;
@@ -74,7 +73,6 @@ public class EditFocusFlowGuiState extends GuiState {
 
             titleLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlow.title"));
             startRunningButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlow.startRunning"), new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> {
-                FocusFlowRunner.loadAndStartRunning();
                 GuiStateMachine.transitionToState(new RunningFocusFlowGuiState());
             }));
             closeButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlow.close"), new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> close()));
