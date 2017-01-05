@@ -75,6 +75,7 @@ public class EditFocusFlowGuiState extends GuiState {
             startRunningButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlow.startRunning"), new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> {
                 GuiStateMachine.transitionToState(new RunningFocusFlowGuiState());
             }));
+            updateStartRunningButtonAvailability();
             closeButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlow.close"), new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> close()));
             mainContainer.addWidgets(titleLabel, startRunningButton, closeButton);
 
@@ -89,6 +90,7 @@ public class EditFocusFlowGuiState extends GuiState {
             flowListContainer = new ContainerScrollableImpl(flowListScrollbar, 10);
 
             flowList = new EditableList<>(4, FocusFlow.sequence, this::createWidgetFromFlowEntry);
+            flowList.setHandler(list -> updateStartRunningButtonAvailability());
             flowListContainer.addWidgets(flowList);
             mainContainer.addWidgets(flowListContainer);
 
@@ -145,6 +147,11 @@ public class EditFocusFlowGuiState extends GuiState {
                     .weight(1, titleTextField));
 
             return container;
+        }
+
+        private void updateStartRunningButtonAvailability() {
+
+            startRunningButton.setEnabled(!FocusFlow.sequence.isEmpty());
         }
 
         @Override

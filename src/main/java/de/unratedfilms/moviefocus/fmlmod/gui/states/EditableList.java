@@ -26,6 +26,8 @@ class EditableList<E> extends ContainerClippingImpl {
     private final List<E>                     model;
     private final Function<E, WidgetFlexible> elemToWidget;
 
+    private EditableListHandler<E>            handler;
+
     public EditableList(int gap, List<E> model, Function<E, WidgetFlexible> elemToWidget) {
 
         this.model = model;
@@ -51,10 +53,22 @@ class EditableList<E> extends ContainerClippingImpl {
         appendLayoutManager(c -> setHeight(getWidgets().stream().mapToInt(Widget::getBottom).max().orElse(0)));
     }
 
+    public EditableListHandler<E> getHandler() {
+
+        return handler;
+    }
+
+    public void setHandler(EditableListHandler<E> handler) {
+
+        this.handler = handler;
+    }
+
     public void addElement(E element) {
 
         model.add(element);
         addWidgets(new ElementContainer(element));
+
+        handler.listChanged(this);
     }
 
     @SuppressWarnings ("unchecked")
@@ -62,6 +76,8 @@ class EditableList<E> extends ContainerClippingImpl {
 
         model.remove(element);
         getWidgets().stream().filter(c -> ((ElementContainer) c).element == element).findFirst().ifPresent(this::removeWidgets);
+
+        handler.listChanged(this);
     }
 
     private void moveElementContainer(ElementContainer toMove, Direction direction) {
@@ -76,6 +92,8 @@ class EditableList<E> extends ContainerClippingImpl {
         clearWidgets();
         ListUtils.moveElementIfPossible(widgets, toMoveIdx, direction);
         addWidgets(widgets.toArray(new Widget[0]));
+
+        handler.listChanged(this);
     }
 
     private class ElementContainer extends ContainerClippingImpl {
@@ -110,6 +128,12 @@ class EditableList<E> extends ContainerClippingImpl {
                     .keep(removeButton, moveUpButton, moveDownButton)
                     .weight(1, customWidget));
         }
+
+    }
+
+    public static interface EditableListHandler<E> {
+
+        public void listChanged(EditableList<E> list);
 
     }
 
