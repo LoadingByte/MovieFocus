@@ -15,6 +15,11 @@ gui.moviefocus.general.focalDepth.unavailable=Focal Depth: Indeterminable
 gui.moviefocus.selectBlock.info=Click a block to select it
 gui.moviefocus.selectEntity.info=Click an entity to select it
 
+gui.moviefocus.runningFocusFlow.configName=Config: %s
+gui.moviefocus.runningFocusFlow.entryTitle=Title: "%s"
+gui.moviefocus.runningFocusFlow.flowKeyHint=Press '%s' to advance the flow
+gui.moviefocus.runningFocusFlow.hideKeyHint=Press '%s' to hide the HUD
+
 gui.moviefocus.editFocusFlow.title=Focus Flow
 gui.moviefocus.editFocusFlow.startRunning=Launch Flow
 gui.moviefocus.editFocusFlow.close=Finish
