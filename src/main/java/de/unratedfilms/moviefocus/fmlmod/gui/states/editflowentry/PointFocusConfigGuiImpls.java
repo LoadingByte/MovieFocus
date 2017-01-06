@@ -15,9 +15,11 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.guilib.core.Axis;
+import de.unratedfilms.guilib.core.MouseButton;
 import de.unratedfilms.guilib.layouts.FitLayout;
 import de.unratedfilms.guilib.layouts.FlowLayout;
 import de.unratedfilms.guilib.layouts.SqueezeLayout;
+import de.unratedfilms.guilib.widgets.model.Button.FilteredButtonHandler;
 import de.unratedfilms.guilib.widgets.model.ButtonLabel;
 import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
 import de.unratedfilms.guilib.widgets.model.Label;
@@ -65,12 +67,12 @@ class PointFocusConfigGuiImpls {
             ContainerFlexible focusedPointCoordContainer = new ContainerClippingImpl(focusedPointXCoordTextField, focusedPointYCoordTextField, focusedPointZCoordTextField);
 
             selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.point.startSelection"),
-                    (b, mb) -> {
+                    new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> {
                         GuiStateMachine.transitionToState(new SelectBlockGuiState(selPoint -> {
                             config.setFocusedPoint(selPoint);
                             GuiStateMachine.transitionToState(new EditFocusFlowEntryGuiState(flowEntry));
                         }));
-                    });
+                    }));
 
             addWidgets(focusedPointLabel, focusedPointCoordContainer, selectionStartButton);
 

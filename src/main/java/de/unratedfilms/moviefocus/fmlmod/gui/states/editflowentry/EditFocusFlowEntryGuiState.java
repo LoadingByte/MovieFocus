@@ -107,7 +107,7 @@ public class EditFocusFlowEntryGuiState extends GuiState implements FocusingGuiS
             backButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.back"), new FilteredButtonHandler(MouseButton.LEFT,
                     // When someone exits this GUI via the back button, he needs to see the focus flow screen again
                     (b, mb) -> GuiStateMachine.transitionToState(new EditFocusFlowGuiState())));
-            closeButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.close"), (b, mb) -> close());
+            closeButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.close"), new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> close()));
 
             mainContainer.addWidgets(titleLabel, configNameLabel, flowEntryTitleLabel, tryoutCheckbox, configSettingsContainer, backButton, closeButton);
 
