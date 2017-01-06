@@ -1,0 +1,13 @@
+[
+{
+  "modid": "moviefocus",
+  "name": "MovieFocus",
+  "description": "A Minecraft mod that allows for a more flexible usage of depth of field and focus in Minecraft movies. It patches supported shaderpacks so that they work together with the mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://www.unratedfilmindustries.de",
+  "authorList": [ "LoadingByte" ],
+  "requiredMods": [ "guilib" ],
+  "dependencies": [ "guilib" ]
+}
+]

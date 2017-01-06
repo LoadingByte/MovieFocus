@@ -1,0 +1,43 @@
+key.categories.moviefocus=MovieFocus
+
+key.moviefocus.flow=Focus Flow Key
+
+
+
+gui.moviefocus.general.focusConfigName.fixed=Fixed Focal Depth
+gui.moviefocus.general.focusConfigName.point=Focus on Point
+gui.moviefocus.general.focusConfigName.entity=Focus on Entity
+
+gui.moviefocus.general.focalDepth.available=Focal Depth: %s m
+gui.moviefocus.general.focalDepth.unavailable=Focal Depth: Indeterminable
+
+
+gui.moviefocus.selectBlock.info=Click a block to select it
+gui.moviefocus.selectEntity.info=Click an entity to select it
+
+gui.moviefocus.runningFocusFlow.configName=Config: %s
+gui.moviefocus.runningFocusFlow.entryTitle=Title: "%s"
+gui.moviefocus.runningFocusFlow.flowKeyHint=Press '%s' to advance the flow
+gui.moviefocus.runningFocusFlow.hideKeyHint=Press '%s' to hide the HUD
+
+gui.moviefocus.editFocusFlow.title=Focus Flow
+gui.moviefocus.editFocusFlow.startRunning=Launch Flow
+gui.moviefocus.editFocusFlow.close=Finish
+gui.moviefocus.editFocusFlow.editEntry=Edit
+
+
+gui.moviefocus.editFocusFlowEntry.title=Editing Flow Entry:
+gui.moviefocus.editFocusFlowEntry.noEntryTitle=- No Title -
+gui.moviefocus.editFocusFlowEntry.tryout=Try Out
+gui.moviefocus.editFocusFlowEntry.back=< Back
+gui.moviefocus.editFocusFlowEntry.close=Close
+
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.general.envsphereRadius=Envsphere Radius:
+
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.fixed.focalDepth=Focal Depth:
+
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.point.focusedPoint=Focusing on:
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.point.startSelection=Select Block
+
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.entity.focusedEntity=Focusing on %s
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.entity.startSelection=Select Entity
