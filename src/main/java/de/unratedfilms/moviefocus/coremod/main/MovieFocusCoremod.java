@@ -7,8 +7,7 @@ import de.unratedfilms.moviefocus.coremod.asm.MainClassTransformer;
 import de.unratedfilms.moviefocus.shared.Consts;
 
 @IFMLLoadingPlugin.Name (Consts.MOD_ID)
-@IFMLLoadingPlugin.MCVersion ("1.7.10")
-@IFMLLoadingPlugin.TransformerExclusions ("de.unrated.moviefocus.coremod.")
+@IFMLLoadingPlugin.TransformerExclusions ("de.unratedfilms." + Consts.MOD_ID + ".coremod.")
 // Run after the shaders mod
 @IFMLLoadingPlugin.SortingIndex (value = 1150)
 public class MovieFocusCoremod implements IFMLLoadingPlugin {
