@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowRunner;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlowSmoother;
@@ -75,16 +75,16 @@ public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiSta
 
                 // Draw the current flow entry name and title
                 String name = I18n.format("gui." + MOD_ID + ".general.focusConfigName." + currEntry.getFocusConfig().getInternalName());
-                MC.fontRenderer.drawStringWithShadow(I18n.format("gui.moviefocus.runningFocusFlow.configName", name), 10, 35, 0xffffff);
+                MC.fontRendererObj.drawStringWithShadow(I18n.format("gui.moviefocus.runningFocusFlow.configName", name), 10, 35, 0xffffff);
 
                 if (!currEntry.getTitle().isEmpty()) {
-                    MC.fontRenderer.drawStringWithShadow(I18n.format("gui.moviefocus.runningFocusFlow.entryTitle", currEntry.getTitle()), 10, 50, 0xffffff);
+                    MC.fontRendererObj.drawStringWithShadow(I18n.format("gui.moviefocus.runningFocusFlow.entryTitle", currEntry.getTitle()), 10, 50, 0xffffff);
                 }
 
                 // Draw hints that tell the user how to run the flow
                 String flowKey = GameSettings.getKeyDisplayString(KeyBindings.FLOW.getKeyCode());
-                MC.fontRenderer.drawStringWithShadow(I18n.format("gui.moviefocus.runningFocusFlow.flowKeyHint", flowKey), 10, 75, 0xffffff);
-                MC.fontRenderer.drawStringWithShadow(I18n.format("gui.moviefocus.runningFocusFlow.hideKeyHint", "F1"), 10, 90, 0xffffff);
+                MC.fontRendererObj.drawStringWithShadow(I18n.format("gui.moviefocus.runningFocusFlow.flowKeyHint", flowKey), 10, 75, 0xffffff);
+                MC.fontRendererObj.drawStringWithShadow(I18n.format("gui.moviefocus.runningFocusFlow.hideKeyHint", "F1"), 10, 90, 0xffffff);
             }
         }
 

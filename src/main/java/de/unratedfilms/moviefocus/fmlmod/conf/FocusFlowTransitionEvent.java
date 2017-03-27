@@ -1,7 +1,7 @@
 
 package de.unratedfilms.moviefocus.fmlmod.conf;
 
-import cpw.mods.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 
 public class FocusFlowTransitionEvent extends Event {

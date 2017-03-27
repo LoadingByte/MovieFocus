@@ -4,9 +4,14 @@ package de.unratedfilms.moviefocus.fmlmod.util;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.GlStateManager.DestFactor;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Vec3;
+import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 
 public class RenderUtils {
 
@@ -14,28 +19,28 @@ public class RenderUtils {
 
     public static void drawWithRenderSettings(Runnable drawer, RenderSetting... settings) {
 
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 
         float originalLineWidth = GL11.glGetFloat(GL11.GL_LINE_WIDTH);
-        int originalDepthFunc = GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
+        int originalDepthFunc = GlStateManager.glGetInteger(GL11.GL_DEPTH_FUNC);
 
         for (RenderSetting setting : settings) {
-            GL11.glColor4d(setting.r, setting.g, setting.b, setting.a);
-            GL11.glLineWidth(setting.lineWidth);
-            GL11.glDepthFunc(setting.depthFunc);
+            GlStateManager.color(setting.r, setting.g, setting.b, setting.a);
+            GlStateManager.glLineWidth(setting.lineWidth);
+            GlStateManager.depthFunc(setting.depthFunc);
 
             drawer.run();
         }
 
-        GL11.glLineWidth(originalLineWidth);
-        GL11.glDepthFunc(originalDepthFunc);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GlStateManager.glLineWidth(originalLineWidth);
+        GlStateManager.depthFunc(originalDepthFunc);
+        GlStateManager.disableBlend();
+        GlStateManager.enableTexture2D();
     }
 
-    public static void drawLine(Vec3 pos1, Vec3 pos2, RenderSetting... settings) {
+    public static void drawLine(Vec3d pos1, Vec3d pos2, RenderSetting... settings) {
 
         drawLine(pos1.xCoord, pos1.yCoord, pos1.zCoord, pos2.xCoord, pos2.yCoord, pos2.zCoord, settings);
     }
@@ -43,11 +48,12 @@ public class RenderUtils {
     public static void drawLine(double x1, double y1, double z1, double x2, double y2, double z2, RenderSetting... settings) {
 
         drawWithRenderSettings(() -> {
-            Tessellator tes = Tessellator.instance;
+            Tessellator tes = Tessellator.getInstance();
+            VertexBuffer vb = tes.getBuffer();
 
-            tes.startDrawing(3);
-            tes.addVertex(x1, y1, z1);
-            tes.addVertex(x2, y2, z2);
+            vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+            vb.pos(x1, y1, z1);
+            vb.pos(x2, y2, z2);
             tes.draw();
         }, settings);
     }
@@ -60,31 +66,34 @@ public class RenderUtils {
     public static void drawAABB(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, RenderSetting... settings) {
 
         drawWithRenderSettings(() -> {
-            Tessellator tes = Tessellator.instance;
+            Tessellator tes = Tessellator.getInstance();
+            VertexBuffer vb = tes.getBuffer();
 
-            tes.startDrawing(3);
-            tes.addVertex(minX, minY, minZ);
-            tes.addVertex(maxX, minY, minZ);
-            tes.addVertex(maxX, minY, maxZ);
-            tes.addVertex(minX, minY, maxZ);
-            tes.addVertex(minX, minY, minZ);
+            vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+            vb.pos(minX, minY, minZ);
+            vb.pos(maxX, minY, minZ);
+            vb.pos(maxX, minY, maxZ);
+            vb.pos(minX, minY, maxZ);
+            vb.pos(minX, minY, minZ);
             tes.draw();
-            tes.startDrawing(3);
-            tes.addVertex(minX, maxY, minZ);
-            tes.addVertex(maxX, maxY, minZ);
-            tes.addVertex(maxX, maxY, maxZ);
-            tes.addVertex(minX, maxY, maxZ);
-            tes.addVertex(minX, maxY, minZ);
+
+            vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+            vb.pos(minX, maxY, minZ);
+            vb.pos(maxX, maxY, minZ);
+            vb.pos(maxX, maxY, maxZ);
+            vb.pos(minX, maxY, maxZ);
+            vb.pos(minX, maxY, minZ);
             tes.draw();
-            tes.startDrawing(1);
-            tes.addVertex(minX, minY, minZ);
-            tes.addVertex(minX, maxY, minZ);
-            tes.addVertex(maxX, minY, minZ);
-            tes.addVertex(maxX, maxY, minZ);
-            tes.addVertex(maxX, minY, maxZ);
-            tes.addVertex(maxX, maxY, maxZ);
-            tes.addVertex(minX, minY, maxZ);
-            tes.addVertex(minX, maxY, maxZ);
+
+            vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
+            vb.pos(minX, minY, minZ);
+            vb.pos(minX, maxY, minZ);
+            vb.pos(maxX, minY, minZ);
+            vb.pos(maxX, maxY, minZ);
+            vb.pos(maxX, minY, maxZ);
+            vb.pos(maxX, maxY, maxZ);
+            vb.pos(minX, minY, maxZ);
+            vb.pos(minX, maxY, maxZ);
             tes.draw();
         }, settings);
     }
@@ -92,19 +101,20 @@ public class RenderUtils {
     public static void drawAABB2D(double minX, double minY, double maxX, double maxY, RenderSetting... settings) {
 
         drawWithRenderSettings(() -> {
-            Tessellator tes = Tessellator.instance;
+            Tessellator tes = Tessellator.getInstance();
+            VertexBuffer vb = tes.getBuffer();
 
-            tes.startDrawing(3);
-            tes.addVertex(minX, minY, 0);
-            tes.addVertex(maxX, minY, 0);
-            tes.addVertex(maxX, maxY, 0);
-            tes.addVertex(minX, maxY, 0);
-            tes.addVertex(minX, minY, 0);
+            vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+            vb.pos(minX, minY, 0);
+            vb.pos(maxX, minY, 0);
+            vb.pos(maxX, maxY, 0);
+            vb.pos(minX, maxY, 0);
+            vb.pos(minX, minY, 0);
             tes.draw();
         }, settings);
     }
 
-    public static void drawSphere(Vec3 center, float radius, int resolution, boolean wireframe, RenderSetting... settings) {
+    public static void drawSphere(Vec3d center, float radius, int resolution, boolean wireframe, RenderSetting... settings) {
 
         drawSphere(center.xCoord, center.yCoord, center.zCoord, radius, resolution, wireframe, settings);
     }
@@ -112,32 +122,32 @@ public class RenderUtils {
     public static void drawSphere(double x, double y, double z, float radius, int resolution, boolean wireframe, RenderSetting... settings) {
 
         // Translate to the sphere's center point, and then actually draw the sphere
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
         {
-            GL11.glTranslated(x, y, z);
+            GlStateManager.translate(x, y, z);
 
             drawWithRenderSettings(() -> {
                 SPHERE.setDrawStyle(wireframe ? GLU.GLU_LINE : GLU.GLU_FILL);
                 SPHERE.draw(radius, resolution, resolution);
             }, settings);
         }
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
     private RenderUtils() {}
 
     public static class RenderSetting {
 
-        public final double r, g, b, a;
-        public float        lineWidth = 1;
-        public int          depthFunc = GL11.GL_ALWAYS;
+        public final float r, g, b, a;
+        public float       lineWidth = 1;
+        public int         depthFunc = GL11.GL_ALWAYS;
 
         public RenderSetting(double r, double g, double b, double a) {
 
-            this.r = r;
-            this.g = g;
-            this.b = b;
-            this.a = a;
+            this.r = (float) r;
+            this.g = (float) g;
+            this.b = (float) b;
+            this.a = (float) a;
         }
 
         public RenderSetting lineWidth(float lineWidth) {

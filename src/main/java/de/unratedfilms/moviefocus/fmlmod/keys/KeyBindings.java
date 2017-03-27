@@ -3,7 +3,7 @@ package de.unratedfilms.moviefocus.fmlmod.keys;
 
 import org.lwjgl.input.Keyboard;
 import net.minecraft.client.settings.KeyBinding;
-import cpw.mods.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import de.unratedfilms.moviefocus.shared.Consts;
 
 public class KeyBindings {

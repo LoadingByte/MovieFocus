@@ -1,19 +1,20 @@
 
 package de.unratedfilms.moviefocus.fmlmod.gui.states.editflowentry;
 
+import static de.unratedfilms.moviefocus.fmlmod.util.VectorUtils.*;
 import static de.unratedfilms.moviefocus.shared.Consts.MOD_ID;
 import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.guilib.core.Axis;
 import de.unratedfilms.guilib.core.MouseButton;
 import de.unratedfilms.guilib.layouts.FitLayout;
@@ -61,9 +62,9 @@ class PointFocusConfigGuiImpls {
 
             focusedPointLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.point.focusedPoint"));
 
-            focusedPointXCoordTextField = createCoordTextField(0xffff0000, () -> config.getFocusedPoint().xCoord, x -> config.getFocusedPoint().xCoord = x);
-            focusedPointYCoordTextField = createCoordTextField(0xff00ff00, () -> config.getFocusedPoint().yCoord, y -> config.getFocusedPoint().yCoord = y);
-            focusedPointZCoordTextField = createCoordTextField(0xff0000ff, () -> config.getFocusedPoint().zCoord, z -> config.getFocusedPoint().zCoord = z);
+            focusedPointXCoordTextField = createCoordTextField(0xffff0000, () -> config.getFocusedPoint().xCoord, x -> config.setFocusedPoint(withX(config.getFocusedPoint(), x)));
+            focusedPointYCoordTextField = createCoordTextField(0xff00ff00, () -> config.getFocusedPoint().yCoord, y -> config.setFocusedPoint(withY(config.getFocusedPoint(), y)));
+            focusedPointZCoordTextField = createCoordTextField(0xff0000ff, () -> config.getFocusedPoint().zCoord, z -> config.setFocusedPoint(withZ(config.getFocusedPoint(), z)));
             ContainerFlexible focusedPointCoordContainer = new ContainerClippingImpl(focusedPointXCoordTextField, focusedPointYCoordTextField, focusedPointZCoordTextField);
 
             selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.point.startSelection"),
@@ -112,19 +113,19 @@ class PointFocusConfigGuiImpls {
         public void onRenderWorldLast(RenderWorldLastEvent event) {
 
             if (!Minecraft.getMinecraft().gameSettings.hideGUI) {
-                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-                double playerX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.partialTicks;
-                double playerY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.partialTicks;
-                double playerZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
+                EntityPlayer player = Minecraft.getMinecraft().player;
+                double playerX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.getPartialTicks();
+                double playerY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.getPartialTicks();
+                double playerZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.getPartialTicks();
 
-                GL11.glPushMatrix();
+                GlStateManager.pushMatrix();
                 {
-                    GL11.glTranslated(-playerX, -playerY, -playerZ);
+                    GlStateManager.translate(-playerX, -playerY, -playerZ);
 
                     // Render the envsphere which highlights the focused point
                     GuiHelper.drawEnvsphere(config.getFocusedPoint(), config.getEnvsphereRadius());
                 }
-                GL11.glPopMatrix();
+                GlStateManager.popMatrix();
             }
         }
 
@@ -133,7 +134,7 @@ class PointFocusConfigGuiImpls {
 
             if (!Minecraft.getMinecraft().gameSettings.hideGUI) {
                 // Render the gizmo
-                GuiHelper.drawGizmo(20, event.partialTicks);
+                GuiHelper.drawGizmo(20, event.getPartialTicks());
             }
         }
 

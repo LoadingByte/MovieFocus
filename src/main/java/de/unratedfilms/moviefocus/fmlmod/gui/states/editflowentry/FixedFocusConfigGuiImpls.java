@@ -8,9 +8,9 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.lwjgl.input.Mouse;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import de.unratedfilms.guilib.core.Axis;
 import de.unratedfilms.guilib.layouts.FlowLayout;
 import de.unratedfilms.guilib.widgets.model.Label;
@@ -65,7 +65,7 @@ class FixedFocusConfigGuiImpls {
         @SubscribeEvent
         public void onTick(ClientTickEvent event) {
 
-            if (event.phase == Phase.START && Minecraft.getMinecraft().theWorld != null) {
+            if (event.phase == Phase.START && Minecraft.getMinecraft().world != null) {
                 int rawMouseScroll = Mouse.getDWheel();
                 if (rawMouseScroll != 0) {
                     int mouseScroll = rawMouseScroll > 0 ? 1 : -1;

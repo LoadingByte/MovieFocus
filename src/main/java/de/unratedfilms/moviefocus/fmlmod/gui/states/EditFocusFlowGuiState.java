@@ -12,8 +12,8 @@ import de.unratedfilms.guilib.layouts.FlowLayout;
 import de.unratedfilms.guilib.layouts.SqueezeLayout;
 import de.unratedfilms.guilib.widgets.model.Button.FilteredButtonHandler;
 import de.unratedfilms.guilib.widgets.model.ButtonLabel;
-import de.unratedfilms.guilib.widgets.model.Container;
 import de.unratedfilms.guilib.widgets.model.ContainerFlexible;
+import de.unratedfilms.guilib.widgets.model.ContainerRigid;
 import de.unratedfilms.guilib.widgets.model.Label;
 import de.unratedfilms.guilib.widgets.model.Scrollbar;
 import de.unratedfilms.guilib.widgets.model.TextField;
@@ -52,7 +52,7 @@ public class EditFocusFlowGuiState extends GuiState {
         private Label                        titleLabel;
         private ButtonLabel                  closeButton;
         private ButtonLabel                  startRunningButton;
-        private Container                    addFlowEntryButtonsContainer;
+        private ContainerRigid               addFlowEntryButtonsContainer;
 
         private ContainerFlexible            flowListContainer;
         private EditableList<FocusFlowEntry> flowList;
@@ -87,7 +87,7 @@ public class EditFocusFlowGuiState extends GuiState {
             mainContainer.addWidgets(addFlowEntryButtonsContainer);
 
             Scrollbar flowListScrollbar = new ScrollbarImpl(2 * PADDING);
-            flowListContainer = new ContainerScrollableImpl(flowListScrollbar, 10);
+            flowListContainer = new ContainerScrollableImpl(flowListScrollbar);
 
             flowList = new EditableList<>(4, FocusFlow.sequence, this::createWidgetFromFlowEntry);
             flowList.setHandler(list -> updateStartRunningButtonAvailability());
@@ -117,7 +117,7 @@ public class EditFocusFlowGuiState extends GuiState {
 
             addFlowEntryButtonsContainer
                     .appendLayoutManager(c -> addFlowEntryButtonsContainer.getWidgets().stream().map(w -> (ButtonLabel) w)
-                            .forEach(button -> button.setWidth(mc.fontRenderer.getStringWidth(button.getLabel()) + 10)))
+                            .forEach(button -> button.setWidth(mc.fontRendererObj.getStringWidth(button.getLabel()) + 10)))
                     .appendLayoutManager(new FlowLayout(Axis.X, 0, 4));
 
             flowListContainer
@@ -140,7 +140,7 @@ public class EditFocusFlowGuiState extends GuiState {
 
             ContainerFlexible container = new ContainerClippingImpl(editButton, titleTextField, nameLabel);
             container.appendLayoutManager(c -> {
-                editButton.setWidth(mc.fontRenderer.getStringWidth(editButton.getLabel()) + 10);
+                editButton.setWidth(mc.fontRendererObj.getStringWidth(editButton.getLabel()) + 10);
             });
             container.appendLayoutManager(new SqueezeLayout(Axis.X, 0, 8)
                     .keep(editButton, nameLabel)

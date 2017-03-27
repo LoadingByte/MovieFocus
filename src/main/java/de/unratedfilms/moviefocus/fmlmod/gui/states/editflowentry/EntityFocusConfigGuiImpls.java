@@ -5,10 +5,11 @@ import static de.unratedfilms.moviefocus.shared.Consts.MOD_ID;
 import org.apache.commons.lang3.Validate;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.guilib.core.Axis;
 import de.unratedfilms.guilib.core.MouseButton;
 import de.unratedfilms.guilib.layouts.FlowLayout;
@@ -48,7 +49,7 @@ class EntityFocusConfigGuiImpls {
         public SettingsContainer() {
 
             focusedEntityLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.entity.focusedEntity",
-                    !config.hasFocusedEntity() ? "--" : config.getFocusedEntity().getCommandSenderName()));
+                    !config.hasFocusedEntity() ? "--" : config.getFocusedEntity().getName()));
 
             selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.entity.startSelection"),
                     new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> {
@@ -83,24 +84,24 @@ class EntityFocusConfigGuiImpls {
         public void onRenderWorldLast(RenderWorldLastEvent event) {
 
             if (!Minecraft.getMinecraft().gameSettings.hideGUI && config.hasFocusedEntity()) {
-                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-                double playerX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.partialTicks;
-                double playerY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.partialTicks;
-                double playerZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
+                EntityPlayer player = Minecraft.getMinecraft().player;
+                double playerX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.getPartialTicks();
+                double playerY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.getPartialTicks();
+                double playerZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.getPartialTicks();
 
-                GL11.glPushMatrix();
+                GlStateManager.pushMatrix();
                 {
-                    GL11.glTranslated(-playerX, -playerY, -playerZ);
+                    GlStateManager.translate(-playerX, -playerY, -playerZ);
 
                     // Render the bounding box around the focused entity
-                    if (config.getFocusedEntity().boundingBox != null) {
-                        RenderUtils.drawAABB(config.getFocusedEntity().boundingBox, aabbRenderSettings);
+                    if (config.getFocusedEntity().getEntityBoundingBox() != null) {
+                        RenderUtils.drawAABB(config.getFocusedEntity().getEntityBoundingBox(), aabbRenderSettings);
                     }
 
                     // Render the envsphere
                     GuiHelper.drawEnvsphere(config.getEnvsphereCenter(), config.getEnvsphereRadius());
                 }
-                GL11.glPopMatrix();
+                GlStateManager.popMatrix();
             }
         }
 

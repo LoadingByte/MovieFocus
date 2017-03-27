@@ -22,7 +22,7 @@ public class ShaderUniforms {
     public static void refreshUniforms() {
 
         // If the game hasn't started yet or is not in playing mode at the moment, uniform refreshes could potentially lead to crashes
-        if (Minecraft.getMinecraft() == null || Minecraft.getMinecraft().theWorld == null) {
+        if (Minecraft.getMinecraft() == null || Minecraft.getMinecraft().world == null) {
             return;
         }
 

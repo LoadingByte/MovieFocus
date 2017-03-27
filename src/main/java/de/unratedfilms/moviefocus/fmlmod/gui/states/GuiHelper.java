@@ -1,8 +1,6 @@
 
 package de.unratedfilms.moviefocus.fmlmod.gui.states;
 
-import static de.unratedfilms.moviefocus.fmlmod.util.VectorUtils.add;
-import static de.unratedfilms.moviefocus.fmlmod.util.VectorUtils.multiply;
 import static de.unratedfilms.moviefocus.shared.Consts.MOD_ID;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -13,7 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 import de.unratedfilms.guilib.widgets.model.Container;
 import de.unratedfilms.guilib.widgets.model.Label;
 import de.unratedfilms.guilib.widgets.model.TextField;
@@ -46,13 +44,13 @@ public class GuiHelper {
 
     public static void drawGizmo(float lineLength, float partialTicks) {
 
-        ScaledResolution scaledResolution = new ScaledResolution(MC, MC.displayWidth, MC.displayHeight);
+        ScaledResolution scaledResolution = new ScaledResolution(MC);
 
         GL11.glPushMatrix();
         {
             // This code is shamelessly stolen from the latest Minecraft version
             GL11.glTranslatef(scaledResolution.getScaledWidth() * 0.5f, scaledResolution.getScaledHeight() * 0.5f, 0);
-            Entity entity = MC.renderViewEntity;
+            Entity entity = MC.getRenderViewEntity();
             GL11.glRotatef(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, -1, 0, 0);
             GL11.glRotatef(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks, 0, 1, 0);
             GL11.glScalef(-1, -1, -1);
@@ -75,7 +73,7 @@ public class GuiHelper {
             focalDepthInfo = I18n.format("gui." + MOD_ID + ".general.focalDepth.unavailable");
         }
 
-        MC.fontRenderer.drawStringWithShadow(focalDepthInfo, 10, 10, 0xffffff);
+        MC.fontRendererObj.drawStringWithShadow(focalDepthInfo, 10, 10, 0xffffff);
     }
 
     public static void addEnvsphereGuiSettings(Container container, Supplier<Float> radiusGetter, Consumer<Float> radiusSetter) {
@@ -99,12 +97,12 @@ public class GuiHelper {
         });
     }
 
-    public static void drawEnvsphere(Vec3 center, float radius) {
+    public static void drawEnvsphere(Vec3d center, float radius) {
 
         RenderUtils.drawSphere(center, radius, (int) ( (Math.log(radius) + 5) * 3), true, ENVSPHERE_WIREFRAME_RENDER_SETTINGS);
         RenderUtils.drawSphere(center, 0.03f, 16, false, ENVSPHERE_CENTER_RENDER_SETTINGS);
 
-        Vec3 focusSpot = add(center, multiply(GeometryUtils.getCamSightLine(), -radius));
+        Vec3d focusSpot = center.add(GeometryUtils.getCamSightLine().scale(-radius));
         RenderUtils.drawSphere(focusSpot, 0.03f, 16, false, ENVSPHERE_FOCUS_SPOT_RENDER_SETTINGS);
         RenderUtils.drawLine(center, focusSpot, ENVSPHERE_FOCUS_SPOT_RENDER_SETTINGS);
     }
