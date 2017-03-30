@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcher;
 import de.unratedfilms.moviefocus.shared.Consts;
-import shadersmodcore.client.IShaderPack;
+import shadersmod.client.IShaderPack;
 
 /**
  * Patches versions 10.0 and 10.1 of SEUS by Sonic Ether.

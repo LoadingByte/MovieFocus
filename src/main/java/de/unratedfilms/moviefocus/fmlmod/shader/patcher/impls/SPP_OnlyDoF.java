@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 import org.apache.commons.io.IOUtils;
 import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcher;
 import de.unratedfilms.moviefocus.shared.Consts;
-import shadersmodcore.client.IShaderPack;
+import shadersmod.client.IShaderPack;
 
 /**
  * Patches versions 1.0 and 1.1 of OnlyDoF by MrY.<br>

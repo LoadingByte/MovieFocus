@@ -6,7 +6,7 @@ import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
 
 /**
  * This class acts as an adapter layer between the frontend {@link FocusConfig} and the backend shader objects.
- * The {@link shadersmodcore.client.Shaders} class uses the fields from this adapter to get the values it should inject into the shader objects as uniform variables.
+ * The {@link shadersmod.client.Shaders} class uses the fields from this adapter to get the values it should inject into the shader objects as uniform variables.
  */
 public class ShaderUniforms {
 
@@ -42,7 +42,7 @@ public class ShaderUniforms {
 
     private static void refreshFocalDepthNormalized() {
 
-        // These two sizes are actually taken directly from the shadersmodcore.client.Shaders class
+        // These two sizes are actually taken directly from the shadersmod.client.Shaders class
         float near = 0.05f;
         float far = Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16;
 
