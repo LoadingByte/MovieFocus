@@ -46,8 +46,7 @@ public class SelectEntityGuiState extends GuiState {
                 RenderUtils.drawAABB2D(15, 15, scaledResolution.getScaledWidth() - 15, scaledResolution.getScaledHeight() - 15, BORDER_RENDER_SETTING);
 
                 // Draw the text
-                String info = I18n.format("gui." + MOD_ID + ".selectEntity.info");
-                MC.fontRendererObj.drawStringWithShadow(info, 25, 25, 0xffffff);
+                MC.fontRendererObj.drawStringWithShadow(I18n.format("gui." + MOD_ID + ".selectEntity.clickHint"), 25, 25, 0xffffff);
             }
         }
 

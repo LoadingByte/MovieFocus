@@ -3,6 +3,7 @@ package de.unratedfilms.moviefocus.fmlmod.gui.states;
 
 import static de.unratedfilms.moviefocus.shared.Consts.MOD_ID;
 import java.util.function.Consumer;
+import org.lwjgl.input.Keyboard;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -46,20 +47,24 @@ public class SelectBlockGuiState extends GuiState {
                 RenderUtils.drawAABB2D(15, 15, scaledResolution.getScaledWidth() - 15, scaledResolution.getScaledHeight() - 15, BORDER_RENDER_SETTING);
 
                 // Draw the text
-                String info = I18n.format("gui." + MOD_ID + ".selectBlock.info");
-                MC.fontRendererObj.drawStringWithShadow(info, 25, 25, 0xffffff);
+                MC.fontRendererObj.drawStringWithShadow(I18n.format("gui." + MOD_ID + ".selectBlock.clickHint"), 25, 25, 0xffffff);
+                MC.fontRendererObj.drawStringWithShadow(I18n.format("gui." + MOD_ID + ".selectBlock.shiftHint", "SHIFT"), 25, 40, 0xffffff);
             }
         }
 
         @SubscribeEvent
-        public void onBlockClick(PlayerInteractEvent event) {
+        public void onBlockClick(PlayerInteractEvent.RightClickBlock event) {
 
-            if (event instanceof PlayerInteractEvent.RightClickBlock || event instanceof PlayerInteractEvent.LeftClickBlock) {
-                event.setCanceled(true);
+            event.setCanceled(true);
 
-                Vec3d selectedPoint = new Vec3d(event.getPos()).addVector(0.5, 0.5, 0.5);
-                selectionCallback.accept(selectedPoint);
+            Vec3d selectedPoint;
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+                selectedPoint = new Vec3d(event.getPos()).addVector(0.5, 0.5, 0.5);
+            } else {
+                selectedPoint = event.getHitVec();
             }
+
+            selectionCallback.accept(selectedPoint);
         }
 
     }
