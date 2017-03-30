@@ -1,12 +1,14 @@
 
 package de.unratedfilms.moviefocus.fmlmod.util;
 
+import java.util.function.Consumer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -17,7 +19,7 @@ public class RenderUtils {
 
     private static final Sphere SPHERE = new Sphere();
 
-    public static void drawWithRenderSettings(Runnable drawer, RenderSetting... settings) {
+    public static void drawWithRenderSettings(Consumer<RenderSetting> drawer, RenderSetting... settings) {
 
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
@@ -31,7 +33,7 @@ public class RenderUtils {
             GlStateManager.glLineWidth(setting.lineWidth);
             GlStateManager.depthFunc(setting.depthFunc);
 
-            drawer.run();
+            drawer.accept(setting);
         }
 
         GlStateManager.glLineWidth(originalLineWidth);
@@ -47,13 +49,13 @@ public class RenderUtils {
 
     public static void drawLine(double x1, double y1, double z1, double x2, double y2, double z2, RenderSetting... settings) {
 
-        drawWithRenderSettings(() -> {
+        drawWithRenderSettings(setting -> {
             Tessellator tes = Tessellator.getInstance();
             VertexBuffer vb = tes.getBuffer();
 
             vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-            vb.pos(x1, y1, z1);
-            vb.pos(x2, y2, z2);
+            vb.pos(x1, y1, z1).endVertex();
+            vb.pos(x2, y2, z2).endVertex();
             tes.draw();
         }, settings);
     }
@@ -65,51 +67,23 @@ public class RenderUtils {
 
     public static void drawAABB(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, RenderSetting... settings) {
 
-        drawWithRenderSettings(() -> {
-            Tessellator tes = Tessellator.getInstance();
-            VertexBuffer vb = tes.getBuffer();
-
-            vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-            vb.pos(minX, minY, minZ);
-            vb.pos(maxX, minY, minZ);
-            vb.pos(maxX, minY, maxZ);
-            vb.pos(minX, minY, maxZ);
-            vb.pos(minX, minY, minZ);
-            tes.draw();
-
-            vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-            vb.pos(minX, maxY, minZ);
-            vb.pos(maxX, maxY, minZ);
-            vb.pos(maxX, maxY, maxZ);
-            vb.pos(minX, maxY, maxZ);
-            vb.pos(minX, maxY, minZ);
-            tes.draw();
-
-            vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
-            vb.pos(minX, minY, minZ);
-            vb.pos(minX, maxY, minZ);
-            vb.pos(maxX, minY, minZ);
-            vb.pos(maxX, maxY, minZ);
-            vb.pos(maxX, minY, maxZ);
-            vb.pos(maxX, maxY, maxZ);
-            vb.pos(minX, minY, maxZ);
-            vb.pos(minX, maxY, maxZ);
-            tes.draw();
+        drawWithRenderSettings(setting -> {
+            RenderGlobal.drawBoundingBox(minX, minY, minZ, maxX, maxY, maxZ, setting.r, setting.g, setting.b, setting.a);
         }, settings);
     }
 
     public static void drawAABB2D(double minX, double minY, double maxX, double maxY, RenderSetting... settings) {
 
-        drawWithRenderSettings(() -> {
+        drawWithRenderSettings(setting -> {
             Tessellator tes = Tessellator.getInstance();
             VertexBuffer vb = tes.getBuffer();
 
             vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-            vb.pos(minX, minY, 0);
-            vb.pos(maxX, minY, 0);
-            vb.pos(maxX, maxY, 0);
-            vb.pos(minX, maxY, 0);
-            vb.pos(minX, minY, 0);
+            vb.pos(minX, minY, 0).endVertex();
+            vb.pos(maxX, minY, 0).endVertex();
+            vb.pos(maxX, maxY, 0).endVertex();
+            vb.pos(minX, maxY, 0).endVertex();
+            vb.pos(minX, minY, 0).endVertex();
             tes.draw();
         }, settings);
     }
@@ -126,7 +100,7 @@ public class RenderUtils {
         {
             GlStateManager.translate(x, y, z);
 
-            drawWithRenderSettings(() -> {
+            drawWithRenderSettings(setting -> {
                 SPHERE.setDrawStyle(wireframe ? GLU.GLU_LINE : GLU.GLU_FILL);
                 SPHERE.draw(radius, resolution, resolution);
             }, settings);
