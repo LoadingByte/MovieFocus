@@ -17,6 +17,17 @@ public class FocusConfigRegistry {
         return focusConfigTypes;
     }
 
+    public static Class<? extends FocusConfig> getTypeByInternalName(String internalName) {
+
+        for (Class<? extends FocusConfig> fct : getAllTypes()) {
+            if (FocusConfig.getInternalName(fct).equals(internalName)) {
+                return fct;
+            }
+        }
+
+        return null;
+    }
+
     public static FocusConfig newInstance(Class<? extends FocusConfig> focusConfigType) {
 
         try {
