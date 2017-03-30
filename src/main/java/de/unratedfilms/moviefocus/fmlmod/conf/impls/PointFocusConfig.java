@@ -3,11 +3,10 @@ package de.unratedfilms.moviefocus.fmlmod.conf.impls;
 
 import net.minecraft.util.math.Vec3d;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigAdapter;
 import de.unratedfilms.moviefocus.fmlmod.util.GeometryUtils;
 
 @FocusConfig.InternalName ("point")
-public class PointFocusConfig extends FocusConfigAdapter {
+public class PointFocusConfig implements FocusConfig {
 
     private Vec3d focusedPoint    = Vec3d.ZERO;
     private float envsphereRadius = 0.5f;

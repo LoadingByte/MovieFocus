@@ -6,11 +6,10 @@ import org.apache.commons.lang3.Validate;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigAdapter;
 import de.unratedfilms.moviefocus.fmlmod.util.GeometryUtils;
 
 @FocusConfig.InternalName ("entity")
-public class EntityFocusConfig extends FocusConfigAdapter {
+public class EntityFocusConfig implements FocusConfig {
 
     private WeakReference<Entity> focusedEntity;
     private float                 envsphereRadius = 0.5f;

@@ -41,16 +41,8 @@ public class FocusFlowRunner {
         // Save the old entry for later
         FocusFlowEntry fromEntry = getCurrentEntry();
 
-        // Deactivate the old entry
-        fromEntry.getFocusConfig().setActive(false);
-
         // Remove the old entry from the queue, so that the next entry shows up
         remainingSequence.poll();
-
-        // If we're still in the game, activate the next entry
-        if (isRunning()) {
-            getCurrentEntry().getFocusConfig().setActive(true);
-        }
 
         // Inform everyone about the transition
         MinecraftForge.EVENT_BUS.post(new FocusFlowTransitionEvent(fromEntry, isRunning() ? getCurrentEntry() : null));
@@ -59,7 +51,6 @@ public class FocusFlowRunner {
     public static void stopRunning() {
 
         if (isRunning()) {
-            getCurrentEntry().getFocusConfig().setActive(false);
             remainingSequence.clear();
         }
     }

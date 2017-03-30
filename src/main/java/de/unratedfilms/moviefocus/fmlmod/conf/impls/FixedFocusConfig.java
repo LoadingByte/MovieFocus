@@ -2,10 +2,9 @@
 package de.unratedfilms.moviefocus.fmlmod.conf.impls;
 
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigAdapter;
 
 @FocusConfig.InternalName ("fixed")
-public class FixedFocusConfig extends FocusConfigAdapter {
+public class FixedFocusConfig implements FocusConfig {
 
     private float fixedFocalDepth;
 

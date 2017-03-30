@@ -36,16 +36,6 @@ public interface FocusConfig {
     }
 
     /**
-     * Tells the focus configuration whether the user views it as the active configuration.
-     * That is the case if this configuration is currently being edited or if this configuration is currently being rendered.
-     * In case of activity, this configuration is allowed to render debug markings on the screen, listen for input (e.g. the mouse wheel)
-     * and should expect {@link #getFocalDepth()} being called.
-     *
-     * @param active Whether this focus configuration should do its stuff ({@code true}) or sleep entirely ({@code false}).
-     */
-    public void setActive(boolean active);
-
-    /**
      * Returns whether {@link #getFocalDepth()} provides a sensible focal depth value that should be rendered.
      * If this is {@code false}, no DoF effect will be rendered at all.
      * For example, that might be the case if an entity the focus depth calculation has been bound to has died.
