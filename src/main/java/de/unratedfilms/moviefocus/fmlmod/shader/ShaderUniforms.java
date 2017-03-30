@@ -2,7 +2,9 @@
 package de.unratedfilms.moviefocus.fmlmod.shader;
 
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
+import de.unratedfilms.moviefocus.fmlmod.events.FocalDepthRequestEvent;
 
 /**
  * This class acts as an adapter layer between the frontend {@link FocusConfig} and the backend shader objects.
@@ -26,18 +28,21 @@ public class ShaderUniforms {
             return;
         }
 
-        enabled = FocusPoller.pollIsFocusRendered() ? 1 : 0;
+        // Post a focal depth request event; anyone who wants to set focus will write its focal depth value into it
+        FocalDepthRequestEvent request = new FocalDepthRequestEvent();
+        MinecraftForge.EVENT_BUS.post(request);
+
+        enabled = request.isFocalDepthSupplied() ? 1 : 0;
 
         if (enabled == 1) {
-            refreshFocalDepthLinear();
+            refreshFocalDepthLinear(request.getSuppliedFocalDepth());
             refreshFocalDepthNormalized();
         }
     }
 
-    private static void refreshFocalDepthLinear() {
+    private static void refreshFocalDepthLinear(float focalDepth) {
 
-        focalDepthLinear = FocusPoller.pollFocalDepth();
-        focalDepthLinear = focalDepthLinear < 0.1f ? 0.1f : focalDepthLinear; // the focal depth mustn't be below 0
+        focalDepthLinear = focalDepth < 0.1f ? 0.1f : focalDepth; // the focal depth mustn't be below 0
     }
 
     private static void refreshFocalDepthNormalized() {

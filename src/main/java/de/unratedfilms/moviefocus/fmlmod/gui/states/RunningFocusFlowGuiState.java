@@ -8,15 +8,15 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import de.unratedfilms.moviefocus.fmlmod.events.FocalDepthRequestEvent;
+import de.unratedfilms.moviefocus.fmlmod.flow.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.flow.FocusFlowRunner;
 import de.unratedfilms.moviefocus.fmlmod.flow.FocusFlowSmoother;
-import de.unratedfilms.moviefocus.fmlmod.flow.FocusFlow.FocusFlowEntry;
-import de.unratedfilms.moviefocus.fmlmod.gui.FocusingGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 import de.unratedfilms.moviefocus.fmlmod.keys.KeyBindings;
 
-public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiState {
+public class RunningFocusFlowGuiState extends GuiState {
 
     private static final Minecraft MC           = Minecraft.getMinecraft();
 
@@ -40,18 +40,6 @@ public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiSta
         FocusFlowRunner.stopRunning();
     }
 
-    @Override
-    public boolean isFocusRendered() {
-
-        return FocusFlowRunner.getCurrentEntry().getFocusConfig().isAvailable();
-    }
-
-    @Override
-    public float getFocalDepth() {
-
-        return FocusFlowSmoother.getSmoothedFocalDepth();
-    }
-
     // Called by the KeyHandler
     public void onFlowKey() {
 
@@ -65,13 +53,21 @@ public class RunningFocusFlowGuiState extends GuiState implements FocusingGuiSta
     protected class EventHandler {
 
         @SubscribeEvent
+        public void onFocalDepthRequest(FocalDepthRequestEvent event) {
+
+            if (FocusFlowRunner.getCurrentEntry().getFocusConfig().isAvailable()) {
+                event.supplyFocalDepth(FocusFlowSmoother.getSmoothedFocalDepth());
+            }
+        }
+
+        @SubscribeEvent
         public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 
             if (!MC.gameSettings.hideGUI) {
                 FocusFlowEntry currEntry = FocusFlowRunner.getCurrentEntry();
 
                 // Draw the focal depth indicator
-                GuiHelper.drawFocalDepthIndicator(currEntry.getFocusConfig().isAvailable(), RunningFocusFlowGuiState.this::getFocalDepth);
+                GuiHelper.drawFocalDepthIndicator(currEntry.getFocusConfig().isAvailable(), FocusFlowSmoother::getSmoothedFocalDepth);
 
                 // Draw the current flow entry name and title
                 String name = I18n.format("gui." + MOD_ID + ".general.focusConfigName." + currEntry.getFocusConfig().getInternalName());

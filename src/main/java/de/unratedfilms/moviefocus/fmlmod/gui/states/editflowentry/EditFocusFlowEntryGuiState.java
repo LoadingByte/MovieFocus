@@ -22,14 +22,14 @@ import de.unratedfilms.guilib.widgets.view.impl.ButtonLabelImpl;
 import de.unratedfilms.guilib.widgets.view.impl.CheckboxImpl;
 import de.unratedfilms.guilib.widgets.view.impl.ContainerClippingImpl;
 import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
+import de.unratedfilms.moviefocus.fmlmod.events.FocalDepthRequestEvent;
 import de.unratedfilms.moviefocus.fmlmod.flow.FocusFlow.FocusFlowEntry;
-import de.unratedfilms.moviefocus.fmlmod.gui.FocusingGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.EditFocusFlowGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.GuiHelper;
 
-public class EditFocusFlowEntryGuiState extends GuiState implements FocusingGuiState {
+public class EditFocusFlowEntryGuiState extends GuiState {
 
     private final FocusFlowEntry editedFlowEntry;
 
@@ -54,18 +54,6 @@ public class EditFocusFlowEntryGuiState extends GuiState implements FocusingGuiS
     protected ImmutableList<Object> getEventHandlers() {
 
         return ImmutableList.of(thisEventHandler, configEventHandler);
-    }
-
-    @Override
-    public boolean isFocusRendered() {
-
-        return screen.tryoutCheckbox.isChecked() && editedFlowEntry.getFocusConfig().isAvailable();
-    }
-
-    @Override
-    public float getFocalDepth() {
-
-        return editedFlowEntry.getFocusConfig().getFocalDepth();
     }
 
     private class Screen extends BasicScreen {
@@ -147,12 +135,20 @@ public class EditFocusFlowEntryGuiState extends GuiState implements FocusingGuiS
     protected class EventHandler {
 
         @SubscribeEvent
+        public void onFocalDepthRequest(FocalDepthRequestEvent event) {
+
+            if (screen.tryoutCheckbox.isChecked() && editedFlowEntry.getFocusConfig().isAvailable()) {
+                event.supplyFocalDepth(editedFlowEntry.getFocusConfig().getFocalDepth());
+            }
+        }
+
+        @SubscribeEvent
         public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 
             if (!Minecraft.getMinecraft().gameSettings.hideGUI) {
                 // Draw the focal depth indicator
                 if (screen.tryoutCheckbox.isChecked()) {
-                    GuiHelper.drawFocalDepthIndicator(editedFlowEntry.getFocusConfig().isAvailable(), EditFocusFlowEntryGuiState.this::getFocalDepth);
+                    GuiHelper.drawFocalDepthIndicator(editedFlowEntry.getFocusConfig().isAvailable(), () -> editedFlowEntry.getFocusConfig().getFocalDepth());
                 }
             }
         }
