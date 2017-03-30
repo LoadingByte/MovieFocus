@@ -18,8 +18,8 @@ import de.unratedfilms.guilib.widgets.model.TextField;
 import de.unratedfilms.guilib.widgets.view.impl.ContainerClippingImpl;
 import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
 import de.unratedfilms.guilib.widgets.view.impl.TextFieldImpl;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.conf.impls.FixedFocusConfig;
+import de.unratedfilms.moviefocus.fmlmod.flow.FocusFlow.FocusFlowEntry;
 
 class FixedFocusConfigGuiImpls {
 

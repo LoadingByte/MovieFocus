@@ -1,11 +1,11 @@
 
-package de.unratedfilms.moviefocus.fmlmod.conf;
+package de.unratedfilms.moviefocus.fmlmod.flow;
 
 import java.util.LinkedList;
 import java.util.Queue;
 import org.apache.commons.lang3.Validate;
 import net.minecraftforge.common.MinecraftForge;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
+import de.unratedfilms.moviefocus.fmlmod.flow.FocusFlow.FocusFlowEntry;
 
 public class FocusFlowRunner {
 

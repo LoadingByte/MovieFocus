@@ -1,9 +1,10 @@
 
-package de.unratedfilms.moviefocus.fmlmod.conf;
+package de.unratedfilms.moviefocus.fmlmod.flow;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.Validate;
+import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
 
 public class FocusFlow {
 

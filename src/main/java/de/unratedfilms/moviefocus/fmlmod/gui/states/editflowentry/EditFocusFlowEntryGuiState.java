@@ -22,7 +22,7 @@ import de.unratedfilms.guilib.widgets.view.impl.ButtonLabelImpl;
 import de.unratedfilms.guilib.widgets.view.impl.CheckboxImpl;
 import de.unratedfilms.guilib.widgets.view.impl.ContainerClippingImpl;
 import de.unratedfilms.guilib.widgets.view.impl.LabelImpl;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
+import de.unratedfilms.moviefocus.fmlmod.flow.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.gui.FocusingGuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;

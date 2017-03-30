@@ -3,10 +3,10 @@ package de.unratedfilms.moviefocus.fmlmod.gui.states.editflowentry;
 
 import de.unratedfilms.guilib.widgets.view.impl.ContainerClippingImpl;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
-import de.unratedfilms.moviefocus.fmlmod.conf.FocusFlow.FocusFlowEntry;
 import de.unratedfilms.moviefocus.fmlmod.conf.impls.EntityFocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.conf.impls.FixedFocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.conf.impls.PointFocusConfig;
+import de.unratedfilms.moviefocus.fmlmod.flow.FocusFlow.FocusFlowEntry;
 
 class FocusConfigGuiImplsFactory {
 

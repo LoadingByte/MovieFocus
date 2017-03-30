@@ -1,5 +1,5 @@
 
-package de.unratedfilms.moviefocus.fmlmod.conf;
+package de.unratedfilms.moviefocus.fmlmod.flow;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
