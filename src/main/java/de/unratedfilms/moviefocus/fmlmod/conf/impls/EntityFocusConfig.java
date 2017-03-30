@@ -15,6 +15,14 @@ public class EntityFocusConfig extends FocusConfigAdapter {
     private WeakReference<Entity> focusedEntity;
     private float                 envsphereRadius = 0.5f;
 
+    public EntityFocusConfig() {}
+
+    public EntityFocusConfig(Entity focusedEntity, float envsphereRadius) {
+
+        setFocusedEntity(focusedEntity);
+        this.envsphereRadius = envsphereRadius;
+    }
+
     public boolean hasFocusedEntity() {
 
         return focusedEntity != null && focusedEntity.get() != null && focusedEntity.get().isEntityAlive();

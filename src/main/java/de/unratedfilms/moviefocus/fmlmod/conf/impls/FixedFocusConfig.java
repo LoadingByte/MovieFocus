@@ -9,6 +9,13 @@ public class FixedFocusConfig extends FocusConfigAdapter {
 
     private float fixedFocalDepth;
 
+    public FixedFocusConfig() {}
+
+    public FixedFocusConfig(float fixedFocalDepth) {
+
+        this.fixedFocalDepth = fixedFocalDepth;
+    }
+
     @Override
     public boolean isAvailable() {
 

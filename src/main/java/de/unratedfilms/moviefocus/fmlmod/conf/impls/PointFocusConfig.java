@@ -12,6 +12,14 @@ public class PointFocusConfig extends FocusConfigAdapter {
     private Vec3d focusedPoint    = Vec3d.ZERO;
     private float envsphereRadius = 0.5f;
 
+    public PointFocusConfig() {}
+
+    public PointFocusConfig(Vec3d focusedPoint, float envsphereRadius) {
+
+        this.focusedPoint = focusedPoint;
+        this.envsphereRadius = envsphereRadius;
+    }
+
     public Vec3d getFocusedPoint() {
 
         return focusedPoint;
