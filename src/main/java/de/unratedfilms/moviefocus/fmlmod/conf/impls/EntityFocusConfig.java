@@ -4,7 +4,7 @@ package de.unratedfilms.moviefocus.fmlmod.conf.impls;
 import java.lang.ref.WeakReference;
 import org.apache.commons.lang3.Validate;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfigAdapter;
 import de.unratedfilms.moviefocus.fmlmod.util.GeometryUtils;
@@ -41,10 +41,10 @@ public class EntityFocusConfig extends FocusConfigAdapter {
         this.envsphereRadius = envsphereRadius;
     }
 
-    public Vec3 getEnvsphereCenter() {
+    public Vec3d getEnvsphereCenter() {
 
         Entity focusedEntity = this.focusedEntity.get();
-        return Vec3.createVectorHelper(focusedEntity.posX, focusedEntity.posY + focusedEntity.getEyeHeight(), focusedEntity.posZ);
+        return new Vec3d(focusedEntity.posX, focusedEntity.posY + focusedEntity.getEyeHeight(), focusedEntity.posZ);
     }
 
     @Override

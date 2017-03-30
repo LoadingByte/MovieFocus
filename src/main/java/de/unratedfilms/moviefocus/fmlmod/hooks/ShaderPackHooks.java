@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.util.ServiceLoader;
 import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcher;
 import de.unratedfilms.moviefocus.shared.Consts;
-import shadersmodcore.client.IShaderPack;
+import shadersmod.client.IShaderPack;
 
 public class ShaderPackHooks {
 

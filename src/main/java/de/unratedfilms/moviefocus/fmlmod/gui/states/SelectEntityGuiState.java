@@ -9,8 +9,8 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils;
 import de.unratedfilms.moviefocus.fmlmod.util.RenderUtils.RenderSetting;
@@ -42,21 +42,20 @@ public class SelectEntityGuiState extends GuiState {
 
             if (!MC.gameSettings.hideGUI) {
                 // Draw the border
-                ScaledResolution scaledResolution = new ScaledResolution(MC, MC.displayWidth, MC.displayHeight);
+                ScaledResolution scaledResolution = new ScaledResolution(MC);
                 RenderUtils.drawAABB2D(15, 15, scaledResolution.getScaledWidth() - 15, scaledResolution.getScaledHeight() - 15, BORDER_RENDER_SETTING);
 
                 // Draw the text
-                String info = I18n.format("gui." + MOD_ID + ".selectEntity.info");
-                MC.fontRenderer.drawStringWithShadow(info, 25, 25, 0xffffff);
+                MC.fontRendererObj.drawStringWithShadow(I18n.format("gui." + MOD_ID + ".selectEntity.clickHint"), 25, 25, 0xffffff);
             }
         }
 
         @SubscribeEvent
-        public void onEntityClick(EntityInteractEvent event) {
+        public void onEntityClick(PlayerInteractEvent.EntityInteract event) {
 
             event.setCanceled(true);
 
-            selectionCallback.accept(event.target);
+            selectionCallback.accept(event.getTarget());
         }
 
     }

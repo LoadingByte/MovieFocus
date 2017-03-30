@@ -1,10 +1,9 @@
 
 package de.unratedfilms.moviefocus.fmlmod.util;
 
-import static net.minecraft.client.renderer.ActiveRenderInfo.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 public class GeometryUtils {
 
@@ -14,9 +13,9 @@ public class GeometryUtils {
      *
      * @return The camera location.
      */
-    public static Vec3 getCamLoc() {
+    public static Vec3d getCamLoc() {
 
-        return ActiveRenderInfo.projectViewFromEntity(Minecraft.getMinecraft().renderViewEntity, 0);
+        return ActiveRenderInfo.projectViewFromEntity(Minecraft.getMinecraft().getRenderViewEntity(), 0);
     }
 
     /**
@@ -26,7 +25,13 @@ public class GeometryUtils {
      *
      * @return The camera plane's normal vector.
      */
-    public static Vec3 getCamSightLine() {
+    public static Vec3d getCamSightLine() {
+
+        float rotationX = ActiveRenderInfo.getRotationX();
+        float rotationXZ = ActiveRenderInfo.getRotationXZ();
+        float rotationZ = ActiveRenderInfo.getRotationZ();
+        float rotationYZ = ActiveRenderInfo.getRotationYZ();
+        float rotationXY = ActiveRenderInfo.getRotationXY();
 
         /*
          * This calculates the normal vector of the camera plane.
@@ -51,7 +56,7 @@ public class GeometryUtils {
          * Finally, I calculated the cross product u' x v', resulting in the code you see down below.
          */
         // @formatter:off
-        return Vec3.createVectorHelper(
+        return new Vec3d(
                         0 * rotationXY  -  rotationZ * rotationXZ,
                 rotationZ * rotationYZ  -  rotationX * rotationXY,
                 rotationX * rotationXZ  -          0 * rotationYZ);
@@ -68,19 +73,19 @@ public class GeometryUtils {
      * @param point The distance should be calculated between this point and the camera plane.
      * @return The distance between the given point and the camera plane.
      */
-    public static double getDepth(Vec3 point) {
+    public static double getDepth(Vec3d point) {
 
         // This is the exact location of the camera. Note that this point must lie on the camera plane.
-        Vec3 camLoc = getCamLoc();
+        Vec3d camLoc = getCamLoc();
 
         // This is the normal vector of the camera plane.
-        Vec3 camSightLine = getCamSightLine();
+        Vec3d camSightLine = getCamSightLine();
 
         /*
          * I can now describe the camera plane since we have a point on that plane (camLoc) and the plane's normalized normal vector (camSightLine).
          * Using that information, I calculate the distance between the supplied point and the camera plane.
          */
-        return camSightLine.dotProduct(camLoc.subtract(point)); // N * (P - C)
+        return camSightLine.dotProduct(point.subtract(camLoc)); // N * (P - C)
     }
 
     private GeometryUtils() {}

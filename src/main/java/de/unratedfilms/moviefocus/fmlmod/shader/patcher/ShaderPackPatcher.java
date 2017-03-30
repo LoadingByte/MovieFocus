@@ -3,7 +3,7 @@ package de.unratedfilms.moviefocus.fmlmod.shader.patcher;
 
 import java.io.IOException;
 import java.io.InputStream;
-import shadersmodcore.client.IShaderPack;
+import shadersmod.client.IShaderPack;
 
 public interface ShaderPackPatcher {
 

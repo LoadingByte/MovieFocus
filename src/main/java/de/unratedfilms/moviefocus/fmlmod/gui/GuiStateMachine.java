@@ -4,8 +4,7 @@ package de.unratedfilms.moviefocus.fmlmod.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class GuiStateMachine {
 
@@ -34,7 +33,6 @@ public class GuiStateMachine {
 
         if (currentState != null) {
             for (Object eventHandler : currentState.getEventHandlers()) {
-                FMLCommonHandler.instance().bus().unregister(eventHandler);
                 MinecraftForge.EVENT_BUS.unregister(eventHandler);
             }
 
@@ -48,8 +46,6 @@ public class GuiStateMachine {
             currentState.enter();
 
             for (Object eventHandler : currentState.getEventHandlers()) {
-                // We don't know what kind of events the handler wants to handle, so we just register it to both buses
-                FMLCommonHandler.instance().bus().register(eventHandler);
                 MinecraftForge.EVENT_BUS.register(eventHandler);
             }
         }
@@ -69,7 +65,7 @@ public class GuiStateMachine {
         public void onGuiOpen(GuiOpenEvent event) {
 
             // If a previous GUI state screen has been replaced with a new screen without the transitionToState() method being used
-            if (currentState != null && event.gui != currentState.getScreen()) {
+            if (currentState != null && event.getGui() != currentState.getScreen()) {
                 // Set the GUI state to null
                 transitionToState(null);
             }

@@ -8,7 +8,7 @@ import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
 import de.unratedfilms.moviefocus.fmlmod.shader.patcher.ShaderPackPatcher;
 import de.unratedfilms.moviefocus.shared.Consts;
-import shadersmodcore.client.IShaderPack;
+import shadersmod.client.IShaderPack;
 
 /**
  * Patches version 6 of Chocapic13's Shaders by Chocapic13.

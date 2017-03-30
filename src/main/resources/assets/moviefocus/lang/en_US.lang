@@ -12,8 +12,9 @@ gui.moviefocus.general.focalDepth.available=Focal Depth: %s m
 gui.moviefocus.general.focalDepth.unavailable=Focal Depth: Indeterminable
 
 
-gui.moviefocus.selectBlock.info=Click a block to select it
-gui.moviefocus.selectEntity.info=Click an entity to select it
+gui.moviefocus.selectBlock.clickHint=Right-click a point on a block surface to select it
+gui.moviefocus.selectBlock.shiftHint=Press '%s' to snap to block center
+gui.moviefocus.selectEntity.clickHint=Right-click an entity to select it
 
 gui.moviefocus.runningFocusFlow.configName=Config: %s
 gui.moviefocus.runningFocusFlow.entryTitle=Title: "%s"

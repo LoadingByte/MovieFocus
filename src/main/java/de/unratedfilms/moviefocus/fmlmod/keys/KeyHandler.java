@@ -1,8 +1,8 @@
 
 package de.unratedfilms.moviefocus.fmlmod.keys;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiState;
 import de.unratedfilms.moviefocus.fmlmod.gui.GuiStateMachine;
 import de.unratedfilms.moviefocus.fmlmod.gui.states.EditFocusFlowGuiState;

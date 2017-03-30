@@ -15,11 +15,11 @@ public class MainClassTransformer implements IClassTransformer {
     public byte[] transform(String obfName, String name, byte[] bytecode) {
 
         switch (name) {
-            case "shadersmodcore.client.Shaders":
+            case "shadersmod.client.Shaders":
                 bytecode = applyTransformers(bytecode, new CNT_Shaders());
                 break;
-            case "shadersmodcore.client.ShaderPackFolder":
-            case "shadersmodcore.client.ShaderPackZip":
+            case "shadersmod.client.ShaderPackFolder":
+            case "shadersmod.client.ShaderPackZip":
                 bytecode = applyTransformers(bytecode, new CNT_ShaderPackFolder_ShaderPackZip());
                 break;
         }
