@@ -25,7 +25,7 @@ public class CNT_ShaderPackFolder_ShaderPackZip implements ClassNodeTransformer 
 
     private static final String PATCHER_FIELD              = Consts.MOD_ID + "patcher";
 
-    private static final Method FIND_PATCHER_HOOK          = Method.getMethod(ShaderPackPatcher.class.getName() + " findPatcher (java.lang.String, shadersmodcore.client.IShaderPack)");
+    private static final Method FIND_PATCHER_HOOK          = Method.getMethod(ShaderPackPatcher.class.getName() + " findPatcher (java.lang.String, shadersmod.client.IShaderPack)");
     private static final Method PATCH_RESOURCE_STREAM_HOOK = Method.getMethod("java.io.InputStream patchResourceStreamIfPatcherExists (java.io.InputStream, java.lang.String, " + ShaderPackPatcher.class.getName() + ")");
 
     @Override
@@ -73,12 +73,12 @@ public class CNT_ShaderPackFolder_ShaderPackZip implements ClassNodeTransformer 
         // Find method to inject into
         MethodNode method = AsmUtils.findMethod(classNode, Method.getMethod("java.io.InputStream getResourceAsStream (java.lang.String)"));
 
-        // Find the injection point inside that method; code should be injected directly before the first return instruction
+        // Find the injection point inside that method; code should be injected directly before the last return instruction which doesn't return null
         AbstractInsnNode insertBeforeInsn = null;
-        for (int index = 0; index < method.instructions.size(); index++) {
+        for (int index = method.instructions.size() - 1; index >= 0; index--) {
             AbstractInsnNode instruction = method.instructions.get(index);
             // We want to patch the input stream, so we add our call to the patcher right before the stream is returned
-            if (instruction.getOpcode() == ARETURN) {
+            if (instruction.getOpcode() == ARETURN && method.instructions.get(index - 1).getOpcode() != ACONST_NULL) {
                 insertBeforeInsn = instruction;
                 break;
             }
