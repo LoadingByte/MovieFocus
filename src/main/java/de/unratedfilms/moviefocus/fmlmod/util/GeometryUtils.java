@@ -85,7 +85,7 @@ public class GeometryUtils {
          * I can now describe the camera plane since we have a point on that plane (camLoc) and the plane's normalized normal vector (camSightLine).
          * Using that information, I calculate the distance between the supplied point and the camera plane.
          */
-        return camSightLine.dotProduct(camLoc.subtract(point)); // N * (P - C)
+        return camSightLine.dotProduct(point.subtract(camLoc)); // N * (P - C)
     }
 
     private GeometryUtils() {}

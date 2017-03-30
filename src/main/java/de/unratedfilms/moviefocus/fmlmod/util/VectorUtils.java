@@ -17,7 +17,7 @@ public class VectorUtils {
 
     public static Vec3d withZ(Vec3d vec, double z) {
 
-        return new Vec3d(vec.zCoord, vec.yCoord, z);
+        return new Vec3d(vec.xCoord, vec.yCoord, z);
     }
 
     private VectorUtils() {}
