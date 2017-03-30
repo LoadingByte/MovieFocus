@@ -3,6 +3,7 @@
 
 ### Additions
 * More precise focus point selection is now possible by directly selecting a point on a block's surface instead of the block center. This will reduce the need for manual adjustments.
+* Incorporated new ways for other mods to interact with and integrate the MovieFocus mod.
 
 ### Notes
 * Upgraded to Minecraft version 1.11.2.
