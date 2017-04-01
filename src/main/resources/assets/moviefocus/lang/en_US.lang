@@ -40,5 +40,5 @@ gui.moviefocus.editFocusFlowEntry.focusConfigSettings.fixed.focalDepth=Focal Dep
 gui.moviefocus.editFocusFlowEntry.focusConfigSettings.point.focusedPoint=Focusing on:
 gui.moviefocus.editFocusFlowEntry.focusConfigSettings.point.startSelection=Select Block
 
-gui.moviefocus.editFocusFlowEntry.focusConfigSettings.entity.focusedEntity=Focusing on %s
+gui.moviefocus.editFocusFlowEntry.focusConfigSettings.entity.focusedEntity=Focusing on %s (%d)
 gui.moviefocus.editFocusFlowEntry.focusConfigSettings.entity.startSelection=Select Entity

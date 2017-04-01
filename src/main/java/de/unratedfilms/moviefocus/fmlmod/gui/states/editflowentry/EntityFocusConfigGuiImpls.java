@@ -48,13 +48,14 @@ class EntityFocusConfigGuiImpls {
 
         public SettingsContainer() {
 
+            boolean empty = !config.isDescribingExistingFocusedEntity();
             focusedEntityLabel = new LabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.entity.focusedEntity",
-                    !config.hasFocusedEntity() ? "--" : config.getFocusedEntity().getName()));
+                    empty ? "--" : config.getFocusedEntity().getName(), empty ? "--" : config.getFocusedEntity().getEntityId()));
 
             selectionStartButton = new ButtonLabelImpl(I18n.format("gui." + MOD_ID + ".editFocusFlowEntry.focusConfigSettings.entity.startSelection"),
                     new FilteredButtonHandler(MouseButton.LEFT, (b, mb) -> {
                         GuiStateMachine.transitionToState(new SelectEntityGuiState(selEntity -> {
-                            config.setFocusedEntity(selEntity);
+                            config.setFocusedEntityId(selEntity.getEntityId());
                             GuiStateMachine.transitionToState(new EditFocusFlowEntryGuiState(flowEntry));
                         }));
                     }));
@@ -83,7 +84,7 @@ class EntityFocusConfigGuiImpls {
         @SubscribeEvent
         public void onRenderWorldLast(RenderWorldLastEvent event) {
 
-            if (!Minecraft.getMinecraft().gameSettings.hideGUI && config.hasFocusedEntity()) {
+            if (!Minecraft.getMinecraft().gameSettings.hideGUI && config.isDescribingExistingFocusedEntity()) {
                 EntityPlayer player = Minecraft.getMinecraft().player;
                 double playerX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.getPartialTicks();
                 double playerY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.getPartialTicks();

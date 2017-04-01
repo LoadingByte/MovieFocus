@@ -1,8 +1,8 @@
 
 package de.unratedfilms.moviefocus.fmlmod.conf.impls;
 
-import java.lang.ref.WeakReference;
 import org.apache.commons.lang3.Validate;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import de.unratedfilms.moviefocus.fmlmod.conf.FocusConfig;
@@ -11,31 +11,43 @@ import de.unratedfilms.moviefocus.fmlmod.util.GeometryUtils;
 @FocusConfig.InternalName ("entity")
 public class EntityFocusConfig implements FocusConfig {
 
-    private WeakReference<Entity> focusedEntity;
-    private float                 envsphereRadius = 0.5f;
+    private static final Minecraft MC              = Minecraft.getMinecraft();
+
+    private int                    focusedEntityId;
+    private float                  envsphereRadius = 0.5f;
 
     public EntityFocusConfig() {}
 
-    public EntityFocusConfig(Entity focusedEntity, float envsphereRadius) {
+    public EntityFocusConfig(int focusedEntityId, float envsphereRadius) {
 
-        setFocusedEntity(focusedEntity);
+        this.focusedEntityId = focusedEntityId;
         this.envsphereRadius = envsphereRadius;
     }
 
-    public boolean hasFocusedEntity() {
+    public int getFocusedEntityId() {
 
-        return focusedEntity != null && focusedEntity.get() != null && focusedEntity.get().isEntityAlive();
+        return focusedEntityId;
+    }
+
+    public void setFocusedEntityId(int focusedEntityId) {
+
+        this.focusedEntityId = focusedEntityId;
+    }
+
+    public boolean isDescribingExistingFocusedEntity() {
+
+        if (MC.world == null) {
+            return false;
+        } else {
+            Entity focusedEntity = MC.world.getEntityByID(focusedEntityId);
+            return focusedEntity != null && focusedEntity.isEntityAlive();
+        }
     }
 
     public Entity getFocusedEntity() {
 
-        Validate.validState(hasFocusedEntity(), "Cannot get the focused entity if there isn't one");
-        return focusedEntity.get();
-    }
-
-    public void setFocusedEntity(Entity focusedEntity) {
-
-        this.focusedEntity = new WeakReference<>(focusedEntity);
+        Validate.validState(isDescribingExistingFocusedEntity(), "Cannot get the focused entity if the described one with ID %d simply doesn't exist", focusedEntityId);
+        return MC.world.getEntityByID(focusedEntityId);
     }
 
     public float getEnvsphereRadius() {
@@ -50,14 +62,14 @@ public class EntityFocusConfig implements FocusConfig {
 
     public Vec3d getEnvsphereCenter() {
 
-        Entity focusedEntity = this.focusedEntity.get();
+        Entity focusedEntity = getFocusedEntity();
         return new Vec3d(focusedEntity.posX, focusedEntity.posY + focusedEntity.getEyeHeight(), focusedEntity.posZ);
     }
 
     @Override
     public boolean isAvailable() {
 
-        return hasFocusedEntity();
+        return isDescribingExistingFocusedEntity();
     }
 
     @Override

@@ -6,6 +6,8 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 
 public interface FocusConfig {
 
@@ -46,8 +48,11 @@ public interface FocusConfig {
     public boolean isAvailable();
 
     /**
-     * Returns the current <b>linear</b> depth value which should be in focus.
-     * "Linear" means that the distance is returned in regular units (1 unit = 1 block) and not mapped to {@code [0; 1]}.
+     * Returns the current <b>linear</b> depth value which should be in focus right now, at this point in time.
+     * "Linear" means that the distance is returned in regular units (1 unit = 1 block) and not mapped to {@code [0; 1]}.<br>
+     * <br>
+     * If external information like the position of the camera in space or the current client world object is needed,
+     * the focus config is free to access all sources which contain that information, e.g. {@link ActiveRenderInfo} or {@link Minecraft#world}.
      *
      * @return The <b>linear</b> focused depth.
      */
